@@ -1,0 +1,29 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+  examen_id:
+    type: integer
+    example: 1
+  examen:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Examen prueba
+  tema_id:
+    type: integer
+    example: 1
+  tema:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Ecuaciones diferenciales

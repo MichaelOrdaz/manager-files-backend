@@ -1,0 +1,91 @@
+get:
+  tags: [Encuestas]
+  summary: "Get - Encuestas"
+  operationId: getEncuesta
+  description: "Obtiene el  Encuestas"
+  parameters:
+    - $ref: "../parameters/path/encuestasId.yaml"
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/Encuestas.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }
+put:
+  tags: [Encuestas]
+  summary: "Update - Encuestas"
+  operationId: updateEncuesta
+  description: "Actualiza el  Encuestas
+  <ul>
+    <li><b>dirigido_a :</b> Sus valores son:
+      <ul>
+        <li>los nombres de <b>roles</b></li>
+        <li><b>Todos</b> Se imite a todos los usuarios sin distinción</li>
+        <li><b>Grupos</b> para EspecialidadPeriodoGrupo</li>
+        <li><b>Materias</b> para DocenteMateria</li>
+      </ul>
+    </li>
+    <li><b>dirigido_id:</b> Es el id correspondiente a EspecialidadPeriodoGrupo o DocenteMateria
+      <ul>
+        <li> Grupos - especialidad_periodo_grupo_id </li>
+        <li> Materias - docente_materia_id </li>
+      </ul>
+      <li> <b>NOTA:</b> solo pone este datos si la encuesta va dirigia a <b>Grupos</b> o <b>Materias</b> </li>
+      <li>Al momento de actualizar se puede obtener <b>dirigido_a</b> a traves de <b>model_type</b> </li>
+      <li>Al momento de actualizar se puede obtener <b>dirigido_id</b> a traves de <b>model_id</b> </li>
+    </li>
+  </ul>"
+  parameters:
+    - $ref: "../parameters/path/encuestasId.yaml"
+  requestBody:
+    {
+      description: "Petición en formato json",
+      content:
+        { application/json: { schema: { $ref: "../schemas/Encuestas.yaml" } } },
+    }
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/Encuestas.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }
+delete:
+  tags: [Encuestas]
+  summary: "Delete - Encuestas"
+  operationId: deleteEncuesta
+  description: "Borra el  Encuestas"
+  parameters:
+    - $ref: "../parameters/path/encuestasId.yaml"
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/Encuestas.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }

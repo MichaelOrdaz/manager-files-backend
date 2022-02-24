@@ -1,0 +1,17 @@
+type: object
+properties:
+  especialidad_id:
+    type: integer
+    example: 1
+  periodo_id:
+    type: integer
+    example: 1
+  fecha_limite:
+    type: string
+    example: "2022-12-20 23:00:00"
+
+
+required:
+  - especialidad_id
+  - periodo_id
+  - fecha_limite

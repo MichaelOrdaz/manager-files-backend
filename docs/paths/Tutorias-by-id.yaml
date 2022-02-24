@@ -1,0 +1,75 @@
+get:
+  tags: [Tutorias]
+  summary: "Get - Tutorias"
+  operationId: getTutoria
+  description: "Obtiene una tutoría"
+  parameters:
+    - $ref: "../parameters/path/tutoriaId.yaml"
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/TutoriasJson.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }
+post:
+  tags: [Tutorias]
+  summary: "Update - Tutorias"
+  operationId: updateTutoria
+  description: "Actualiza una tutoría"
+  parameters:
+    - $ref: "../parameters/path/tutoriaId.yaml"
+  requestBody:
+    {
+      description: "Petición multipart/form-data",
+      content:
+        {
+          multipart/form-data:
+            { schema: { $ref: "../schemas/TutoriasMultiPart.yaml" } },
+        },
+    }
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/TutoriasJson.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }
+delete:
+  tags: [Tutorias]
+  summary: "Delete - Tutorias"
+  operationId: deleteTutoria
+  description: "Borra una tutoría"
+  parameters:
+    - $ref: "../parameters/path/tutoriaId.yaml"
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/TutoriasJson.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }

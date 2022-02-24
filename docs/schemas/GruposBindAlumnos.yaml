@@ -1,0 +1,16 @@
+type: object
+properties:
+  grupo_id:
+    type: integer
+    example: 1
+  periodo_id:
+    type: integer
+    example: 1
+  especialidad_id:
+    type: integer
+    example: 1
+  alumnos:
+    type: array
+    items:
+      type: integer
+      example: 1

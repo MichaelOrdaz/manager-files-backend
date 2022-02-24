@@ -1,0 +1,28 @@
+post:
+  tags: [Tareas]
+  summary: "Copy - Tareas"
+  operationId: copyTarea
+  description: "<h4>Copiar una tarea dentro de una unidad.</h4>
+  <br>Los parámetros <strong>especialidad_id, periodo_id, material_id, unidad_id</strong> indican en donde se va a copiar la tarea(tarea_id)
+  <br>El método retorna el nuevo registro"
+  parameters:
+    - $ref: "../parameters/path/especialidadId.yaml"
+    - $ref: "../parameters/path/periodoId.yaml"
+    - $ref: "../parameters/path/materiaId.yaml"
+    - $ref: "../parameters/path/unidadId.yaml"
+    - $ref: "../parameters/path/tareaId.yaml"
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/TareasCopy.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }

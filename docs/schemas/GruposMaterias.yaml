@@ -1,0 +1,74 @@
+type: object
+properties:
+  nombre:
+    type: string
+    example: Bachillerato técnico en seguridad ciudadana - Semestre 1 - A - Ingles et
+  especialidad_periodo_grupo_id:
+    type: integer
+    example: 1
+  especialidad_periodo_id:
+    type: integer
+    example: 1
+  periodo_id:
+    type: integer
+    example: 1
+  periodo:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Semestre 1
+  especialidad_id:
+    type: integer
+    example: 1
+  especialidad:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Técnico en Seguridad Pública
+  grupo_id:
+    type: integer
+    example: 1
+  grupo:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 2
+      nombre:
+        type: string
+        example: Grupo B
+  docente_materia_id:
+    type: integer
+    example: 1
+  materia_id:
+    type: integer
+    example: 1
+  materia:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 2
+      nombre:
+        type: string
+        example: Matematicas
+  usuario_id:
+    type: integer
+    example: 1
+  usuario:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 2
+      nombre:
+        type: string
+        example: Ernesto Valverde Herrera

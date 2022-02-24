@@ -1,0 +1,6 @@
+name: tutoria_id
+in: path
+description: id de la tutoría
+schema:
+  type: integer
+required: true

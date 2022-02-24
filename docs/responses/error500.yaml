@@ -1,0 +1,12 @@
+description: Error del servidor
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        errors:
+          type: string
+          example: Error del servidor
+        success:
+          type: boolean
+          example: false

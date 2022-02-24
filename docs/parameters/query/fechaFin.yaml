@@ -1,0 +1,6 @@
+in: query
+name: fechaFin
+description: Valor de finalización para filtrar por rango de fechas
+required: false
+schema:
+  type: string

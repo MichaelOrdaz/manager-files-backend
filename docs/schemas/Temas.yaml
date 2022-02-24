@@ -1,0 +1,48 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+    readOnly: true
+  nombre:
+    type: string
+    example: Ecuaciones diferenciales
+  descripcion:
+    type: string
+    example: Veremos como resolver los diferentes tipos de ecuaciones
+  materia_id:
+    type: integer
+    example: 1
+    readOnly: true
+  materia:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Algebra
+  unidad_id:
+    type: integer
+    example: 1
+    readOnly: true
+  unidad:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Algebra
+  activo:
+    type: boolean
+    example: true
+    writeOnly: true
+
+required:
+  - nombre
+  - descripcion

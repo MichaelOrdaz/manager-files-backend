@@ -1,0 +1,27 @@
+get:
+  tags: [AlumnoGrupo]
+  summary: "list - Calendario"
+  operationId: listCalendario
+  description: "Obtiene todos una list de To-Do para el alumno"
+  parameters:
+    - $ref: "../parameters/path/usuarioId.yaml"
+    - $ref: "../parameters/query/fechaInicio.yaml"
+    - $ref: "../parameters/query/fechaFin.yaml"
+  responses:
+    200:
+      description: "Estructura básica de la respuesta"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../schemas/AlumnosGrupoCalendario.yaml"
+                maxItems: 25
+              message:
+                type: string
+              success:
+                type: boolean
+                example: true

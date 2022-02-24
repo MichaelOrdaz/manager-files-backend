@@ -1,0 +1,6 @@
+in: query
+name: especialidadPeriodoGrupoId
+description: Id de la EspecialidadPeriodoGrupo
+required: false
+schema:
+  type: string

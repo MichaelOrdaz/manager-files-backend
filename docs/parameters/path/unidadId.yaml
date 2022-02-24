@@ -1,0 +1,6 @@
+name: unidad_id
+in: path
+description: id de la unidad
+schema:
+  type: integer
+required: true

@@ -1,0 +1,11 @@
+type: object
+properties:
+  permisos:
+    writeOnly: true
+    type: array
+    items:
+      type: string
+      example: "usuario.show"
+
+required:
+  - permisos

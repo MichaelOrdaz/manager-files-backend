@@ -1,0 +1,6 @@
+name: examenes_calificaciones_id
+in: path
+description: id de la calificación del examen
+schema:
+  type: integer
+required: true

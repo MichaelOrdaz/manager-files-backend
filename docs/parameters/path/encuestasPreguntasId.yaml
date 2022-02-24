@@ -1,0 +1,6 @@
+name: encuestas_preguntas_id
+in: path
+description: id de la pregunta
+schema:
+  type: integer
+required: true

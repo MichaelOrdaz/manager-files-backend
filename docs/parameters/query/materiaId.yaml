@@ -1,0 +1,6 @@
+in: query
+name: materiaId
+description: Valor para filtrar por campo materia_id
+required: false
+schema:
+  type: integer

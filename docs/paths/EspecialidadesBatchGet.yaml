@@ -1,0 +1,30 @@
+get:
+  tags: [Especialidades]
+  summary: "BatchGet - Especialidades"
+  operationId: BatchGetEspecialidades
+  description: "Devuelve vista de árbol a partir de especialidades"
+  parameters:
+    - $ref: "../parameters/path/especialidadId.yaml"
+    - $ref: "../parameters/query/page.yaml"
+  responses:
+    200:
+      description: "Estructura básica de la respuesta"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../schemas/EspecialidadesBatchGet.yaml"
+                maxItems: 25
+              message:
+                type: string
+              success:
+                type: boolean
+                example: true
+              links:
+                $ref: "../meta-datos/links.yaml"
+              meta:
+                $ref: "../meta-datos/paginacion.yaml"

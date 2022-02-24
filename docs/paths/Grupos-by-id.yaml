@@ -1,0 +1,25 @@
+get:
+  tags: [Grupos]
+  summary: "Get - Grupos"
+  operationId: getGrupo
+  description: "Obtiene un grupo"
+  parameters:
+    - $ref: "../parameters/path/grupoId.yaml"
+  responses: { 200: { description: "Estructura básica de la respuesta", content: { application/json: { schema: { $ref: "../schemas/Grupos.yaml" } } } }, 422: { $ref: "../responses/error422.yaml" }, 404: { $ref: "../responses/error404.yaml" }, 401: { $ref: "../responses/error401.yaml" } }
+put:
+  tags: [Grupos]
+  summary: "Update - Grupos"
+  operationId: updateGrupo
+  description: "Actualiza un grupo"
+  parameters:
+    - $ref: "../parameters/path/grupoId.yaml"
+  requestBody: { description: "Petición en formato json", content: { application/json: { schema: { $ref: "../schemas/Grupos.yaml" } } } }
+  responses: { 200: { description: "Estructura básica de la respuesta", content: { application/json: { schema: { $ref: "../schemas/Grupos.yaml" } } } }, 422: { $ref: "../responses/error422.yaml" }, 404: { $ref: "../responses/error404.yaml" }, 401: { $ref: "../responses/error401.yaml" } }
+delete:
+  tags: [Grupos]
+  summary: "Delete - Grupos"
+  operationId: deleteGrupo
+  description: "Borra un grupo"
+  parameters:
+    - $ref: "../parameters/path/grupoId.yaml"
+  responses: { 200: { description: "Estructura básica de la respuesta", content: { application/json: { schema: { $ref: "../schemas/Grupos.yaml" } } } }, 422: { $ref: "../responses/error422.yaml" }, 404: { $ref: "../responses/error404.yaml" }, 401: { $ref: "../responses/error401.yaml" } }

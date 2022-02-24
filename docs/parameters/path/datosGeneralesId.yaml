@@ -1,0 +1,6 @@
+name: datos_generales_id
+in: path
+description: id de datos generales
+schema:
+  type: integer
+required: true

@@ -1,0 +1,24 @@
+<?php
+
+namespace Tests\Feature\[% model_name %];
+
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
+use Spatie\Permission\Models\Role;
+
+class [% model_name %]RolesPermisosTest extends TestCase
+{
+    use DatabaseTransactions;
+
+    public function test_[% model_name_singular_variable %]_role_crud()
+    {
+      $role = Role::where("name","Role")->first();
+      $this->assertTrue($role->hasPermissionTo('[% model_name_singular_variable %].show'));
+      $this->assertFalse($role->hasPermissionTo('[% model_name_singular_variable %].update'));
+      $this->assertFalse($role->hasPermissionTo('[% model_name_singular_variable %].create'));
+      $this->assertFalse($role->hasPermissionTo('[% model_name_singular_variable %].delete'));
+    }
+}

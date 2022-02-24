@@ -1,0 +1,6 @@
+name: contenido_extra_id
+in: path
+description: id de contenido extra
+schema:
+  type: integer
+required: true

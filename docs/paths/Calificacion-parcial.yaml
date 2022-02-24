@@ -1,0 +1,39 @@
+post:
+  tags: [CalificacionParcial]
+  summary: "Post - calificacionParcial"
+  operationId: createUpdateCalificacionParcial
+  description: "Crea o actualiza una calificación parcial"
+  parameters:
+    - $ref: "../parameters/path/especialidadPeriodoGrupoId.yaml"
+    - $ref: "../parameters/path/materiaId.yaml"
+    - $ref: "../parameters/path/usuarioId.yaml"
+  requestBody:
+    {
+      description: "Petición en formato json<br><br>
+      <b>Importante:</b> Los datos <b>especialidad_nombre,periodo_nombre,grupo_nombre</b> una vez creados <b>no</b> deberian
+      ser modificados, <br> estos datos se crean de forma automatica en backend cuando se crea por primera vez, <br>
+      por lo tanto es importante mandarlos al backend si ya existen (en caso contrario mandar estos datos como nulos) <br>
+      para que no se sobreescriban con los datos de Especialidad Periodo Grupo si es que tuvieron una modificacion <br>
+      De esta manera el historial academico del alumno no presenta irregularidades
+      ",
+      content:
+        {
+          application/json:
+            { schema: { $ref: "../schemas/Calificacion-parcial.yaml" } },
+        },
+    }
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/Calificacion-parcial.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }

@@ -1,0 +1,6 @@
+name: rubrica_id
+in: path
+description: id de la rubrica
+schema:
+  type: integer
+required: true

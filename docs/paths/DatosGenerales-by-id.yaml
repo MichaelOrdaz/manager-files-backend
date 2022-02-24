@@ -1,0 +1,55 @@
+get:
+  tags: [Usuarios]
+  summary: "Get - Datos Generales"
+  operationId: getDatosGenerales
+  description: "Obtiene datos generales de un usuario pasando usuario_id"
+  parameters:
+    - $ref: "../parameters/path/usuarioId.yaml"
+    - $ref: "../parameters/path/datosGeneralesId.yaml"
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/DatosGeneralesJson.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }
+post:
+  tags: [Usuarios]
+  summary: "Update - Datos generales"
+  operationId: updateDatosGenerales
+  description: "Actualiza Datos generales de un usuario pasando un usuario_id"
+  parameters:
+    - $ref: "../parameters/path/usuarioId.yaml"
+    - $ref: "../parameters/path/datosGeneralesId.yaml"
+  requestBody:
+    {
+      description: "Petición en formato json",
+      content:
+        {
+          multipart/form-data:
+            { schema: { $ref: "../schemas/DatosGeneralesMultiPart.yaml" } },
+        },
+    }
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/DatosGeneralesJson.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }

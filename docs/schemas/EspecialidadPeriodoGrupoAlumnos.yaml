@@ -1,0 +1,28 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+  alumno_email:
+    type: string
+    format: email
+    example: correo@puller.mx
+  datos_generales:
+    readOnly: true
+    allOf:
+      - $ref: "./DatosGeneralesJson.yaml"
+  datos_academicos:
+    readOnly: true
+    allOf:
+      - $ref: "./DatosAcademicos.yaml"
+  grupo_id:
+    type: integer
+    example: 1
+    readOnly: true
+  periodo_id:
+    type: integer
+    example: 1
+    readOnly: true
+  especialidad_id:
+    type: integer
+    example: 1

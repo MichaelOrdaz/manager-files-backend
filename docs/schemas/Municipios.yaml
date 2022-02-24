@@ -1,0 +1,32 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+    readOnly: true
+  nombre:
+    type: string
+    example: Puebla de Zaragoza
+  estado_id:
+    readOnly: true
+    type: integer
+    example: 5
+  estado:
+    type: object
+    readOnly: true
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Puebla
+  activo:
+    type: integer
+    example: 1
+    writeOnly: true
+
+required:
+  - nombre
+  - estado_id
+  - activo

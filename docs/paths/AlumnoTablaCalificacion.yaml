@@ -1,0 +1,30 @@
+get:
+  tags: [Alumno]
+  summary: "Get - AlumnoTablaCalificacion"
+  operationId: getAlumnoTablaCalificacion
+  description: "Regresa un listado del promedio por materias para un alumno<br><br>
+  El atributo <b>total</b> es calculado por el desempeño del alumno <br>
+  sin embargo el campo <b>calificacion_semestral</b> es la calificación que se establece<br>
+  en el kardex, <b>si el dato no es null</b> esta es la calificación que debe <b>visualizar el alumno</b><br>
+  el campo id se refiere al id de la materia<br><br>
+  <b>Nota:</b> los atributos flotantes no tienen formato de dos decimales
+  "
+  parameters:
+    - $ref: "../parameters/path/usuarioId.yaml"
+  responses:
+    200:
+      description: "Estructura básica de la respuesta"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../schemas/AlumnoTablaCalificacion.yaml"
+              message:
+                type: string
+              success:
+                type: boolean
+                example: true

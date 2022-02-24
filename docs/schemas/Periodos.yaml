@@ -1,0 +1,30 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+    readOnly: true
+  nombre:
+    type: string
+    example: Semestre 1
+  descripcion:
+    type: string
+    example: Semestre n para la escuela benito juarez
+  actual_especialidad_id:
+    description: id con el que se quiere relacionar a una especialidad
+    type: integer
+    example: 1
+    writeOnly: true
+  actualiza_especialidad_id:
+    description: id con el que se quiere actualizar la relación de su especialidad
+    type: integer
+    example: 1
+    writeOnly: true
+  activo:
+    example: 1
+    type: integer
+    writeOnly: true
+
+required:
+  - nombre
+  - activo

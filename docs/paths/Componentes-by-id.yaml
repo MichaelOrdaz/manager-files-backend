@@ -1,0 +1,74 @@
+get:
+  tags: [Componentes]
+  summary: "Get - Componente"
+  operationId: getComponente
+  description: "Obtiene un Componente pasando componente_id"
+  parameters:
+    - $ref: "../parameters/path/componenteId.yaml"
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/Componentes.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }
+put:
+  tags: [Componentes]
+  summary: "Update - Componente"
+  operationId: updateComponente
+  description: "Actualiza un componente pasando un componente_id"
+  parameters:
+    - $ref: "../parameters/path/componenteId.yaml"
+  requestBody:
+    {
+      description: "Petición en formato json",
+      content:
+        {
+          application/json: { schema: { $ref: "../schemas/Componentes.yaml" } },
+        },
+    }
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/Componentes.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }
+delete:
+  tags: [Componentes]
+  summary: "Delete - Componente"
+  operationId: deleteComponente
+  description: "Borra un Componente"
+  parameters:
+    - $ref: "../parameters/path/componenteId.yaml"
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/Componentes.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }

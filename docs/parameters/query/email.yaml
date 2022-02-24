@@ -1,0 +1,6 @@
+in: query
+name: email
+description: Valor para filtrar por campo email
+required: false
+schema:
+  type: string

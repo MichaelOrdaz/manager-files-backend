@@ -1,0 +1,6 @@
+name: componente_id
+in: path
+description: id del componente
+schema:
+  type: integer
+required: true

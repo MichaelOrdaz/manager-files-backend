@@ -1,0 +1,10 @@
+post:
+  tags: [Grupos]
+  summary: "Bind - Grupo Alumno"
+  operationId: bindGrupoAlumno
+  description: "Relaciona un alumno a un grupo"
+  parameters:
+    - $ref: "../parameters/path/grupoId.yaml"
+    - $ref: "../parameters/path/usuarioId.yaml"
+  requestBody: { description: "Petición en formato json", content: { application/json: { schema: { $ref: "../schemas/GruposBindAlumno.yaml" } } } }
+  responses: { 200: { description: "Estructura básica de la respuesta", content: { application/json: { schema: { $ref: "../schemas/GruposBindAlumno.yaml" } } } }, 422: { $ref: "../responses/error422.yaml" }, 404: { $ref: "../responses/error404.yaml" }, 401: { $ref: "../responses/error401.yaml" } }

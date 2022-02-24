@@ -1,0 +1,31 @@
+post:
+  tags: [Usuarios]
+  summary: "Create - Datos Generales"
+  operationId: createDatosGenerales
+  description: "Crea datos generales de un usuario pasando el usuario_id"
+  parameters:
+    - $ref: "../parameters/path/usuarioId.yaml"
+  requestBody:
+    {
+      description: "Petición en formato multipart/form-data",
+      content:
+        {
+          multipart/form-data:
+            { schema: { $ref: "../schemas/DatosGeneralesMultiPart.yaml" } },
+        },
+    }
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/DatosGeneralesJson.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }

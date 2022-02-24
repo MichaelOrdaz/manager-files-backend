@@ -1,0 +1,6 @@
+name: docente_materia_id
+in: path
+description: id de DocenteMateria
+schema:
+  type: integer
+required: true

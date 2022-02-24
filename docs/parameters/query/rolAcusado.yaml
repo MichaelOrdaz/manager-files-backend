@@ -1,0 +1,6 @@
+in: query
+name: rolAcusado
+description: Valor string para filtrar por rol del acusado
+required: false
+schema:
+  type: string

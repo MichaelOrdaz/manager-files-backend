@@ -1,0 +1,36 @@
+post:
+  tags: [Especialidades]
+  summary: "Create - Especialidades"
+  operationId: createEspecialidad
+  description: "Crea una nueva especialidad"
+  requestBody: { description: "Petición multipart/form-data", content: { multipart/form-data: { schema: { $ref: "../schemas/EspecialidadesMultiPart.yaml" } } } }
+  responses: { 200: { description: "Estructura básica de la respuesta", content: { application/json: { schema: { $ref: "../schemas/EspecialidadesJson.yaml" } } } }, 422: { $ref: "../responses/error422.yaml" }, 404: { $ref: "../responses/error404.yaml" }, 401: { $ref: "../responses/error401.yaml" } }
+get:
+  tags: [Especialidades]
+  summary: "List - Especialidades"
+  operationId: ListEspecialidades
+  description: "Lista especialidades"
+  parameters:
+    - $ref: "../parameters/query/page.yaml"
+  responses:
+    200:
+      description: "Estructura básica de la respuesta"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../schemas/EspecialidadesJson.yaml"
+                maxItems: 25
+              message:
+                type: string
+              success:
+                type: boolean
+                example: true
+              links:
+                $ref: "../meta-datos/links.yaml"
+              meta:
+                $ref: "../meta-datos/paginacion.yaml"

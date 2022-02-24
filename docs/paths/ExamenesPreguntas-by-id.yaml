@@ -1,0 +1,81 @@
+get:
+  tags: [ExamenesPreguntas]
+  summary: "Get - ExamenesPreguntas"
+  operationId: getExamenesPregunta
+  description: "Obtiene una pregunta de examen"
+  parameters:
+    - $ref: "../parameters/path/usuarioId.yaml"
+    - $ref: "../parameters/path/examenId.yaml"
+    - $ref: "../parameters/path/examenesPreguntasId.yaml"
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/ExamenesPreguntasJson.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }
+post:
+  tags: [ExamenesPreguntas]
+  summary: "Update - ExamenesPreguntas"
+  operationId: updateExamenesPregunta
+  description: "Actualiza una pregunta de examen"
+  parameters:
+    - $ref: "../parameters/path/usuarioId.yaml"
+    - $ref: "../parameters/path/examenId.yaml"
+    - $ref: "../parameters/path/examenesPreguntasId.yaml"
+  requestBody:
+    {
+      description: "Petición multipart/form-data",
+      content:
+        {
+          multipart/form-data:
+            { schema: { $ref: "../schemas/ExamenesPreguntasMultiPart.yaml" } },
+        },
+    }
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/ExamenesPreguntasJson.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }
+delete:
+  tags: [ExamenesPreguntas]
+  summary: "Delete - ExamenesPreguntas"
+  operationId: deleteExamenesPregunta
+  description: "Borra una pregunta de examen"
+  parameters:
+    - $ref: "../parameters/path/usuarioId.yaml"
+    - $ref: "../parameters/path/examenId.yaml"
+    - $ref: "../parameters/path/examenesPreguntasId.yaml"
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/ExamenesPreguntasJson.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }

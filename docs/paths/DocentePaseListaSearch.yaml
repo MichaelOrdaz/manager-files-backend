@@ -1,0 +1,33 @@
+get:
+  tags: [Docentes]
+  summary: "search - DocentePaseListaSearch"
+  operationId: searchDocentePaseListaSearch
+  description: "filtra los registros de las asistencias de los alumnos"
+  parameters:
+    - in: path
+      name: usuario_id
+      description: id del usuario de tipo docente
+      schema:
+        type: integer
+      required: true
+    - $ref: "../parameters/query/docenteId.yaml"
+    - $ref: "../parameters/query/alumnoId.yaml"
+    - $ref: "../parameters/query/conferenciaId.yaml"
+    - $ref: "../parameters/query/especialidadPeriodoGrupoId.yaml"
+  responses:
+    200:
+      description: "Estructura básica de la respuesta"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../schemas/DocenteAsistenciaResponse.yaml"
+              message:
+                type: string
+              success:
+                type: boolean
+                example: true

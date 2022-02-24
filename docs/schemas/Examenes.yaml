@@ -1,0 +1,149 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+    readOnly: true
+  nombre:
+    type: string
+    example: Examen parcial uno de ecuaciones
+  descripcion:
+    type: string
+    example: Resuelve los siguientes ejercicios
+  usuario_id:
+    type: integer
+    example: 1
+    readOnly: true
+  usuario:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Gabino
+      apellido_paterno:
+        type: string
+        example: Cortez
+      apellido_materno:
+        type: string
+        example: Jimenez
+  materia_id:
+    type: integer
+    example: 1
+  materia:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Materia1
+      descripcion:
+        type: string
+        example: Descripción de materia
+      requisitos:
+        type: string
+        example: Descripción de materia
+      imagen_url:
+        type: string
+        example: www.imagen.com
+      especialidad_id:
+        type: integer
+        example: 1
+      componente_id:
+        type: integer
+        example: 1
+      periodo_id:
+        type: integer
+        example: 1
+  tipo_id:
+    type: integer
+    example: 1
+  tipo:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Examen parcial
+  duracion_minutos:
+    type: integer
+    example: 10
+  puntaje_minimo:
+    type: number
+    example: 10
+  aleatorio:
+    type: boolean
+    example: true
+  lecciones_referencia:
+    type: array
+    example: [1,2,3,4,5]
+  activo:
+    type: integer
+    example: 1
+    writeOnly: true
+  examenes_grupos:
+    readOnly: true
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        especialidad_periodo_grupo_id:
+          type: integer
+          example: 1
+        grupo:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            nombre:
+              type: string
+              example: Grupo A para desarrolladores
+        especialidad:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            nombre:
+              type: string
+              example: Bachillerato técnico en seguridad ciudadana
+        periodo:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            nombre:
+              type: string
+              example: Semestre 1
+        examen_id:
+          type: integer
+          example: 1
+        fecha_limite:
+          type: string
+          example: "2021-12-07 18:16:02"
+
+
+
+required:
+  - nombre
+  - descripcion
+  - usuario_id
+  - tipo_id
+  - aleatorio
+  - lecciones_referencia
+  - activo
+  - materia_id

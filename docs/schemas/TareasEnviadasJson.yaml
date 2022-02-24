@@ -1,0 +1,75 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+    readOnly: true
+  usuario_id:
+    type: integer
+    example: 1
+  usuario:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Gabino
+      apellido_paterno:
+        type: string
+        example: Cortez
+      apellido_materno:
+        type: string
+        example: Jimenez
+  tarea_id:
+    type: integer
+    example: 1
+  tarea:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      titulo:
+        type: string
+        example: Ecuaciones diferenciales
+      fecha_limite:
+        type: string
+        example: "2022-12-20 23:00:00"
+  materia_id:
+    type: integer
+    example: 1
+  materia:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Algebra
+  nota:
+    type: string
+    example: Le envió las respuestas
+  observaciones:
+    type: string
+    example: Excelente trabajo
+  archivo_url:
+    type: string
+    example: http://localhost/imagen.png
+    readOnly: true
+  calificacion:
+    type: integer
+    example: 10
+
+required:
+  - usuario_id
+  - tarea_id
+  - materia_id
+  - nota
+  - observaciones
+  - calificacion

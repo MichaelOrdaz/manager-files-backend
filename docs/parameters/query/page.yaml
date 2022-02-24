@@ -1,0 +1,6 @@
+in: query
+name: page
+description: Número de la página a consultar
+required: false
+schema:
+  type: integer

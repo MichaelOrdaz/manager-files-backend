@@ -1,0 +1,113 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+  email:
+    type: string
+    format: email
+    example: correo@puller.mx
+  nombre_completo:
+    type: string
+    example:  Teodoro Derma de la garza Garces
+  especialidad_id:
+    type: integer
+    example: 1
+  periodo_id:
+    type: integer
+    example: 1
+  grupo_id:
+    type: integer
+    example: 1
+  grupo:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: grupo 1
+  examen_id:
+    type: integer
+    example: 1
+  examen:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: examen 1
+      descripcion:
+        type: string
+        example: Examen Descripción 1
+      creador_id:
+        type: integer
+        example: 1
+      materia_id:
+        type: integer
+        example: 1
+      tipo_id:
+        type: integer
+        example: 1
+      duracion_minutos:
+        type: integer
+        example: 1
+      aleatorio:
+        type: boolean
+        example: true
+      lecciones_referencia:
+        type: array
+        example: [1,2,3,4,5]
+      fecha_aplicacion:
+        type: string
+        example: "2021-12-31 12:00:00"
+      puntaje_minimo:
+        type: number
+        example: 10
+      examen_preguntas:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            pregunta:
+              type: string
+              example: "2021-12-31 12:00:00"
+            valor:
+              type: integer
+              example: 9
+            respuestas:
+              type: string
+              example: '[{"Respuesta":"Size","value":"10","order":1},{"Respuesta":"Color","value":"7","order":2}, {"Respuesta":"Country","value":"19","order":3}, {"Respuesta":"Address","value":"8","order":4}]'
+            imagen_url:
+              type: string
+              example: www.imagen.com
+            examen_respuesta:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                usuario_id:
+                  type: integer
+                  example: 1
+                pregunta_id:
+                  type: integer
+                  example: 1
+                examen_id:
+                  type: integer
+                  example: 1
+                respuesta:
+                  type: string
+                  example: "Quo repudiandae ex praesentium nesciunt."
+                calificacion:
+                  type: integer
+                  example: 9
+                observaciones:
+                  type: string
+                  example: "Iste adipisci rerum corporis ab hic provident aut odit."

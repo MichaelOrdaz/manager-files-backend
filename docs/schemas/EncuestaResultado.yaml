@@ -1,0 +1,51 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+    readOnly: true
+  nombre:
+    type: string
+    example: Encuesta de satisfacción
+  descripcion:
+    type: string
+    example: Responde las siguientes preguntas
+  objetivo:
+    type: string
+    example: Objetivo de la encuesta, finalidad, ¿para que se hizo?
+  creador:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre_completo:
+        type: string
+        example: Gabino Cortez Jimenez
+      email:
+        type: string
+        example: correo@puller.mx
+  creador_id:
+    readOnly: true
+    type: integer
+    example: 1
+    writeOnly: true
+  usuarios_respondieron_encuesta:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        pregunta:
+          type: string
+          example: pregunta 1
+        imagen_url:
+          type: string
+          example: www.example.com/imagen.png
+        respuesta:
+          type: string
+          example: respuesta 1
+

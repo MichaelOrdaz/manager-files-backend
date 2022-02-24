@@ -1,0 +1,28 @@
+{
+  "workbench.colorCustomizations": {
+    "editorCursor.foreground": "#ffff00",
+    "terminalCursor.foreground": "#ffff00",
+    "activityBar.background": "#571709",
+    "titleBar.activeBackground": "#290b04",
+    "titleBar.activeForeground": "#e7e7e7",
+    "activityBar.activeBackground": "#571709",
+    "activityBar.activeBorder": "#0c741f",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBarBadge.background": "#0c741f",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "statusBar.background": "#290b04",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#571709",
+    "titleBar.inactiveBackground": "#290b0499",
+    "titleBar.inactiveForeground": "#e7e7e799",
+    "sash.hoverBorder": "#571709",
+    "statusBarItem.remoteBackground": "#290b04",
+    "statusBarItem.remoteForeground": "#e7e7e7"
+  },
+  "peacock.color": "#290b04",
+  "cSpell.words": [
+    "Deletes",
+    "EVALUATORIO"
+  ]
+}

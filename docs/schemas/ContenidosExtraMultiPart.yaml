@@ -1,0 +1,37 @@
+type: object
+properties:
+  nombre:
+    type: string
+    example: Boleta de calificaciones
+  especialidad_id:
+    type: integer
+    example: 1
+    writeOnly: true
+  tipo_contenido_id:
+    type: integer
+    example: 1
+    writeOnly: true
+  model_type:
+    type: integer
+    example: 1
+  model_id:
+    type: integer
+    example: 1
+  archivo:
+    type: string
+    format: binary
+    writeOnly: true
+  activo:
+    type: integer
+    example: 1
+    writeOnly: true
+  descripcion:
+    type: string
+    example: Esta es una descripción de ejemplo
+
+required:
+  - nombre
+  - especialidad_id
+  - tipo_contenido_id
+  - activo
+  - descripcion

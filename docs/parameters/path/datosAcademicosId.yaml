@@ -1,0 +1,6 @@
+name: datos_academicos_id
+in: path
+description: id de datos academicos
+schema:
+  type: integer
+required: true

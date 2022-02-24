@@ -1,0 +1,14 @@
+description: Elemento no encontrado
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+            example: "Registro no encontrado"
+        success:
+          type: boolean
+          example: false

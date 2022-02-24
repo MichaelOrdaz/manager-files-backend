@@ -1,0 +1,28 @@
+get:
+  tags: [Materias]
+  summary: "Get - Materias"
+  operationId: getMateria
+  description: "Obtiene una materia"
+  parameters:
+    - $ref: "../parameters/path/especialidadId.yaml"
+    - $ref: "../parameters/path/materiaId.yaml"
+  responses: { 200: { description: "Estructura básica de la respuesta", content: { application/json: { schema: { $ref: "../schemas/MateriasJson.yaml" } } } }, 422: { $ref: "../responses/error422.yaml" }, 404: { $ref: "../responses/error404.yaml" }, 401: { $ref: "../responses/error401.yaml" } }
+post:
+  tags: [Materias]
+  summary: "Update - Materias"
+  operationId: updateMateria
+  description: "Actualiza una materia"
+  parameters:
+    - $ref: "../parameters/path/especialidadId.yaml"
+    - $ref: "../parameters/path/materiaId.yaml"
+  requestBody: { description: "Petición multipart/form-data", content: { multipart/form-data: { schema: { $ref: "../schemas/MateriasMultiPart.yaml" } } } }
+  responses: { 200: { description: "Estructura básica de la respuesta", content: { application/json: { schema: { $ref: "../schemas/MateriasJson.yaml" } } } }, 422: { $ref: "../responses/error422.yaml" }, 404: { $ref: "../responses/error404.yaml" }, 401: { $ref: "../responses/error401.yaml" } }
+delete:
+  tags: [Materias]
+  summary: "Delete - materia"
+  operationId: deleteMateria
+  description: "Borra una materia"
+  parameters:
+    - $ref: "../parameters/path/especialidadId.yaml"
+    - $ref: "../parameters/path/materiaId.yaml"
+  responses: { 200: { description: "Estructura básica de la respuesta", content: { application/json: { schema: { $ref: "../schemas/MateriasJson.yaml" } } } }, 422: { $ref: "../responses/error422.yaml" }, 404: { $ref: "../responses/error404.yaml" }, 401: { $ref: "../responses/error401.yaml" } }

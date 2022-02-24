@@ -1,0 +1,6 @@
+name: infraccion_id
+in: path
+description: id de la infracción
+schema:
+  type: integer
+required: true

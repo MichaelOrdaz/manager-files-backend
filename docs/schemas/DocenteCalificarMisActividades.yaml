@@ -1,0 +1,17 @@
+type: object
+properties:
+  id:
+    readOnly: true
+    type: integer
+    example: 1
+  calificacion:
+    writeOnly: true
+    type: number
+    example: 10
+  asignado:
+    type: string
+    example: "Tarea"
+
+required:
+  - calificacion
+  - asignado

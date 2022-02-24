@@ -1,0 +1,6 @@
+in: query
+name: periodoId
+description: Valor para filtrar por campo periodo_id
+required: false
+schema:
+  type: integer

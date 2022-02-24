@@ -1,0 +1,6 @@
+in: query
+name: fechaInicio
+description: Valor de inicio para filtrar por rango de fechas
+required: false
+schema:
+  type: string

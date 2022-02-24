@@ -1,0 +1,6 @@
+name: evento_id
+in: path
+description: id del evento
+schema:
+  type: integer
+required: true

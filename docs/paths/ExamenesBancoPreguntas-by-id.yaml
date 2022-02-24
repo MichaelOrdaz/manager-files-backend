@@ -1,0 +1,75 @@
+get:
+  tags: [ExamenesBancoPreguntas]
+  summary: "Get - ExamenesBancoPreguntas"
+  operationId: getExamenesBancoPreguntas
+  description: "Obtiene una pregunta del banco de preguntas exámenes"
+  parameters:
+    - $ref: "../parameters/path/bancoPreguntaId.yaml"
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/ExamenesBancoPreguntasJson.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }
+post:
+  tags: [ExamenesBancoPreguntas]
+  summary: "Update - ExamenesBancoPreguntas"
+  operationId: updateExamenesBancoPreguntas
+  description: "Actualiza una pregunta del banco de preguntas exámenes"
+  parameters:
+    - $ref: "../parameters/path/bancoPreguntaId.yaml"
+  requestBody:
+    {
+      description: "Petición multipart/form-data",
+      content:
+        {
+          multipart/form-data:
+            { schema: { $ref: "../schemas/ExamenesBancoPreguntasMultiPart.yaml" } },
+        },
+    }
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/ExamenesBancoPreguntasJson.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }
+delete:
+  tags: [ExamenesBancoPreguntas]
+  summary: "Delete - ExamenesBancoPreguntas"
+  operationId: deleteExamenesBancoPreguntas
+  description: "Borra una pregunta del banco de preguntas exámenes"
+  parameters:
+    - $ref: "../parameters/path/bancoPreguntaId.yaml"
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/ExamenesBancoPreguntasJson.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }

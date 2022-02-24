@@ -1,0 +1,15 @@
+type: object
+properties:
+  email:
+    type: string
+    format: email
+    example: correo@puller.mx
+    writeOnly: true
+  token:
+    type: string
+    example: "A0fhtt2eW3nUZcJf2Emqep0uk4HXnNimtscqdnBEuBENqaairOYUYFwEvr6z3Hib02ZhEs6Gvitm7K27"
+    writeOnly: true
+
+required:
+  - email
+  - token

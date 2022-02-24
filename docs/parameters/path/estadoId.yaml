@@ -1,0 +1,6 @@
+name: estado_id
+in: path
+description: id del estado
+schema:
+  type: integer
+required: true

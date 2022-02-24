@@ -1,0 +1,6 @@
+in: query
+name: statusAspirante
+description: Valor para filtrar por el status del aspirante, puede ser.. Todos, Calificados, Rechazados, Aceptados, No calificados
+required: false
+schema:
+  type: string

@@ -1,0 +1,52 @@
+type: object
+properties:
+  nombre:
+    type: string
+    example: Juan
+    readOnly: true
+  apellido_paterno:
+    type: string
+    example: Martinez
+    readOnly: true
+  apellido_materno:
+    type: string
+    example: Garcia
+    readOnly: true
+  email:
+    type: string
+    format: email
+    example: correo@puller.mx
+    readOnly: true
+  materia:
+    readOnly: true
+    allOf:
+      - $ref: "./MateriasJson.yaml"
+  periodo:
+    readOnly: true
+    allOf:
+      - $ref: "./Periodos.yaml"
+  grupo:
+    readOnly: true
+    allOf:
+      - $ref: "./Grupos.yaml"
+  especialidad:
+    readOnly: true
+    allOf:
+      - $ref: "./EspecialidadesJson.yaml"
+  especialidad_id:
+    type: integer
+    example: 1
+    writeOnly: true
+  periodo_id:
+    type: integer
+    example: 1
+    writeOnly: true
+  grupo_id:
+    type: integer
+    example: 1
+    writeOnly: true
+
+required:
+  - especialidad_id
+  - periodo_id
+  - grupo_id

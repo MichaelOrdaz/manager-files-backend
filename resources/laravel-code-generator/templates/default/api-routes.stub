@@ -1,0 +1,5 @@
+    Route::get('/', 'App\Http\Controllers\[% controller_name %]@list');
+    Route::get('/{[% model_name_singular_variable %]_id}','App\Http\Controllers\[% controller_name %]@get');
+    Route::post('/', 'App\Http\Controllers\[% controller_name %]@create');
+    Route::put('/{[% model_name_singular_variable %]_id}', 'App\Http\Controllers\[% controller_name %]@update');
+    Route::delete('/{[% model_name_singular_variable %]_id}','App\Http\Controllers\[% controller_name %]@delete');

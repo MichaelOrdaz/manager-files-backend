@@ -1,0 +1,6 @@
+name: conferencia_id
+in: path
+description: id de la conferencia
+schema:
+  type: integer
+required: true

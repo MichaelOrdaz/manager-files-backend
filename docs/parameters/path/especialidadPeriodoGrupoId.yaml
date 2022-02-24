@@ -1,0 +1,6 @@
+name: especialidad_periodo_grupo_id
+in: path
+description: id de EspecialidadPeriodoGrupo
+schema:
+  type: integer
+required: true

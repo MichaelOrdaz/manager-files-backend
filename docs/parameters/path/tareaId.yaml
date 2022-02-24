@@ -1,0 +1,6 @@
+name: tarea_id
+in: path
+description: id de la tarea
+schema:
+  type: integer
+required: true

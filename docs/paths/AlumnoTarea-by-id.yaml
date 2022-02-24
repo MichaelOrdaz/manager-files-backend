@@ -1,0 +1,25 @@
+get:
+  tags: [Alumno]
+  summary: "Get - AlumnoTarea"
+  operationId: getAlumnoTarea
+  description: "Obtiene una tarea a entregar para el alumno, si ya la entrego la devuelve en su cuerpo"
+  parameters:
+    - $ref: "../parameters/path/usuarioId.yaml"
+    - $ref: "../parameters/path/tareaId.yaml"
+  responses:
+    200:
+      description: "Estructura básica de la respuesta"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../schemas/AlumnoTarea-by-id.yaml"
+              message:
+                type: string
+              success:
+                type: boolean
+                example: true

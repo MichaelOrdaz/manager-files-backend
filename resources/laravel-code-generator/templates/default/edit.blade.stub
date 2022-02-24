@@ -1,0 +1,71 @@
+@extends('[% layout_name %]')
+
+@section('breadcrumb')
+  <div class="row page-titles">
+    <div class="col-md-5 col-8 align-self-center">
+      <h3 class="text-themecolor m-b-0 m-t-0">[% model_plural %]</h3>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('[% index_route_name %]') }}">[% model_plural %]</a></li>
+        <li class="breadcrumb-item">Editar</li>
+        <li class="breadcrumb-item active">{{ !empty([% model_header %]) ? [% model_header %] : '[% model_name_title %]' }}</li>
+      </ol>
+    </div>
+  </div>
+@endsection
+
+@section('content')
+
+  <div class="row">
+    <div class="col-lg-12 col-xlg-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="button-group">
+            <a href="{{ route('[% index_route_name %]') }}" type="button"
+               class="btn waves-effect waves-light btn-outline-secondary">Mostrar Todos / Cancelar</a>
+          </div>
+          @if ($errors->any())
+            <div class="row">
+              <div class="col-lg-12 col-md-12 mt-3">
+                @foreach ($errors->all() as $error)
+                  <div class="alert alert-danger">{{ $error }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                  </div>
+                @endforeach
+              </div>
+            </div>
+          @endif
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card card-outline-info">
+        <div class="card-body">
+
+          <form method="POST" action="{{ route('[% update_route_name %]', $[% model_name_singular_variable %]->[% primary_key %]) }}" id="[% form_id %]" name="[% form_name %]" accept-charset="UTF-8" class="form-horizontal"[% upload_files %]>
+            @csrf
+            <input name="_method" type="hidden" value="PUT">
+            <div class="form-body">
+              <h3 class="card-title">Editar {{ !empty([% model_header %]) ? [% model_header %] : '[% model_name_title %]' }}</h3>
+              <hr>
+              <div class="row p-t-20">
+                <div class="col-md-6">
+                  @include ('[% form_view_name %]', ['[% model_name_singular_variable %]' => $[% model_name_singular_variable %],])
+                </div>
+              </div>
+            </div>
+            <div class="form-actions mb-2 mt-2">
+              <button type="submit" class="btn btn-outline-success"><i class="fa fa-check"></i> Guardar</button>
+              <a href="{{ route('[% index_route_name %]') }}" type="button"
+                 class="btn waves-effect waves-light btn-outline-secondary float-right">Mostrar Todos / Cancelar</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+@endsection

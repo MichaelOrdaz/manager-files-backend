@@ -1,0 +1,75 @@
+get:
+  tags: [Examenes]
+  summary: "Get - Examenes"
+  operationId: getExamen
+  description: "Obtiene un examen"
+  parameters:
+    - $ref: "../parameters/path/usuarioId.yaml"
+    - $ref: "../parameters/path/examenId.yaml"
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/Examenes.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }
+put:
+  tags: [Examenes]
+  summary: "Update - Examen"
+  operationId: updateExamen
+  description: "Actualiza un examen"
+  parameters:
+    - $ref: "../parameters/path/usuarioId.yaml"
+    - $ref: "../parameters/path/examenId.yaml"
+  requestBody:
+    {
+      description: "Petición en formato json",
+      content:
+        { application/json: { schema: { $ref: "../schemas/Examenes.yaml" } } },
+    }
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/Examenes.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }
+delete:
+  tags: [Examenes]
+  summary: "Delete - Examenes"
+  operationId: deleteExamen
+  description: "Borra un examen"
+  parameters:
+    - $ref: "../parameters/path/usuarioId.yaml"
+    - $ref: "../parameters/path/examenId.yaml"
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/Examenes.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }

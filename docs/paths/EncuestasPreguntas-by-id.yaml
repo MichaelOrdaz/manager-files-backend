@@ -1,0 +1,78 @@
+get:
+  tags: [EncuestasPreguntas]
+  summary: "Get - EncuestasPreguntas"
+  operationId: getEncuestaPregunta
+  description: "Obtiene una pregunta de una encuesta"
+  parameters:
+    - $ref: "../parameters/path/encuestasId.yaml"
+    - $ref: "../parameters/path/encuestasPreguntasId.yaml"
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/EncuestasPreguntasJson.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }
+post:
+  tags: [EncuestasPreguntas]
+  summary: "Update - EncuestasRespuestas"
+  operationId: updateEncuestaPregunta
+  description: "Actualiza una pregunta de una encuesta"
+  parameters:
+    - $ref: "../parameters/path/encuestasId.yaml"
+    - $ref: "../parameters/path/encuestasPreguntasId.yaml"
+  requestBody:
+    {
+      description: "Petición multipart/form-data",
+      content:
+        {
+          multipart/form-data:
+            { schema: { $ref: "../schemas/EncuestasPreguntasMultiPart.yaml" } },
+        },
+    }
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/EncuestasPreguntasJson.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }
+delete:
+  tags: [EncuestasPreguntas]
+  summary: "Delete - EncuestasPreguntas"
+  operationId: deleteEncuestaPregunta
+  description: "Borra una pregunta de una encuesta"
+  parameters:
+    - $ref: "../parameters/path/encuestasId.yaml"
+    - $ref: "../parameters/path/encuestasPreguntasId.yaml"
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/EncuestasPreguntasJson.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }

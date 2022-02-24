@@ -1,0 +1,114 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+    readOnly: true
+  titulo:
+    readOnly: true
+    type: string
+    example: Ecuaciones diferenciales
+  descripcion:
+    readOnly: true
+    type: string
+    example: Resuelve las siguientes ecuaciones diferenciales
+  grupos:
+    readOnly: true
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        fecha_limite:
+          type: string
+          example: "2022-12-20 23:00:00"
+        nombre:
+          type: string
+          example: Gabino
+  creador_id:
+    type: integer
+    example: 1
+    readOnly: true
+  creador:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Gabino
+      apellido_paterno:
+        type: string
+        example: Cortez
+      apellido_materno:
+        type: string
+        example: Jimenez
+  usuario_id:
+    type: integer
+    example: 1
+    readOnly: true
+  usuario:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Gabino
+      apellido_paterno:
+        type: string
+        example: Cortez
+      apellido_materno:
+        type: string
+        example: Jimenez
+  unidad_id:
+    type: integer
+    example: 1
+  unidad:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Unidad 1
+  materia_id:
+    type: integer
+    example: 1
+  materia:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Algebra
+  archivo_url:
+    type: string
+    example: http://localhost/ecuaciones-ejercicios.png
+    readOnly: true
+  activo:
+    type: integer
+    readOnly: true
+  periodo_id:
+    type: integer
+    example: 1
+  especialidad_id:
+    type: integer
+    example: 1
+
+required:
+  - materia_id
+  - periodo_id
+  - especialidad_id
+  - unidad_id

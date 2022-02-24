@@ -1,0 +1,9 @@
+post:
+  tags: [Usuarios]
+  summary: "Baja - Usuario"
+  operationId: bajaUsuario
+  description: "Dar de baja a un usuario"
+  parameters:
+    - $ref: "../parameters/path/usuarioId.yaml"
+  requestBody: { description: "Petición en formato json", content: { application/json: { schema: { $ref: "../schemas/UsuarioBaja.yaml" } } } }
+  responses: { 200: { description: "Estructura básica de la respuesta", content: { application/json: { schema: { $ref: "../schemas/UsuarioBaja.yaml" } } } }, 422: { $ref: "../responses/error422.yaml" }, 404: { $ref: "../responses/error404.yaml" }, 401: { $ref: "../responses/error401.yaml" } }

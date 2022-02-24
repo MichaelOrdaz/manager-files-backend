@@ -1,0 +1,6 @@
+name: configuracion_admision_id
+in: path
+description: id de la configuración admisión
+schema:
+  type: integer
+required: true

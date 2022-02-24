@@ -1,0 +1,19 @@
+type: object
+properties:
+  clave_actual:
+    type: string
+    format: password
+    example: $p4ssW0rdActu41
+  clave_nueva:
+    type: string
+    format: password
+    example: Nu3v0P4ssW0rd
+  clave_nueva_repetida:
+    type: string
+    format: password
+    example: Nu3v0P4ssW0rd
+
+required:
+  - clave_actual
+  - clave_nueva
+  - clave_nueva_repetida

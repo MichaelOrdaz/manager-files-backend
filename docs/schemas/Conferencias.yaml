@@ -1,0 +1,115 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+    readOnly: true
+  nombre:
+    type: string
+    example: Inteligencia emocional
+  usuario_id:
+    type: integer
+    example: 1
+    readOnly: true
+  usuario:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      email:
+        type: string
+        format: email
+        example: correo@puller.mx
+      nombre_completo:
+        type: string
+        example: Juan Solano Martinez
+  status:
+    type: string
+    example: recorded
+  meeting_id:
+    type: integer
+    example: 7232123123123
+    readOnly: true
+  materia_id:
+    type: integer
+    example: 1
+  materia:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Matemáticas
+  unidad_id:
+    type: integer
+    example: 1
+  unidad:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Unidad 1
+  tema_id:
+    type: integer
+    example: 1
+  tema:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Tema 1
+  especialidad_periodo_grupo_id:
+    type: integer
+    example: 1
+  grupo_id:
+    readOnly: true
+    type: integer
+    example: 2
+  grupo:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 2
+      nombre:
+        type: string
+        example: Grupo B
+      periodo:
+        type: object
+        properties:
+          id:
+            type: integer
+            example: 1
+          nombre:
+            type: string
+            example: Semestre 1
+  meeting_password:
+    type: string
+    example: SxHww
+    readOnly: true
+  activo:
+    type: integer
+    example: 1
+    writeOnly: true
+  zoom_start_time:
+    type: string
+    example: '2021-12-31 12:00'
+
+required:
+  - nombre
+  - especialidad_periodo_grupo_id
+  - materia_id

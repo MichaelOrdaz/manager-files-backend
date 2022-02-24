@@ -1,0 +1,1 @@
+Route::resource('[% model_name_singular_variable %]','[% controller_name %]');

@@ -1,0 +1,72 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+    readOnly: true
+  usuario_id:
+    readOnly: true
+    type: integer
+    example: 1
+  usuario:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Gabino
+      apellido_paterno:
+        type: string
+        example: Cortez
+      apellido_materno:
+        type: string
+        example: Jimenez
+  pregunta_id:
+    readOnly: true
+    type: integer
+    example: 1
+  pregunta:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      pregunta:
+        type: string
+        example: ¿Este es el ejemplo de una pregunta?
+  examen_id:
+    readOnly: true
+    type: integer
+    example: 1
+  examen:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Examen parcial uno de ecuaciones
+  respuesta:
+    type: string
+    example: Opción 1
+  calificacion:
+    readOnly: true
+    type: number
+    example: 10
+  observaciones:
+    type: string
+    example: No entendí que querias explicar
+  activo:
+    writeOnly: true
+    type: integer
+    example: 1
+
+required:
+  - respuesta
+  - activo

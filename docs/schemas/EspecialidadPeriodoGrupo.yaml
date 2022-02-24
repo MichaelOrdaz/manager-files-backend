@@ -1,0 +1,67 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+    readOnly: true
+  grupo_id:
+    type: integer
+    example: 1
+    readOnly: true
+  grupo:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 2
+      nombre:
+        type: string
+        example: Grupo B
+  periodo_id:
+    type: integer
+    example: 1
+    readOnly: true
+  periodo:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Semestre 1
+  especialidad_id:
+    type: integer
+    example: 1
+  especialidad:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Técnico en Seguridad Pública
+      objetivos:
+        type: string
+        example: ejemplo objetivos
+      planes_de_estudios:
+        type: string
+        example: ejemplo planes de estudios
+      perfil_egresado:
+        type: string
+        example: ejemplo perfil egresado
+  generacion:
+    type: integer
+    example: 1
+  numero_alumnos:
+    type: integer
+    example: 1
+  numero_materias:
+    type: integer
+    example: 1
+  nombre:
+    type: string
+    example: Técnico en Seguridad Pública - Semestre 1 - Grupo B
+

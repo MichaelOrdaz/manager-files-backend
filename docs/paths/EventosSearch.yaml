@@ -1,0 +1,32 @@
+get:
+  tags: [Eventos]
+  summary: "Search - Eventos"
+  operationId: searchEventos
+  description: "Filtra los eventos"
+  parameters:
+    - $ref: "../parameters/query/docenteMateriaId.yaml"
+    - $ref: "../parameters/query/especialidadPeriodoGrupoId.yaml"
+    - $ref: "../parameters/query/emitidoPorRol.yaml"
+    - $ref: "../parameters/query/emitidoPorUsuarioId.yaml"
+    - $ref: "../parameters/query/fechaInicio.yaml"
+    - $ref: "../parameters/query/fechaFin.yaml"
+    - $ref: "../parameters/query/dirigidoARol.yaml"
+    - $ref: "../parameters/query/todos.yaml"
+  responses:
+    200:
+      description: "Estructura básica de la respuesta"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../schemas/EventosJson.yaml"
+                maxItems: 25
+              message:
+                type: string
+              success:
+                type: boolean
+                example: true

@@ -1,0 +1,6 @@
+in: query
+name: conferenciaStatus
+description: Valor para filtrar por campo status
+required: false
+schema:
+  type: string

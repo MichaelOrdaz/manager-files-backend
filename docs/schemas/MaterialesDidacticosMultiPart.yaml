@@ -1,0 +1,28 @@
+type: object
+properties:
+  nombre:
+    type: string
+    example: Ecuaciones primeros ejercicios
+  descripcion:
+    type: string
+    example: Ecuaciones primeros ejercicios
+  tipo_material_id:
+    type: integer
+    example: 1
+    writeOnly: true
+    description: 1 para indicar que se envia un archivo de video mp4 <br>2 para indicar que se envia un link de youtube <br>3 para indicar que se envia un archivo pdf
+  archivo:
+    type: string
+    format: binary
+    writeOnly: true
+  activo:
+    type: integer
+    example: 1
+    writeOnly: true
+
+
+required:
+  - nombre
+  - descripcion
+  - tipo_material_id
+  - activo

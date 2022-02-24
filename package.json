@@ -1,0 +1,33 @@
+{
+    "name": "openapi-boilerplate",
+    "version": "0.1.1",
+    "description": "Multi-file boilerplate for Open API Specification.",
+    "main": "index.js",
+    "scripts": {
+        "build": "swagger-cli bundle docs/openapi.yaml --outfile docs/_build/openapi.yaml --type yaml",
+        "client": "swagger-cli generate -i docs/openapi.yaml -l javascript -o cliente/",
+        "test": "npm run build && spectral lint docs/_build/openapi.yaml",
+        "preview": "npm run build && redoc-cli serve docs/_build/openapi.yaml --options.onlyRequiredInSamples",
+        "html": "npm run build && redoc-cli bundle docs/_build/openapi.yaml  --output docs/_build/index.html --options.onlyRequiredInSamples",
+        "clean": "rm -r _build",
+        "deploy": "./ci/deploy.sh",
+        "prepare": "husky install"
+    },
+    "dependencies": {
+        "@apidevtools/swagger-cli": "^4.0.4",
+        "@stoplight/spectral": "^5.8.1",
+        "redoc-cli": "^0.10.3"
+    },
+    "devDependencies": {
+        "husky": "^7.0.2",
+        "lint-staged": "^11.1.2"
+    },
+    "lint-staged": {
+        "*.php": "php ./vendor/bin/php-cs-fixer fix --config .php_cs"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    }
+}

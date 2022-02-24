@@ -1,0 +1,148 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+  email:
+    type: string
+    format: email
+    example: correo@puller.mx
+  nombre_completo:
+    type: string
+    example:  Teodoro Derma de la garza Garces
+  especialidad_id:
+    type: integer
+    example: 1
+  periodo_id:
+    type: integer
+    example: 1
+  grupo_id:
+    type: integer
+    example: 1
+  tarea_id:
+    type: integer
+    example: 1
+  tarea:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      titulo:
+        type: string
+        example: Tarea 1
+      descripcion:
+        type: string
+        example: "Magnam et doloribus rerum quam hic sit consequatur."
+      creador_id:
+        type: integer
+        example: 1
+      usuario_id:
+        type: integer
+        example: 1
+      unidad_id:
+        type: integer
+        example: 1
+      materia_id:
+        type: integer
+        example: 1
+      archivo_url:
+        type: string
+        example: 'http://localhost/boleta-calificaciones.png'
+      activo:
+        type: boolean
+        example: true
+  tarea_enviada_id:
+    type: integer
+    example: 1
+  tarea_enviada:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nota:
+        type: string
+        example: 	Comentario que envia el alumno en markdown
+      usuario_id:
+        type: integer
+        example: 1
+      tarea_id:
+        type: integer
+        example: 1
+      materia_id:
+        type: integer
+        example: 1
+      calificacion:
+        type: number
+        example: 8
+      archivo_url:
+        type: string
+        example: 'http://localhost/boleta-calificaciones.png'
+  materia_id:
+    type: integer
+    example: 1
+  materia:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Ingles II
+      descripcion:
+        type: string
+        example: Excepturi perspiciatis tempora non aut sequi repellendus.
+      requisitos:
+        type: string
+        example: Aprobar la materia Ingles I
+      especialidad_periodo_id:
+        type: integer
+        example: 1
+      componente_id:
+        type: integer
+        example: 1
+      archivo_url:
+        type: string
+        example: 'http://localhost/boleta-calificaciones.png'
+      activo:
+        type: boolean
+        example: true
+  unidades:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        nombre:
+          type: string
+          example: "unidad praesentium"
+        descripcion:
+          type: string
+          example: "unidad descripción"
+        materia_id:
+          type: integer
+          example: 1
+        temas:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              nombre:
+                type: string
+                example: "Tema nombre"
+              descripcion:
+                type: string
+                example: "Descripción tema"
+              unidad_id:
+                type: integer
+                example: 1
+              activo:
+                type: boolean
+                example: true

@@ -1,0 +1,37 @@
+post:
+  tags: [ExamenesRespuestas]
+  summary: "Create - ExamenesRespuestasAspirantes"
+  operationId: createExamenRespuestaAspirante
+  description: "Crea una respuesta de aspirante a una pregunta de examen"
+  parameters:
+    - $ref: "../parameters/path/usuarioId.yaml"
+    - $ref: "../parameters/path/examenId.yaml"
+    - $ref: "../parameters/path/examenesPreguntasId.yaml"
+  requestBody:
+    {
+      description: "Petición en formato json, <br>
+      El atributo <b>observaciones solo puede ser modificado por un usuario Docente </b> <br>
+      El atributo <b>aprobado</b> de solo lectura: <ul><li><b>true</b> - Alcanzo puntaje mínimo</li>
+      <li><b>false</b> - No alcanzo puntaje mínimo</li><li><b>null</b> - Sigue respondiendo el examen</li></ul>",
+      required: true,
+      content:
+        {
+          application/json:
+            { schema: { $ref: "../schemas/ExamenesRespuestasAspirantes.yaml" } },
+        },
+    }
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/ExamenesRespuestasAspirantes.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }

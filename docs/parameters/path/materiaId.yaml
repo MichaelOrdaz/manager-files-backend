@@ -1,0 +1,6 @@
+name: materia_id
+in: path
+description: id de la materia
+schema:
+  type: integer
+required: true

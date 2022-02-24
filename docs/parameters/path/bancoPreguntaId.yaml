@@ -1,0 +1,6 @@
+name: banco_pregunta_id
+in: path
+description: id de ExamenBancoPreguntas
+schema:
+  type: integer
+required: true

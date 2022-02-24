@@ -1,0 +1,32 @@
+get:
+  tags: [ExamenesBancoPreguntas]
+  summary: "search -  ExamenesBancoPreguntas"
+  operationId: searchExamenesBancoPreguntas
+  description: "filtra ExamenesBancoPreguntas"
+  parameters:
+    - $ref: "../parameters/query/page.yaml"
+    - $ref: "../parameters/query/pregunta.yaml"
+    - $ref: "../parameters/query/materiaId.yaml"
+    - $ref: "../parameters/query/tipoId.yaml"
+  responses:
+    200:
+      description: "Estructura básica de la respuesta"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../schemas/ExamenesBancoPreguntasJson.yaml"
+                maxItems: 10
+              message:
+                type: string
+              success:
+                type: boolean
+                example: true
+              links:
+                $ref: "../meta-datos/links.yaml"
+              meta:
+                $ref: "../meta-datos/paginacion.yaml"

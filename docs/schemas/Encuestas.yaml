@@ -1,0 +1,61 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+    readOnly: true
+  nombre:
+    type: string
+    example: Encuesta de satisfacción
+  descripcion:
+    type: string
+    example: Responde las siguientes preguntas
+  usuario:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre_completo:
+        type: string
+        example: Gabino Cortez Jimenez
+      email:
+        type: string
+        example: correo@puller.mx
+  usuario_id:
+    readOnly: true
+    type: integer
+    example: 1
+    writeOnly: true
+  objetivo:
+    type: string
+    example: Objetivo de la encuesta, finalidad, ¿para que se hizo?
+  model_type:
+    readOnly: true
+    type: string
+    example: Grupos
+  model_id:
+    readOnly: true
+    type: integer
+    example: 1
+  dirigido_a:
+    writeOnly: true
+    type: string
+    example: 'Grupos'
+  dirigido_id:
+    writeOnly: true
+    type: integer
+    example: 1
+  lanzada:
+    type: boolean
+    example: true
+  target:
+    readOnly: true
+    type: string
+    example: "Es una propiedad objeto que trae las relaciones del modelo en función al model_type"
+
+required:
+  - nombre
+  - descripcion
+  - dirigido_a

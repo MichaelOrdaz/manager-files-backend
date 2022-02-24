@@ -1,0 +1,39 @@
+post:
+  tags: [Examenes]
+  summary: "Create - Examenes"
+  operationId: createExamenes
+  description: "Crea un nuevo examen"
+  parameters:
+    - $ref: "../parameters/path/usuarioId.yaml"
+  requestBody: { description: "Petición en formato json", required: true, content: { application/json: { schema: { $ref: "../schemas/Examenes.yaml" } } } }
+  responses: { 200: { description: "Estructura básica de la respuesta", content: { application/json: { schema: { $ref: "../schemas/Examenes.yaml" } } } }, 422: { $ref: "../responses/error422.yaml" }, 404: { $ref: "../responses/error404.yaml" }, 401: { $ref: "../responses/error401.yaml" } }
+get:
+  tags: [Examenes]
+  summary: "List - Examenes"
+  operationId: listExamenes
+  description: "Lista exámenes con relación al usuario"
+  parameters:
+    - $ref: "../parameters/query/page.yaml"
+    - $ref: "../parameters/path/usuarioId.yaml"
+  responses:
+    200:
+      description: "Estructura básica de la respuesta"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../schemas/Examenes.yaml"
+                maxItems: 25
+              message:
+                type: string
+              success:
+                type: boolean
+                example: true
+              links:
+                $ref: "../meta-datos/links.yaml"
+              meta:
+                $ref: "../meta-datos/paginacion.yaml"

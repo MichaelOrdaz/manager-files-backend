@@ -1,0 +1,22 @@
+get:
+  tags: [PreguntasTipo]
+  summary: "Get - Tipo de pregunta"
+  operationId: getPreguntaTipo
+  description: "Obtiene un Tipo de pregunta pasando un pregunta_tipo_id"
+  parameters:
+    - $ref: "../parameters/path/preguntaTipoId.yaml"
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/PreguntasTipo.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }

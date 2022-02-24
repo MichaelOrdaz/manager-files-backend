@@ -1,0 +1,6 @@
+name: especialidad_periodo_id
+in: path
+description: id de la relacion de una especialidad con un periodo
+schema:
+  type: integer
+required: true

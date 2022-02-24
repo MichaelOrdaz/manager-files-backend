@@ -1,0 +1,6 @@
+in: query
+name: temaId
+description: Valor para filtrar por campo tema_id
+required: false
+schema:
+  type: integer

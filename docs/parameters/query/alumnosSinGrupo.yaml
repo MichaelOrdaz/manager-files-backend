@@ -1,0 +1,6 @@
+in: query
+name: alumnosSinGrupo
+description: True - trae los alumnos que tienen relacionado un grupo
+required: false
+schema:
+  type: integer

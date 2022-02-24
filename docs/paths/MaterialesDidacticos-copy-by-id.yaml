@@ -1,0 +1,28 @@
+post:
+  tags: [MaterialesDidacticos]
+  summary: "Copy - MaterialesDidacticos"
+  operationId: copyMaterialesDidacticos
+  description: "<h4>Copia un repositorio material didáctico dentro de un tema</h4>
+  <br>Los parámetros <strong>especialidad_id, material_id, unidad_id, tema_id</strong> indican en donde se va a copiar el material didáctico(repositorio_id)
+  <br>El método retorna el nuevo registro"
+  parameters:
+    - $ref: "../parameters/path/especialidadId.yaml"
+    - $ref: "../parameters/path/materiaId.yaml"
+    - $ref: "../parameters/path/unidadId.yaml"
+    - $ref: "../parameters/path/temaId.yaml"
+    - $ref: "../parameters/path/repositorioId.yaml"
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/MaterialesDidacticosJson.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }

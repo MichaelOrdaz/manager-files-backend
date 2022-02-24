@@ -1,0 +1,252 @@
+TiposMaterial:
+  $ref: "./TiposMaterial.yaml"
+Unidades:
+  $ref: "./Unidades.yaml"
+PreguntasTipo:
+  $ref: "./PreguntasTipo.yaml"
+CatalogosExamenesTipo:
+  $ref: "./ExamenesTipo.yaml"
+Estados:
+  $ref: "./Estados.yaml"
+Municipios:
+  $ref: "./Municipios.yaml"
+Usuarios:
+  $ref: "./Usuarios.yaml"
+UsuariosSearch:
+  $ref: "./UsuariosSearch.yaml"
+UsuariosSearchAlumnos:
+  $ref: "./UsuariosSearchAlumnos.yaml"
+UsuariosSearchAspirantes:
+  $ref: "./UsuariosSearchAspirantes.yaml"
+UsuariosGetFormatImportUsers:
+  $ref: "./UsuariosGetFormatImportUsers.yaml"
+UsuariosImport:
+  $ref: "./UsuariosImport.yaml"
+UsuariosExport:
+  $ref: "./UsuariosExport.yaml"
+DatosGenerales:
+  $ref: "./DatosGeneralesJson.yaml"
+DatosGeneralesMultipart:
+  $ref: "./DatosGeneralesMultiPart.yaml"
+DatosFamiliares:
+  $ref: "./DatosFamiliares.yaml"
+Grupos:
+  $ref: "./Grupos.yaml"
+ConfiguracionAdmision:
+  $ref: "./ConfiguracionAdmision/ConfiguracionAdmisionJson.yaml"
+ConfiguracionAdmisionMultiPart:
+  $ref: "./ConfiguracionAdmision/ConfiguracionAdmisionMultiPart.yaml"
+Configuraciones:
+  $ref: "./ConfiguracionesJson.yaml"
+ConfiguracionesMultipart:
+  $ref: "./ConfiguracionesMultiPart.yaml"
+Conferencias:
+  $ref: "./Conferencias.yaml"
+Actividades:
+  $ref: "./Actividades.yaml"
+TutoriasJson:
+  $ref: "./TutoriasJson.yaml"
+TutoriasMultiPart:
+  $ref: "./TutoriasMultiPart.yaml"
+Avisos:
+  $ref: "./AvisosJson.yaml"
+AvisosMultipart:
+  $ref: "./AvisosMultiPart.yaml"
+Especialidades:
+  $ref: "./EspecialidadesJson.yaml"
+EspecialidadesMultiPart:
+  $ref: "./EspecialidadesMultiPart.yaml"
+EspecialidadesBatchGet:
+  $ref: "./EspecialidadesBatchGet.yaml"
+Periodos:
+  $ref: "./Periodos.yaml"
+Componentes:
+  $ref: "./Componentes.yaml"
+Materias:
+  $ref: "./MateriasJson.yaml"
+MateriasMultipart:
+  $ref: "./MateriasMultiPart.yaml"
+MateriasSearch:
+  $ref: "./MateriasSearch.yaml"
+Temas:
+  $ref: "./Temas.yaml"
+MaterialesDidacticos:
+  $ref: "./MaterialesDidacticosJson.yaml"
+MaterialesDidacticosMultipart:
+  $ref: "./MaterialesDidacticosMultiPart.yaml"
+Tareas:
+  $ref: "./TareasJson.yaml"
+TareasCopy:
+  $ref: "./TareasCopy.yaml"
+TareasMultipart:
+  $ref: "./TareasMultiPart.yaml"
+ContenidosExtra:
+  $ref: "./ContenidosExtraJson.yaml"
+ContenidosExtraMultipart:
+  $ref: "./ContenidosExtraMultiPart.yaml"
+Examenes:
+  $ref: "./Examenes.yaml"
+ExamenesBindingTema:
+  $ref: "./ExamenesBindingTema.yaml"
+ExamenesPreguntas:
+  $ref: "./ExamenesPreguntasJson.yaml"
+ExamenesPreguntasMultipart:
+  $ref: "./ExamenesPreguntasMultiPart.yaml"
+ExamenesRespuestas:
+  $ref: "./ExamenesRespuestas.yaml"
+ExamenesCalificaciones:
+  $ref: "./ExamenesCalificaciones.yaml"
+Encuestas:
+  $ref: "./Encuestas.yaml"
+EncuestaResultado:
+  $ref: "./EncuestaResultado.yaml"
+EncuestaExportar:
+  $ref: "./EncuestaExportar.yaml"
+EncuestasPreguntas:
+  $ref: "./EncuestasPreguntasJson.yaml"
+EncuestasPreguntasMultiPart:
+  $ref: "./EncuestasPreguntasMultiPart.yaml"
+EncuestasRespuestas:
+  $ref: "./EncuestasRespuestas.yaml"
+Calendario:
+  $ref: "./Calendario.yaml"
+BajasTipo:
+  $ref: "./BajasTipo.yaml"
+DatosAcademicos:
+  $ref: "./DatosAcademicos.yaml"
+ExamenWithPreguntas:
+  $ref: "./ExamenWithPreguntas.yaml"
+ExamenesBancoPreguntas:
+  $ref: "./ExamenesBancoPreguntasJson.yaml"
+ExamenesBancoPreguntasMultiPart:
+  $ref: "./ExamenesBancoPreguntasMultiPart.yaml"
+ConfirmarEmail:
+  $ref: "./ConfirmarEmail.yaml"
+VerificarEmail:
+  $ref: "./VerificarEmail.yaml"
+Permisos-Usuarios:
+  $ref: "./Permisos-Usuarios.yaml"
+Permisos:
+  $ref: "./Permisos.yaml"
+ExamenesRespuestasAspirantes:
+  $ref: "./ExamenesRespuestasAspirantes.yaml"
+Rol:
+  $ref: "./Rol.yaml"
+PeriodosBind:
+  $ref: "./PeriodosBind.yaml"
+Tarea-bind-grupo:
+  $ref: "./Tarea-bind-grupo.yaml"
+TareasBindingTema:
+  $ref: "./TareasBindingTema.yaml"
+links:
+  $ref: "../meta-datos/links.yaml"
+meta:
+  $ref: "../meta-datos/paginacion.yaml"
+DocenteMateria:
+  $ref: "./DocenteMateria.yaml"
+DocenteMateria-anidado:
+  $ref: "./DocenteMateria-anidado.yaml"
+UsuarioBaja:
+  $ref: "./UsuarioBaja.yaml"
+UsuarioReingreso:
+  $ref: "./UsuarioReingreso.yaml"
+Aspirantes-correoTerminoExamen:
+  $ref: "./Aspirantes-correoTerminoExamen.yaml"
+Generaciones:
+  $ref: "./Generaciones.yaml"
+GruposBindAlumnos:
+  $ref: "./GruposBindAlumnos.yaml"
+GruposBindAlumno:
+  $ref: "./GruposBindAlumno.yaml"
+EspecialidadPeriodoGrupo:
+  $ref: "./EspecialidadPeriodoGrupo.yaml"
+EspecialidadPeriodoGrupoAlumnos:
+  $ref: "./EspecialidadPeriodoGrupoAlumnos.yaml"
+Timestamp:
+  $ref: "./Timestamp.yaml"
+DocentesMateria-Grupos:
+  $ref: "./DocentesMateria-Grupos.yaml"
+DocenteMateriasGrupo:
+  $ref: "./DocenteMateriasGrupo.yaml"
+AlumnosGrupoCalendario:
+  $ref: "./AlumnosGrupoCalendario.yaml"
+AlumnoExamen:
+  $ref: "./AlumnoExamen.yaml"
+AlumnoExamen-by-id:
+  $ref: "./AlumnoExamen-by-id.yaml"
+AlumnoTarea:
+  $ref: "./AlumnoTarea.yaml"
+AlumnoTareaEnviada:
+  $ref: "./AlumnoTareaEnviada.yaml"
+AlumnoTarea-by-id:
+  $ref: "./AlumnoTarea-by-id.yaml"
+AlumnoMisActividades-by-id:
+  $ref: "./AlumnoMisActividades-by-id.yaml"
+MateriasBatchGet:
+  $ref: "./MateriasBatchGet.yaml"
+ZoomConferencias:
+  $ref: "./ZoomConferencias.yaml"
+ZoomGenerarSignature:
+  $ref: "./ZoomGenerarSignature.yaml"
+DocentesCalificarTarea:
+  $ref: "./DocentesCalificarTarea.yaml"
+DocentesCalificarExamen:
+  $ref: "./DocentesCalificarExamen.yaml"
+AlumnoTareasEnviadasMultiPart:
+  $ref: "./AlumnoTareasEnviadasMultiPart.yaml"
+DocenteTareasEnviadasMultiPart:
+  $ref: "./DocenteTareasEnviadasMultiPart.yaml"
+DocenteTareasEnviadasJson:
+  $ref: "./DocenteTareasEnviadasJson.yaml"
+DocenteTareasExamenesCalendario:
+  $ref: "./DocenteTareasExamenesCalendario.yaml"
+DocenteAlumnoGrupo:
+  $ref: "./DocenteAlumnoGrupo.yaml"
+DocenteAsistenciaResponse:
+  $ref: "./DocenteAsistenciaResponse.yaml"
+DocenteAsistenciaGrupoRequest:
+  $ref: "./DocenteAsistenciaGrupoRequest.yaml"
+DocenteTablaCalificacion:
+  $ref: "./DocenteTablaCalificacion.yaml"
+Rubrica:
+  $ref: "./Rubrica.yaml"
+DocenteTablaRubrica:
+  $ref: "./DocenteTablaRubrica.yaml"
+ExamenesGrupos:
+  $ref: "./Examenes-grupos.yaml"
+DocenteCalificarMisActividades:
+  $ref: "./DocenteCalificarMisActividades.yaml"
+CalificacionParcial:
+  $ref: "./Calificacion-parcial.yaml"
+CalificacionParcialAlumnos:
+  $ref: "./Calificacion-parcial-listAlumnos.yaml"
+EspecialidadPeriodoGrupoMaterias:
+  $ref: "./EspecialidadPeriodoGrupoMaterias.yaml"
+AlumnoTablaCalificacion:
+  $ref: "./AlumnoTablaCalificacion.yaml"
+kardexAlumno:
+  $ref: "./kardex-alumno.yaml"
+kardexGrupo:
+  $ref: "./kardex-grupo.yaml"
+Rendimiento:
+  $ref: "./Rendimiento-alumno.yaml"
+boletaAlumno:
+  $ref: "./boleta-alumno.yaml"
+actaSegumiento:
+  $ref: "./acta-seguimiento.yaml"
+Eventos:
+  $ref: "./EventosJson.yaml"
+EventosMultipart:
+  $ref: "./EventosMultiPart.yaml"
+Infracciones:
+  $ref: "./Infracciones.yaml"
+GruposMaterias:
+  $ref: "./GruposMaterias.yaml"
+DocenteTablaCalificacionAlumno:
+  $ref: "./DocenteTablaCalificacionAlumno.yaml"
+EspecialidadPeriodo:
+  $ref: "./EspecialidadPeriodo.yaml"
+InfraccionesMultipart:
+  $ref: "./InfraccionesMultipart.yaml"
+cambioClave:
+  $ref: "./CambioClave.yaml"

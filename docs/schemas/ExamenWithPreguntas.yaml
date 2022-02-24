@@ -1,0 +1,110 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+    readOnly: true
+  nombre:
+    type: string
+    example: Examen parcial uno de ecuaciones
+  descripcion:
+    type: string
+    example: Resuelve los siguientes ejercicios
+  materia_id:
+    type: integer
+    example: 1
+  usuario:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Gabino
+      apellido_paterno:
+        type: string
+        example: Cortez
+      apellido_materno:
+        type: string
+        example: Jimenez
+  usuario_id:
+    type: integer
+    example: 1
+    writeOnly: true
+  tipo:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Examen parcial
+  tipo_id:
+    type: integer
+    example: 1
+    writeOnly: true
+  duracion_minutos:
+    type: integer
+    example: 10
+  aleatorio:
+    type: boolean
+    example: true
+  lecciones_referencia:
+    type: array
+    example: [1,2,3,4,5]
+  fecha_aplicacion:
+    type: string
+    example: "2021-12-31 12:00:00"
+  activo:
+    type: boolean
+    example: true
+    writeOnly: true
+  materia:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Materia1
+      descripcion:
+        type: string
+        example: Descripción de materia
+      requisitos:
+        type: string
+        example: Descripción de materia
+      imagen_url:
+        type: string
+        example: www.imagen.com
+      especialidad_id:
+        type: integer
+        example: 1
+      componente_id:
+        type: integer
+        example: 1
+      periodo_id:
+        type: integer
+        example: 1
+  examenPreguntas:
+    type: array
+    items:
+      $ref: "./ExamenesPreguntasJson.yaml"
+
+
+required:
+  - nombre
+  - descripcion
+  - usuario_id
+  - tipo_id
+  - duracion_minutos
+  - aleatorio
+  - lecciones_referencia
+  - fecha_aplicacion
+  - activo
+  - materia_id

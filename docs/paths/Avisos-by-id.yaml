@@ -1,0 +1,84 @@
+get:
+  tags: [Avisos]
+  summary: "Get - Aviso"
+  operationId: getAviso
+  description: "Obtiene un aviso pasando aviso_id"
+  parameters:
+    - $ref: "../parameters/path/avisoId.yaml"
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                {
+                  schema:
+                    { $ref: "../schemas/AvisosJson.yaml" },
+                },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }
+post:
+  tags: [Avisos]
+  summary: "Update - Aviso"
+  operationId: updateAviso
+  description: "Actualiza un Aviso pasando un aviso_id"
+  parameters:
+    - $ref: "../parameters/path/avisoId.yaml"
+  requestBody:
+    {
+      description: "Petición multipart/form-data",
+      content:
+        {
+          multipart/form-data:
+            { schema: { $ref: "../schemas/AvisosMultiPart.yaml" } },
+        },
+    }
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                {
+                  schema:
+                    { $ref: "../schemas/AvisosJson.yaml" },
+                },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }
+delete:
+  tags: [Avisos]
+  summary: "Delete Aviso"
+  operationId: deleteAviso
+  description: "Borra un aviso pasando un aviso_id"
+  parameters:
+    - $ref: "../parameters/path/avisoId.yaml"
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                {
+                  schema:
+                    { $ref: "../schemas/AvisosJson.yaml" },
+                },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }

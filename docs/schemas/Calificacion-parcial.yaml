@@ -1,0 +1,69 @@
+type: object
+properties:
+  id:
+    readOnly: true
+    type: integer
+    example: 1
+  usuario_id:
+    type: integer
+    example: 1
+  materia_id:
+    type: integer
+    example: 1
+  materia_nombre:
+    type: string
+    example: Materia 1
+  asistencia_total:
+    type: number
+    example: 20
+  porcentaje:
+    type: number
+    example: 80
+  parcial_uno:
+    type: number
+    example: 10
+  parcial_dos:
+    type: number
+    example: 10
+  parcial_tres:
+    type: number
+    example: 10
+  suma:
+    type: number
+    example: 10
+  calificacion_semestral:
+    type: number
+    example: 10
+  calificacion_letra:
+    type: string
+    example: Diez
+  observaciones:
+    type: string
+    example: "Es buen chico solo necesita ponerse las pilas"
+  especialidad_periodo_grupo_id:
+    type: integer
+    example: 1
+  especialidad_nombre:
+    type: string
+    example: Especialidad 1
+  periodo_nombre:
+    type: string
+    example: Periodo 1
+  grupo_nombre:
+    type: string
+    example: Grupo A
+  ciclo_escolar:
+    type: string
+    example: "2021-2022"
+
+
+required:
+  - usuario_id
+  - especialidad_periodo_grupo_id
+  - materia_id
+  - parcial_uno
+  - calificacion_letra
+  - calificacion_semestral
+  - asistencia_total
+  - porcentaje
+  - ciclo_escolar

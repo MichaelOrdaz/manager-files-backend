@@ -1,0 +1,34 @@
+get:
+  tags: [Tareas]
+  summary: "Get - Tareas"
+  operationId: getTareas
+  description: "Obtiene una tarea"
+  parameters:
+    - $ref: "../parameters/path/especialidadId.yaml"
+    - $ref: "../parameters/path/materiaId.yaml"
+    - $ref: "../parameters/path/unidadId.yaml"
+    - $ref: "../parameters/path/tareaId.yaml"
+  responses: { 200: { description: "Estructura básica de la respuesta", content: { application/json: { schema: { $ref: "../schemas/TareasJson.yaml" } } } }, 422: { $ref: "../responses/error422.yaml" }, 404: { $ref: "../responses/error404.yaml" }, 401: { $ref: "../responses/error401.yaml" } }
+post:
+  tags: [Tareas]
+  summary: "Update - Tareas"
+  operationId: updateTareas
+  description: "Actualiza una tarea"
+  parameters:
+    - $ref: "../parameters/path/especialidadId.yaml"
+    - $ref: "../parameters/path/materiaId.yaml"
+    - $ref: "../parameters/path/unidadId.yaml"
+    - $ref: "../parameters/path/tareaId.yaml"
+  requestBody: { description: "Petición multipart/form-data", content: { multipart/form-data: { schema: { $ref: "../schemas/TareasMultiPart.yaml" } } } }
+  responses: { 200: { description: "Estructura básica de la respuesta", content: { application/json: { schema: { $ref: "../schemas/TareasJson.yaml" } } } }, 422: { $ref: "../responses/error422.yaml" }, 404: { $ref: "../responses/error404.yaml" }, 401: { $ref: "../responses/error401.yaml" } }
+delete:
+  tags: [Tareas]
+  summary: "Delete - Tareas"
+  operationId: deleteTareas
+  description: "Borra una tarea"
+  parameters:
+    - $ref: "../parameters/path/especialidadId.yaml"
+    - $ref: "../parameters/path/materiaId.yaml"
+    - $ref: "../parameters/path/unidadId.yaml"
+    - $ref: "../parameters/path/tareaId.yaml"
+  responses: { 200: { description: "Estructura básica de la respuesta", content: { application/json: { schema: { $ref: "../schemas/TareasJson.yaml" } } } }, 422: { $ref: "../responses/error422.yaml" }, 404: { $ref: "../responses/error404.yaml" }, 401: { $ref: "../responses/error401.yaml" } }

@@ -1,0 +1,20 @@
+get:
+  tags: [Usuarios]
+  summary: "Get - Formatos de importación"
+  operationId: getFormatImportUsers
+  description: "Retorna la url del fichero"
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/UsuariosGetFormatImportUsers.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }

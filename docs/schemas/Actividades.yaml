@@ -1,0 +1,46 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+    readOnly: true
+  titulo:
+    type: string
+    example: Entregar tarea de matemáticas
+  contenido:
+    type: string
+    example: Texto de prueba
+  fecha_inicio:
+    type: string
+    example: "2022-10-08 00:00:00"
+  fecha_fin:
+    type: string
+    example: "2022-10-08 00:00:00"
+  usuario_id:
+    type: integer
+    example: 1
+    readOnly: true
+  usuario:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Gabino
+      apellido_paterno:
+        type: string
+        example: Cortez
+      apellido_materno:
+        type: string
+        example: Jimenez
+
+
+required:
+  - titulo
+  - contenido
+  - usuario_id
+  - fecha_inicio
+  - fecha_fin

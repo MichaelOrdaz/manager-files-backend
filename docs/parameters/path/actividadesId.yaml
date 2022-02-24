@@ -1,0 +1,6 @@
+name: actividades_id
+in: path
+description: id de la actividad
+schema:
+  type: integer
+required: true

@@ -1,0 +1,6 @@
+name: encuestas_respuestas_id
+in: path
+description: id de la respuesta de una encuesta
+schema:
+  type: integer
+required: true

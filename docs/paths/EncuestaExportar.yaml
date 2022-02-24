@@ -1,0 +1,30 @@
+get:
+  tags: [Encuestas]
+  summary: "Get - EncuestaExportar"
+  operationId: getEncuestaExportar
+  description: "Retorna el url de una exportacion del resultado de una encuesta"
+  parameters:
+    - $ref: "../parameters/path/encuestasId.yaml"
+  responses:
+    200:
+      description: "Estructura básica de la respuesta"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../schemas/EncuestaExportar.yaml"
+                maxItems: 10
+              message:
+                type: string
+              success:
+                type: boolean
+                example: true
+              links:
+                $ref: "../meta-datos/links.yaml"
+              meta:
+                $ref: "../meta-datos/paginacion.yaml"
+

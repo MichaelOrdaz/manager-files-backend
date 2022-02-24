@@ -1,0 +1,76 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+    readOnly: true
+  nombre:
+    type: string
+    example: Boleta de calificaciones
+  descripcion:
+    type: string
+    example: Esta es una descripción de ejemplo
+  archivo_url:
+    type: string
+    example: "http://localhost/boleta-calificaciones.png"
+    readOnly: true
+  model_type:
+    type: integer
+    example: 1
+  model_id:
+    type: integer
+    example: 1
+  periodo_id:
+    type: integer
+    example: 1
+  periodo:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: "Semestre 1"
+  especialidad_id:
+    type: integer
+    example: 1
+  especialidad:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: "especialidad 1"
+  tipo_contenido_id:
+    type: integer
+    example: 1
+  tipo_contenido:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Tareas
+  archivo:
+    type: string
+    format: binary
+    writeOnly: true
+  activo:
+    type: boolean
+    example: true
+    writeOnly: true
+
+required:
+  - nombre
+  - especialidad_id
+  - tipo_contenido_id
+  - activo
+  - descripcion

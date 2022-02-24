@@ -1,0 +1,14 @@
+description: Error general de la petición
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+            example: "El campo key_name es obligatorio"
+        success:
+          type: boolean
+          example: false

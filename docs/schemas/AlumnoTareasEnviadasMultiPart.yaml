@@ -1,0 +1,15 @@
+type: object
+properties:
+  materia_id:
+    type: integer
+    example: 1
+  nota:
+    type: string
+    example: Le envio las respuestas
+  archivo:
+    type: string
+    format: binary
+    writeOnly: true
+
+required:
+  - materia_id

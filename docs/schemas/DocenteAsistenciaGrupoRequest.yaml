@@ -1,0 +1,24 @@
+type: object
+properties:
+  paseLista:
+    writeOnly: true
+    type: array
+    items:
+      type: object
+      properties:
+        alumno_id:
+          type: integer
+        conferencia_id:
+          type: integer
+        asistencia:
+          type: boolean
+    example:
+      - alumno_id: 1
+        conferencia_id: 1
+        asistencia: true
+      - alumno_id: 2
+        conferencia_id: 1
+        asistencia: false
+
+required:
+  - paseLista

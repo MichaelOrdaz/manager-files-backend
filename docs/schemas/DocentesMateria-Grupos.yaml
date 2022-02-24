@@ -1,0 +1,35 @@
+type: object
+properties:
+  especialidad_periodo_grupo_id:
+    type: integer
+    example: 1
+  especialidad_periodo_id:
+    type: integer
+    example: 1
+  especialidad:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Especialidad 1
+  periodo:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: periodo 1
+  grupo:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Grupo 1

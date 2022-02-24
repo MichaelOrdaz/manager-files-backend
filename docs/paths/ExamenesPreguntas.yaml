@@ -1,0 +1,57 @@
+post:
+  tags: [ExamenesPreguntas]
+  summary: "Create - ExamenesPreguntas"
+  operationId: createExamenesPregunta
+  description: "Crea una nueva pregunta de examen"
+  parameters:
+    - $ref: "../parameters/path/usuarioId.yaml"
+    - $ref: "../parameters/path/examenId.yaml"
+  requestBody:
+    {
+      description: "Petición multipart/form-data",
+      content:
+        {
+          multipart/form-data:
+            { schema: { $ref: "../schemas/ExamenesPreguntasMultiPart.yaml" } },
+        },
+    }
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/ExamenesPreguntasJson.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }
+get:
+  tags: [ExamenesPreguntas]
+  summary: "List - ExamenesPreguntas"
+  operationId: listExamenesPreguntas
+  description: "Lista preguntas de examen"
+  parameters:
+    - $ref: "../parameters/path/usuarioId.yaml"
+    - $ref: "../parameters/path/examenId.yaml"
+  responses:
+    200:
+      description: "Estructura básica de la respuesta"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../schemas/ExamenesPreguntasJson.yaml"
+              message:
+                type: string
+              success:
+                type: boolean
+                example: true

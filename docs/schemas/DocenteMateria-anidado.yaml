@@ -1,0 +1,93 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+  usuario_id:
+    type: integer
+    example: 1
+  usuario:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      email:
+        type: string
+        format: email
+        example: correo@puller.mx
+      firebase_uid:
+        type: string
+        example: qwerty-123-piuuty
+      nombre_completo:
+        type: string
+        example: Alicia sikorsky
+  especialidad_periodo_grupo_id:
+    type: integer
+    example: 1
+  grupo_id:
+    type: integer
+    example: 2
+  grupo:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 2
+      nombre:
+        type: string
+        example: Grupo B
+  materia_id:
+    type: integer
+    example: 1
+  materia:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Materia1
+      descripcion:
+        type: string
+        example: Descripción de materia
+      requisitos:
+        type: string
+        example: Descripción de materia
+      imagen_url:
+        type: string
+        example: www.imagen.com
+      activo:
+        type: boolean
+        example: true
+      unidades:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            nombre:
+              type: string
+              example: unidad 1
+            descripcion:
+              type: string
+              example: descripcion unidad 1
+            activo:
+              type: boolean
+              example: true
+            temas:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  nombre:
+                    type: string
+                    example: Tema 1

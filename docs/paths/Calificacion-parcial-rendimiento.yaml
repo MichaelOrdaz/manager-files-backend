@@ -1,0 +1,24 @@
+get:
+  tags: [CalificacionParcial]
+  summary: "get - RendimientoAlumno"
+  operationId: getRendimientoAlumno
+  description: "Obtiene un objeto que contiene los promedios por periodo y los periodos cursados"
+  parameters:
+    - $ref: "../parameters/path/usuarioId.yaml"
+  responses:
+    200:
+      description: "Estructura básica de la respuesta"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../schemas/Rendimiento-alumno.yaml"
+              message:
+                type: string
+              success:
+                type: boolean
+                example: true

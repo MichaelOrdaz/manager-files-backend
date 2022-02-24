@@ -1,0 +1,5 @@
+name: bajaTipoId
+in: query
+description: Id del tipo de baja del estudiante
+schema:
+  type: integer

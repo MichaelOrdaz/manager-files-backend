@@ -1,0 +1,14 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+  usuario_id:
+    type: integer
+    example: 1
+  examen_id:
+    type: integer
+    example: 1
+  timestamp:
+    type: integer
+    example: 247894

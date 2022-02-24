@@ -1,0 +1,39 @@
+type: object
+properties:
+  pregunta:
+    type: string
+    example: Si hay un más allá… ¿Hay un menos acá?
+  descripcion:
+    type: string
+    example: Descripcion tutoria
+  respuesta_tutoria_id:
+    type: integer
+    example: 1
+  material_id:
+    type: integer
+    example: 1
+  tema_id:
+    type: integer
+    example: 1
+  materia_id:
+    type: integer
+    example: 1
+  grupo_id:
+    type: integer
+    example: 1
+  imagenes[]:
+    type: array
+    items:
+      type: string
+      format: binary
+  activo:
+    type: boolean
+    example: true
+
+required:
+  - pregunta
+  - material_id
+  - tema_id
+  - materia_id
+  - grupo_id
+  - activo

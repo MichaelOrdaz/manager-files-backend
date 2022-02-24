@@ -1,0 +1,28 @@
+<?php
+
+namespace Tests\Feature\[% model_name %];
+
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
+use App\Models\[% model_name %];
+use App\Models\Model;
+
+class [% model_name %]RelacionesTest extends TestCase
+{
+    use DatabaseTransactions;
+
+    protected $[% model_name_singular_variable %];
+
+    public function test_[% model_name_singular_variable %]_has_one_model()
+    {
+      $this->assertInstanceOf(Model::class,$this->[% model_name_singular_variable %]->Model);
+    }
+
+    public function setUp():void{
+      parent::setUp();
+      $this->[% model_name_singular_variable %] = [% model_name %]::find(1);
+    }
+}

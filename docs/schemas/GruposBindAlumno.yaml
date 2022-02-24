@@ -1,0 +1,20 @@
+type: object
+properties:
+  grupo_id:
+    type: integer
+    example: 1
+    readOnly: true
+  periodo_id:
+    type: integer
+    example: 1
+  especialidad_id:
+    type: integer
+    example: 1
+  alumno_id:
+    type: integer
+    example: 1
+    readOnly: true
+
+required:
+  - periodo_id
+  - especialidad_id

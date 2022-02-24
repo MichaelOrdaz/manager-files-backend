@@ -1,0 +1,6 @@
+in: query
+name: filter
+description: filtro por string
+required: true
+schema:
+  type: string

@@ -1,0 +1,5 @@
+name: acusadoId
+in: query
+description: Id del usuario que es acusado
+schema:
+  type: integer

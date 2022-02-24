@@ -1,0 +1,22 @@
+
+    /**
+     * Moves the attached file to the server.
+     *
+     * @param Symfony\Component\HttpFoundation\File\UploadedFile $file
+     *
+     * @return string
+     */
+    protected function moveFile($file)
+    {
+        if (! $file->isValid()) {
+            return '';
+        }
+
+        $originalName = $file->getClientOriginalName();
+        $slugify = new Slugify(['regexp' => '/[^A-Za-z\.]+/']);
+        $slug = $slugify->slugify($originalName);
+        $filename = now()->format('YmdHis') .'_'. rand(1,99) .'_'. $slug;
+        $filename = $file->storeAs('', $filename, ['disk' => 'img']);
+
+        return basename($filename);
+    }

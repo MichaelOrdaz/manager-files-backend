@@ -1,0 +1,6 @@
+name: examen_tipo_id
+in: path
+description: id del tipo de examen
+schema:
+  type: integer
+required: true

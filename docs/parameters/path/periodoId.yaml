@@ -1,0 +1,6 @@
+name: periodo_id
+in: path
+description: id del periodo
+schema:
+  type: integer
+required: true

@@ -1,0 +1,427 @@
+image: docker:latest
+stages:
+  - .pre
+  - build
+  - publish
+  - deploy
+  - config
+
+
+cache:
+  key: modules
+  paths:
+    - node_modules/
+    - vendor/
+
+services:
+  - name : docker:dind
+    entrypoint: ["env", "-u", "DOCKER_HOST"]
+    command: [ "dockerd-entrypoint.sh" ]
+
+variables:
+  DOCKER_HOST: tcp://docker:2375/
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+  TAG_LATEST: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest #Variable docker
+  TAG_COMMIT: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_COMMIT_SHORT_SHA #Variable docker
+  CONTAINER_PORT_QA: 102
+  CONTAINER_PORT_STAGING: 103
+  CONTAINER_PORT_TESTING: 105
+  CONTAINER_PORT_PRODUCTION: 80
+  WEBSOCKET_PORT_QA: 6102
+  WEBSOCKET_PORT_STAGING: 6103
+  WEBSOCKET_PORT_TESTING: 6105
+  CLI_VERSION: 3.0.27
+
+  CONTAINER_NAME: $CI_PROJECT_NAME
+  SOURCE_PATH_QA: /home/server/${CI_PROJECT_NAME}_qa
+  SOURCE_PATH_TESTING: /home/server/${CI_PROJECT_NAME}_testing
+  SOURCE_PATH_STAGING: /home/server/${CI_PROJECT_NAME}_staging
+  SOURCE_PATH_PRODUCTION: /home/server/${CI_PROJECT_NAME}_production
+
+
+prepare:install-node:
+  stage: .pre
+  image: node:12
+  cache:
+    key: modules
+    paths:
+      - node_modules/
+      - vendor/
+  before_script:
+      - mkdir -p ~/.ssh
+      - chmod 700 ~/.ssh
+      - ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+      ## Make sure that ssh will trust the new host, instead of asking
+      - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+  script:
+    - if [[ ! -d node_modules ]] || [[ -n `git diff --name-only HEAD~1 HEAD | grep "\package.json\b"` ]];
+      then
+      npm ci;
+      fi
+
+prepare:install-composer:
+  stage: .pre
+  image: composer/composer
+  cache:
+    key: modules
+    paths:
+      - node_modules/
+      - vendor/
+  script:
+    - if [[ ! -d vendor ]] || [[ -n `git diff --name-only HEAD~1 HEAD | grep "\composer.json\b"` ]];
+      then
+      composer install --ignore-platform-reqs --no-dev --optimize-autoloader --no-ansi --no-interaction --no-progress;
+      fi
+  only:
+    - qa
+    - master
+
+build_qa:
+  image: docker:latest
+  stage: publish
+  services:
+    - docker:dind
+  script:
+    - docker build -t $TAG_COMMIT -t $TAG_LATEST .
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker push $TAG_LATEST
+    - docker push $TAG_COMMIT
+
+  only:
+    - qa
+
+
+deploy_qa:
+  image: alpine
+  stage: deploy
+  before_script:
+    ## Install ssh agent (so we can access the Digital Ocean Droplet) and run it.
+    - apk update && apk add openssh-client
+    - eval $(ssh-agent -s)
+    ## Write the environment variable value to the agent store, create the ssh directory and give the right permissions to it.
+    - echo "$SECRETS_DIGITAL_OCEAN_DROPLET_SSH_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+
+    ## Make sure that ssh will trust the new host, instead of asking
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    ## Test it!
+    - ssh -t ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "echo $HOME"
+  script:
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "./docker_clean_images.sh"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker pull $TAG_COMMIT"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "pwd"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker ps -qa --filter \"name=${CONTAINER_NAME}_qa\" | grep -q . && docker stop ${CONTAINER_NAME}_qa && docker rm -fv ${CONTAINER_NAME}_qa && docker rmi -f ${TAG_LATEST} || true"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker run -v ${SOURCE_PATH_QA}/.env:/var/www/.env -d --restart unless-stopped -p $CONTAINER_PORT_QA:80 -p $WEBSOCKET_PORT_QA:6001 --name ${CI_PROJECT_NAME}_qa --network pullermx-mysql-server $TAG_COMMIT"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "${SOURCE_PATH_QA}/./deploy.sh -n \"${CONTAINER_NAME}_qa\""
+  only:
+    - qa
+
+deploy_testing:
+  image: alpine
+  stage: deploy
+  before_script:
+    ## Install ssh agent (so we can access the Digital Ocean Droplet) and run it.
+    - apk update && apk add openssh-client
+    - eval $(ssh-agent -s)
+    ## Write the environment variable value to the agent store, create the ssh directory and give the right permissions to it.
+    - echo "$SECRETS_DIGITAL_OCEAN_DROPLET_SSH_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+
+    ## Make sure that ssh will trust the new host, instead of asking
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    ## Test it!
+    - ssh -t ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "echo $HOME"
+  script:
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "./docker_clean_images.sh"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker pull $TAG_COMMIT"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "pwd"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker ps -qa --filter \"name=${CONTAINER_NAME}_testing\" | grep -q . && docker stop ${CONTAINER_NAME}_testing && docker rm -fv ${CONTAINER_NAME}_testing && docker rmi -f ${TAG_LATEST} || true"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker run -v ${SOURCE_PATH_TESTING}/.env:/var/www/.env -d --restart unless-stopped -p $CONTAINER_PORT_TESTING:80 -p $WEBSOCKET_PORT_TESTING:6001 --name ${CI_PROJECT_NAME}_testing --network pullermx-mysql-server $TAG_COMMIT"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "${SOURCE_PATH_TESTING}/./deploy.sh -n \"${CONTAINER_NAME}_testing\""
+  only:
+    - qa
+
+
+build_staging:
+  image: docker:latest
+  stage: publish
+  services:
+    - docker:dind
+  script:
+    - docker build -t $TAG_COMMIT -t $TAG_LATEST .
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker push $TAG_LATEST
+    - docker push $TAG_COMMIT
+
+  only:
+    - master
+
+
+deploy_staging:
+  image: alpine
+  stage: deploy
+  before_script:
+    ## Install ssh agent (so we can access the Digital Ocean Droplet) and run it.
+    - apk update && apk add openssh-client
+    - eval $(ssh-agent -s)
+    ## Write the environment variable value to the agent store, create the ssh directory and give the right permissions to it.
+    - echo "$SECRETS_DIGITAL_OCEAN_DROPLET_SSH_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+
+    ## Make sure that ssh will trust the new host, instead of asking
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    ## Test it!
+    - ssh -t ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "echo $HOME"
+  script:
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "./docker_clean_images.sh"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker pull $TAG_COMMIT"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "pwd"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker ps -qa --filter \"name=${CONTAINER_NAME}_staging\" | grep -q . && docker stop ${CONTAINER_NAME}_staging && docker rm -fv ${CONTAINER_NAME}_staging && docker rmi -f ${TAG_LATEST} || true"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker run -v ${SOURCE_PATH_STAGING}/.env:/var/www/.env -d --restart unless-stopped -p $CONTAINER_PORT_STAGING:80 --name ${CI_PROJECT_NAME}_staging --network pullermx-mysql-server $TAG_COMMIT"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "${SOURCE_PATH_STAGING}/./deploy.sh -n \"${CONTAINER_NAME}_staging\""
+  only:
+    - master
+
+deploy_production:
+  image: alpine
+  stage: deploy
+  before_script:
+    ## Install ssh agent (so we can access the Digital Ocean Droplet) and run it.
+    - apk update && apk add openssh-client
+    - eval $(ssh-agent -s)
+    ## Write the environment variable value to the agent store, create the ssh directory and give the right permissions to it.
+    - echo "$DO_PRODUCTION_SSH_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+
+    ## Make sure that ssh will trust the new host, instead of asking
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    ## Test it!
+    - ssh -t ${DO_PRODUCTION_USER}@${DO_PRODUCTION_IP} "echo $HOME"
+  script:
+    - ssh ${DO_PRODUCTION_USER}@${DO_PRODUCTION_IP} "./docker_clean_images.sh"
+    - ssh ${DO_PRODUCTION_USER}@${DO_PRODUCTION_IP} "docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY"
+    - ssh ${DO_PRODUCTION_USER}@${DO_PRODUCTION_IP} "docker pull $TAG_COMMIT"
+    - ssh ${DO_PRODUCTION_USER}@${DO_PRODUCTION_IP} "pwd"
+    - ssh ${DO_PRODUCTION_USER}@${DO_PRODUCTION_IP} "docker ps -qa --filter \"name=${CONTAINER_NAME}_production\" | grep -q . && docker stop ${CONTAINER_NAME}_production && docker rm -fv ${CONTAINER_NAME}_production && docker rmi -f ${TAG_LATEST} || true"
+    - ssh ${DO_PRODUCTION_USER}@${DO_PRODUCTION_IP} "docker run -v ${SOURCE_PATH_PRODUCTION}/.env:/var/www/.env -d --restart unless-stopped -p $CONTAINER_PORT_PRODUCTION:80 --name ${CI_PROJECT_NAME}_production --network pullermx-mysql-server $TAG_COMMIT"
+    - ssh ${DO_PRODUCTION_USER}@${DO_PRODUCTION_IP} "${SOURCE_PATH_PRODUCTION}/./deploy.sh -n \"${CONTAINER_NAME}_production\""
+  environment:
+    name: production
+    url: https://aizeducacion.com/
+  when: manual
+  only:
+    - master
+
+
+
+deploy documentacion:
+  image: node:12
+  stage: deploy
+  cache:
+    key: modules
+    paths:
+      - node_modules/
+  before_script:
+      ## Install ssh agent (so we can access the Digital Ocean Droplet) and run it.
+      # Search for the ssh-agent
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    ## Write the environment variable value to the agent store, create the ssh directory and give the right permissions to it.
+    - echo "$DO_SERVER_TOOLS_SSH_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    ## Make sure that ssh will trust the new host, instead of asking
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    - which rsync || ( apt-get update -y && apt-get install rsync -y )
+
+  script:
+    - npm run build
+    - npm run html
+
+    - mkdir .public
+    - cp -r docs/_build/* .public
+    - rm public/index.php
+    - cp -r  .public/* public && rm -R .public
+    - find public -type f -regex '.*\.\(htm\|html\|txt\|text\|js\|css\)$' -exec gzip -f -k {} \;
+    - ssh ${DO_SERVER_TOOLS_USER}@${DO_SERVER_TOOLS_IP} "docker exec -i 2b9cd9092a99 rm -R /var/www/${PROJECT_NAME}/documentacion || true"
+    - ssh ${DO_SERVER_TOOLS_USER}@${DO_SERVER_TOOLS_IP} "./make_path_to_deploy_frontend.sh -p \"${PROJECT_NAME}\" -b \"documentacion\" "
+    - rsync -avrc --delete "$PWD/public" ${DO_SERVER_TOOLS_USER}@${DO_SERVER_TOOLS_IP}:frontend/${PROJECT_NAME}/documentacion
+    - ssh ${DO_SERVER_TOOLS_USER}@${DO_SERVER_TOOLS_IP} "docker exec -i 2b9cd9092a99 chown -R www-data:www-data /var/www/${PROJECT_NAME}/documentacion/"
+  environment:
+    name: qa
+    url: http://documentacion.qa-bachiller.puller.mx/
+  only:
+    - qa
+
+db run migrate:
+  image: node:12
+  stage: config
+  cache:
+    key: modules
+    paths:
+      - vendor/
+  before_script:
+    ## Install ssh agent (so we can access the Digital Ocean Droplet) and run it.
+    - apk update && apk add openssh-client
+    - eval $(ssh-agent -s)
+    ## Write the environment variable value to the agent store, create the ssh directory and give the right permissions to it.
+    - echo "$SECRETS_DIGITAL_OCEAN_DROPLET_SSH_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+
+    ## Make sure that ssh will trust the new host, instead of asking
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    ## Test it!
+    - ssh -t ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "echo $HOME"
+
+  script:
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker exec -i ${CONTAINER_NAME}_qa php artisan migrate"
+  when: manual
+  only:
+    - qa
+
+
+db refresh:
+  image: node:12
+  stage: config
+  cache:
+    key: modules
+    paths:
+      - vendor/
+  before_script:
+    ## Install ssh agent (so we can access the Digital Ocean Droplet) and run it.
+    - apk update && apk add openssh-client
+    - eval $(ssh-agent -s)
+    ## Write the environment variable value to the agent store, create the ssh directory and give the right permissions to it.
+    - echo "$SECRETS_DIGITAL_OCEAN_DROPLET_SSH_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+
+    ## Make sure that ssh will trust the new host, instead of asking
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    ## Test it!
+    - ssh -t ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "echo $HOME"
+
+  script:
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker exec -i ${CONTAINER_NAME}_qa php artisan migrate:refresh"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker exec -i ${CONTAINER_NAME}_qa php artisan db:seed"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker exec -i ${CONTAINER_NAME}_qa php artisan passport:install --force"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker exec -i ${CONTAINER_NAME}_qa chown -R www-data:www-data storage/"
+  when: manual
+  only:
+    - qa
+
+
+staging:migrate refresh:
+  image: node:12
+  stage: config
+  before_script:
+    ## Install ssh agent (so we can access the Digital Ocean Droplet) and run it.
+    - apk update && apk add openssh-client
+    - eval $(ssh-agent -s)
+    ## Write the environment variable value to the agent store, create the ssh directory and give the right permissions to it.
+    - echo "$SECRETS_DIGITAL_OCEAN_DROPLET_SSH_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+
+    ## Make sure that ssh will trust the new host, instead of asking
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    ## Test it!
+    - ssh -t ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "echo $HOME"
+
+  script:
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker exec -i ${CONTAINER_NAME}_staging php artisan migrate:refresh"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker exec -i ${CONTAINER_NAME}_staging php artisan db:seed --class=RolesSeeder"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker exec -i ${CONTAINER_NAME}_staging php artisan db:seed --class=UserSeeder"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker exec -i ${CONTAINER_NAME}_staging php artisan db:seed --class=ResourceSeeder"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker exec -i ${CONTAINER_NAME}_staging php artisan db:seed --class=AdministracionSeeder"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker exec -i ${CONTAINER_NAME}_staging php artisan passport:install --force"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker exec -i ${CONTAINER_NAME}_staging chown -R www-data:www-data storage/"
+  when: manual
+  only:
+    - master
+
+staging:run migrate:
+  image: node:12
+  stage: config
+  before_script:
+    ## Install ssh agent (so we can access the Digital Ocean Droplet) and run it.
+    - apk update && apk add openssh-client
+    - eval $(ssh-agent -s)
+    ## Write the environment variable value to the agent store, create the ssh directory and give the right permissions to it.
+    - echo "$SECRETS_DIGITAL_OCEAN_DROPLET_SSH_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+
+    ## Make sure that ssh will trust the new host, instead of asking
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    ## Test it!
+    - ssh -t ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "echo $HOME"
+
+  script:
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker exec -i ${CONTAINER_NAME}_staging php artisan migrate"
+
+  when: manual
+  only:
+    - master
+
+production:run migrate 😁:
+  image: node:12
+  stage: config
+  before_script:
+    ## Install ssh agent (so we can access the Digital Ocean Droplet) and run it.
+    - apk update && apk add openssh-client
+    - eval $(ssh-agent -s)
+    ## Write the environment variable value to the agent store, create the ssh directory and give the right permissions to it.
+    - echo "$DO_PRODUCTION_SSH_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+
+    ## Make sure that ssh will trust the new host, instead of asking
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    ## Test it!
+    - ssh -t ${DO_PRODUCTION_USER}@${DO_PRODUCTION_IP} "echo $HOME"
+
+  script:
+    - ssh ${DO_PRODUCTION_USER}@${DO_PRODUCTION_IP} "docker exec -i ${CONTAINER_NAME}_staging php artisan migrate"
+  when: manual
+  only:
+    - master
+
+production:migrate refresh 🤯:
+  image: node:12
+  stage: config
+  before_script:
+    ## Install ssh agent (so we can access the Digital Ocean Droplet) and run it.
+    - apk update && apk add openssh-client
+    - eval $(ssh-agent -s)
+    ## Write the environment variable value to the agent store, create the ssh directory and give the right permissions to it.
+    - echo "$DO_PRODUCTION_SSH_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+
+    ## Make sure that ssh will trust the new host, instead of asking
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+
+  script:
+    - ssh ${DO_PRODUCTION_USER}@${DO_PRODUCTION_IP} "docker exec -i ${CONTAINER_NAME}_staging php artisan migrate:refresh"
+    - ssh ${DO_PRODUCTION_USER}@${DO_PRODUCTION_IP} "docker exec -i ${CONTAINER_NAME}_staging php artisan db:seed --class=RolesSeeder"
+    - ssh ${DO_PRODUCTION_USER}@${DO_PRODUCTION_IP} "docker exec -i ${CONTAINER_NAME}_staging php artisan db:seed --class=UserSeeder"
+    - ssh ${DO_PRODUCTION_USER}@${DO_PRODUCTION_IP} "docker exec -i ${CONTAINER_NAME}_staging php artisan db:seed --class=ResourceSeeder"
+    - ssh ${DO_PRODUCTION_USER}@${DO_PRODUCTION_IP} "docker exec -i ${CONTAINER_NAME}_staging php artisan db:seed --class=AdministracionSeeder"
+    - ssh ${DO_PRODUCTION_USER}@${DO_PRODUCTION_IP} "docker exec -i ${CONTAINER_NAME}_staging php artisan passport:install --force"
+    - ssh ${DO_PRODUCTION_USER}@${DO_PRODUCTION_IP} "docker exec -i ${CONTAINER_NAME}_staging chown -R www-data:www-data storage/"
+  when: manual
+  only:
+    - master
+
+
+

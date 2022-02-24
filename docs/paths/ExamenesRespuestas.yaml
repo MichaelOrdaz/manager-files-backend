@@ -1,0 +1,34 @@
+post:
+  tags: [ExamenesRespuestas]
+  summary: "Create - ExamenesRespuestas"
+  operationId: createExamenRespuesta
+  description: "Crea una respuesta de una pregunta de examen"
+  parameters:
+    - $ref: "../parameters/path/usuarioId.yaml"
+    - $ref: "../parameters/path/examenId.yaml"
+    - $ref: "../parameters/path/examenesPreguntasId.yaml"
+  requestBody:
+    {
+      description: "Petición en formato json, el atributo <b>observaciones solo puede ser modificado por un usuario Docente",
+      required: true,
+      content:
+        {
+          application/json:
+            { schema: { $ref: "../schemas/ExamenesRespuestas.yaml" } },
+        },
+    }
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/ExamenesRespuestas.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }

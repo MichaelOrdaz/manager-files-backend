@@ -1,0 +1,6 @@
+in: query
+name: todos
+description: Valor para filtrar Todos de coleccion Avisos/Encuesta
+required: false
+schema:
+  type: string

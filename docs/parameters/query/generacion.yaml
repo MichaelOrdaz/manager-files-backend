@@ -1,0 +1,6 @@
+in: query
+name: generacion
+description: Valor para filtrar por generacion los grupos
+required: false
+schema:
+  type: integer

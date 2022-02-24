@@ -1,0 +1,63 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+    readOnly: true
+  email:
+    type: string
+    format: email
+    example: correo@puller.mx
+  email_verified_at:
+    type: string
+    example: "2020-01-01 12:00:00"
+    readOnly: true
+  role:
+    writeOnly: true
+    type: array
+    items:
+      type: string
+      example: "Aspirante a ingreso"
+  roles:
+    readOnly: true
+    type: array
+    items:
+      type: string
+      example: "Aspirante a ingreso"
+  generacion:
+    type: integer
+    example: 6
+  anio_ingreso:
+    type: integer
+    example: 2020
+    pattern: '^\d{4}'
+  activo:
+    type: integer
+    example: 1
+    writeOnly: true
+  firebase_uid:
+    type: string
+    example: Quyas91k
+  datos_generales:
+    readOnly: true
+    allOf:
+      - $ref: "./DatosGeneralesJson.yaml"
+  datos_familiares:
+    readOnly: true
+    type: array
+    items:
+      allOf:
+        - $ref: "./DatosFamiliares.yaml"
+  datos_academicos:
+    readOnly: true
+    allOf:
+      - $ref: "./DatosAcademicos.yaml"
+  puntaje:
+    type: number
+    example: 100.00
+
+
+required:
+  - email
+  - password
+  - role

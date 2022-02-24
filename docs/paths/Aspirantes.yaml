@@ -1,0 +1,57 @@
+get:
+  tags: [Usuarios]
+  summary: "Search - Aspirantes"
+  operationId: listAspirantes
+  description: "Lista usuarios con rol de aspirante"
+  parameters:
+    - $ref: "../parameters/query/page.yaml"
+    - $ref: "../parameters/query/statusAspirante.yaml"
+    - $ref: "../parameters/query/nombre.yaml"
+  responses:
+    200:
+      description: "Estructura básica de la respuesta"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../schemas/Usuarios.yaml"
+              message:
+                type: string
+              success:
+                type: boolean
+                example: true
+              links:
+                $ref: "../meta-datos/links.yaml"
+              meta:
+                $ref: "../meta-datos/paginacion.yaml"
+post:
+  tags: [Usuarios]
+  summary: "Create - Aspirantes"
+  operationId: createAspirantes
+  description: "Crea un nuevo aspirante"
+  requestBody:
+    {
+      description: "Petición en formato json",
+      required: true,
+      content:
+        { application/json: { schema: { $ref: "../schemas/Usuarios.yaml" } } },
+    }
+  responses:
+    {
+      200:
+        {
+          description: "Estructura básica de la respuesta",
+          content:
+            {
+              application/json:
+                { schema: { $ref: "../schemas/Usuarios.yaml" } },
+            },
+        },
+      422: { $ref: "../responses/error422.yaml" },
+      404: { $ref: "../responses/error404.yaml" },
+      401: { $ref: "../responses/error401.yaml" },
+    }

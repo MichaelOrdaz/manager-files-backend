@@ -1,0 +1,65 @@
+type: object
+properties:
+  usuario_id:
+    type: integer
+    example: 1
+  usuario:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Gabino
+      apellido_paterno:
+        type: string
+        example: Cortez
+      apellido_materno:
+        type: string
+        example: Jimenez
+  matricula:
+    type: string
+    example: "291871123SDA"
+  generacion:
+    type: integer
+    example: 2020
+  baja_id:
+    type: integer
+    example: 1
+  baja:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: "Temporal"
+      descripcion:
+        type: string
+        example: "Solo se aplica por un periodo de tiempo"
+  fecha_baja:
+    type: string
+    example: "2022-12-20 23:00:00"
+  status_id:
+    type: integer
+    example: 1
+  status:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      message:
+        type: string
+        example: "No calificado"
+
+required:
+- usuario_id
+- matricula
+- generacion
+- status_id

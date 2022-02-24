@@ -1,0 +1,152 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+  nombre:
+    type: string
+    example: Algebra
+  descripcion:
+    type: string
+    example: Algebra
+  periodo_id:
+    type: integer
+    example: 1
+  periodo:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Semestre 1
+      descripcion:
+        type: string
+        example: Descripción 1
+  grupos:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+          readOnly: true
+        nombre:
+          type: string
+          example: Grupo A
+  componente_id:
+    type: integer
+    example: 1
+  componente:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Componente básico
+      descripcion:
+        type: string
+        example: Componente básico
+  especialidad_id:
+    type: integer
+    example: 1
+  especialidad:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Técnico en Seguridad Pública
+      objetivos:
+        type: string
+        example: ejemplo objetivos
+      planes_de_estudios:
+        type: string
+        example: ejemplo planes de estudios
+      perfil_egresado:
+        type: string
+        example: ejemplo perfil egresado
+  imagen_url:
+    type: string
+    example: http://localhost/imgs/materias/algebra.png
+  requisitos:
+    type: string
+    example: Haber aprobado la materia anterior
+  docentes:
+    type: array
+    items:
+      type: object
+      properties:
+        docente_id:
+          type: integer
+          example: 5
+        docente_nombre_completo:
+          type: string
+          example: "Ing. María Ángeles Aranda Cabello Rincón"
+        grupo_id:
+          type: integer
+          example: 1
+        grupo_nombre:
+          type: string
+          example: "Grupo A para desarrolladores"
+        especialidad_id:
+          type: integer
+          example: 1
+        especialidad_nombre:
+          type: string
+          example: "Bachillerato técnico en seguridad ciudadana"
+        periodo_id:
+          type: integer
+          example: 13
+        periodo_nombre:
+          type: string
+          example: "Periodo para desarrolladores"
+  unidadades:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        nombre:
+          type: string
+          example: unidad 1
+        descripcion:
+          type: string
+          example: Descripcion unidad
+        temas:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              nombre:
+                type: string
+                example: tema 1
+        material_didactico:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            nombre:
+              type: string
+              example: Material didactico 1
+
+
+
+required:
+  - nombre
+  - descripcion
+  - periodo_id
+  - componente_id
+  - especialidad_id

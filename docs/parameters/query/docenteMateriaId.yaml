@@ -1,0 +1,6 @@
+in: query
+name: docenteMateriaId
+description: DocenteMateriaId al que va dirigido el aviso/encuesta
+required: false
+schema:
+  type: string

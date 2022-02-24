@@ -1,0 +1,6 @@
+in: query
+name: rol
+description: Valor string para filtrar por rol
+required: false
+schema:
+  type: string

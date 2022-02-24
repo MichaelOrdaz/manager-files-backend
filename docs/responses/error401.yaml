@@ -1,0 +1,12 @@
+description: No autenticado
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        errors:
+          type: string
+          example: "Unauthorized"
+        success:
+          type: boolean
+          example: false

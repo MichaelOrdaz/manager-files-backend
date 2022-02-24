@@ -1,0 +1,6 @@
+in: query
+name: permiso
+description: Valor string para filtrar por permiso
+required: false
+schema:
+  type: string

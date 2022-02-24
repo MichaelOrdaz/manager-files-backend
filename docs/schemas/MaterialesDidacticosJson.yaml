@@ -1,0 +1,87 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+    readOnly: true
+  nombre:
+    type: string
+    example: Ecuaciones primeros ejercicios
+  descripcion:
+    type: string
+    example: Ecuaciones primeros ejercicios
+  tema:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Ecuaciones diferenciales
+  tipo_material_id:
+    type: integer
+    example: 1
+  material:
+    readOnly: true
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Material 1
+  archivo_url:
+    type: string
+    example: http://localhost/ecuaciones-ejercicios.png
+    readOnly: true
+  creador_id:
+    type: integer
+    example: 1
+  creador:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      email:
+        type: string
+        format: email
+        example: correo@puller.mx
+  usuario_id:
+    type: integer
+    example: 1
+  usuario:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      email:
+        type: string
+        format: email
+        example: correo@puller.mx
+  alumno_material_didactico:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      usuario_id:
+        type: integer
+        example: 1
+      material_didactico_id:
+        type: integer
+        example: 1
+  activo:
+    type: integer
+    example: 1
+
+
+required:
+  - nombre
+  - descripcion
+  - tipo_material_id
+  - activo

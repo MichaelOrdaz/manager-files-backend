@@ -1,0 +1,64 @@
+<?php
+
+namespace Tests\Feature\[% model_name %];
+
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
+use App\Models\[% model_name %];
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
+
+class [% model_name %]RolesEndPointsTest extends TestCase
+{
+    use DatabaseTransactions;
+
+    protected $[% model_name_singular_variable %];
+    protected $usuario;
+
+    public function test_[% model_name_singular_variable %]_endpoints_para_Role()
+    {
+      //Create
+      $this->usuario->syncRoles(['role']);
+      $response = $this->post("/[% model_name_singular_variable %]",[
+        // code ...
+      ]);
+      $response->assertStatus(200);
+
+      // list
+      $response = $this->get("/[% model_name_singular_variable %]");
+      $response->assertStatus(200);
+
+      // get
+      $response = $this->get("/[% model_name_singular_variable %]/".$this->[% model_name_singular_variable %]->id);
+      $response->assertStatus(200);
+
+      // update
+      $response = $this->put("/[% model_name_singular_variable %]/".$this->[% model_name_singular_variable %]->id,[
+        // code ...
+      ]);
+      $response->assertStatus(200);
+
+      $response = $this->delete("/[% model_name_singular_variable %]/".$this->[% model_name_singular_variable %]->id);
+      $response->assertStatus(403);
+    }
+
+    public function setUp():void{
+      parent::setUp();
+
+      $this->usuario = User::create([
+        'email' => 'admin_test@puller.mx',
+        'password' => Hash::make('12345'),
+        'activo' =>   true,
+        'firebase_uid' => 'kJK1CRjkci9mCY7CuN',
+        'email_verified_at' => Carbon::now(),
+      ]);
+      //uso ese usuario como el usuario autenticado en cada petición
+      $this->actingAs($this->usuario, 'api');
+
+      $this->[% model_name_singular_variable %] = [% model_name %]::find(1);
+    }
+}

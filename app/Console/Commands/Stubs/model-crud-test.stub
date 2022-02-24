@@ -1,0 +1,89 @@
+<?php
+
+namespace Tests\Feature\[% model_name %];
+
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
+use App\Models\[% model_name %];
+
+class [% model_name %]CrudTest extends TestCase
+{
+    use DatabaseTransactions;
+
+    public function test_[% model_name_singular_variable %]_crud_create()
+    {
+      $response = $this->post("/[% model_name_singular_variable %]",[
+        // code ...
+      ]);
+
+      $response->assertStatus(200)
+      ->assertJsonStructure([
+        // code ...
+      ]);
+    }
+
+    public function test_[% model_name_singular_variable %]_crud_list()
+    {
+      $response = $this->get("/[% model_name_singular_variable %]");
+      $response->assertStatus(200)
+      ->assertJsonStructure([
+        // code ...
+      ]);
+    }
+
+    public function test_[% model_name_singular_variable %]_crud_get()
+    {
+      $response = $this->get("/[% model_name_singular_variable %]/1");
+      $response->assertStatus(200)
+      ->assertJsonStructure([
+        // code ...
+      ]);
+    }
+
+    public function test_[% model_name_singular_variable %]_crud_update()
+    {
+      $response = $this->put("/[% model_name_singular_variable %]/1",[
+        // code ...
+      ]);
+
+      $response->assertStatus(200)
+      ->assertJsonStructure([
+        // code ...
+      ]);
+
+      $[% model_name_singular_variable %]Update = [% model_name %]::find(1);
+      $this->assertEquals($[% model_name_singular_variable %]Update->property,"...");
+    }
+
+    public function test_[% model_name_singular_variable %]_crud_delete()
+    {
+      $response = $this->delete("/[% model_name_singular_variable %]/1");
+      $response->assertStatus(200)
+      ->assertJsonStructure([
+        // code ...
+      ]);
+
+      $[% model_name_singular_variable %]Delete = [% model_name %]::find(1);
+      $this->assertEquals($[% model_name_singular_variable %]Delete,NULL);
+    }
+
+    public function setUp():void{
+      parent::setUp();
+
+      // Usuario que se usara para las peticiones
+      $usuario = User::create([
+        'email' => 'adminTest@puller.mx',
+        'password' => Hash::make('12345'),
+        'activo' =>   true,
+        'firebase_uid' => 'kJK1CRjkci9mCY7CuN',
+        'email_verified_at' => Carbon::now(),
+      ]);
+      // Asignación de rol con todos los permisos crud
+      $usuario->assignRole('Admin');
+      //Se esa este usuario como el usuario autenticado en cada petición
+      $this->actingAs($usuario, 'api');
+    }
+}

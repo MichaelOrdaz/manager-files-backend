@@ -1,0 +1,4 @@
+<tr>
+  <td><strong>[% field_title %]</strong></td>
+  <td>{{ [% field_value %] }}</td>
+</tr>
