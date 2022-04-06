@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\TipoDeDocumento;
+use App\Models\Documento;
 use Illuminate\Http\Request;
 
-class TiposDeDocumentosController extends Controller
+class DocumentoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class TiposDeDocumentosController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\TiposDeDocumentos  $tiposDeDocumentos
+     * @param  \App\Models\Documentos  $documentos
      * @return \Illuminate\Http\Response
      */
-    public function show(TipoDeDocumento $tiposDeDocumentos)
+    public function show(Documento $documentos)
     {
         //
     }
@@ -52,10 +52,10 @@ class TiposDeDocumentosController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\TiposDeDocumentos  $tiposDeDocumentos
+     * @param  \App\Models\Documentos  $documentos
      * @return \Illuminate\Http\Response
      */
-    public function edit(TipoDeDocumento $tiposDeDocumentos)
+    public function edit(Documento $documentos)
     {
         //
     }
@@ -64,10 +64,10 @@ class TiposDeDocumentosController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\TiposDeDocumentos  $tiposDeDocumentos
+     * @param  \App\Models\Documentos  $documentos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TipoDeDocumento $tiposDeDocumentos)
+    public function update(Request $request, Documento $documentos)
     {
         //
     }
@@ -75,10 +75,10 @@ class TiposDeDocumentosController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\TiposDeDocumentos  $tiposDeDocumentos
+     * @param  \App\Models\Documentos  $documentos
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TipoDeDocumento $tiposDeDocumentos)
+    public function destroy(Documento $documentos)
     {
         //
     }

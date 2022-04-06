@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\Documentos;
+use App\Models\AccionHistorial;
 use Illuminate\Http\Request;
 
-class DocumentosController extends Controller
+class AccionHistorialController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class DocumentosController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Documentos  $documentos
+     * @param  \App\Models\AccionHistorial  $accionHistorial
      * @return \Illuminate\Http\Response
      */
-    public function show(Documentos $documentos)
+    public function show(AccionHistorial $accionHistorial)
     {
         //
     }
@@ -52,10 +52,10 @@ class DocumentosController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Documentos  $documentos
+     * @param  \App\Models\AccionHistorial  $accionHistorial
      * @return \Illuminate\Http\Response
      */
-    public function edit(Documentos $documentos)
+    public function edit(AccionHistorial $accionHistorial)
     {
         //
     }
@@ -64,10 +64,10 @@ class DocumentosController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Documentos  $documentos
+     * @param  \App\Models\AccionHistorial  $accionHistorial
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Documentos $documentos)
+    public function update(Request $request, AccionHistorial $accionHistorial)
     {
         //
     }
@@ -75,10 +75,10 @@ class DocumentosController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Documentos  $documentos
+     * @param  \App\Models\AccionHistorial  $accionHistorial
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Documentos $documentos)
+    public function destroy(AccionHistorial $accionHistorial)
     {
         //
     }
