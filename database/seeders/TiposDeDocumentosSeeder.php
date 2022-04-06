@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\TiposDeDocumentos;
+use App\Models\TipoDeDocumento;
 use Illuminate\Database\Seeder;
 
 class TiposDeDocumentosSeeder extends Seeder
@@ -14,11 +14,11 @@ class TiposDeDocumentosSeeder extends Seeder
      */
     public function run()
     {
-        TiposDeDocumentos::create([
+        TipoDeDocumento::create([
             'nombre' => 'Carpeta'
         ]);
 
-        TiposDeDocumentos::create([
+        TipoDeDocumento::create([
             'nombre' => 'Archivo'
         ]);
     }
