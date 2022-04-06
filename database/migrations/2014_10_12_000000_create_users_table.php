@@ -16,16 +16,19 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('email');
-            $table->string('nombre');
-            $table->string('paterno');
-            $table->string('materno');
-            $table->string('celular');
-            $table->string('imagen');
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
+            $table->string('nombre');
+            $table->string('paterno')->nullable();
+            $table->string('materno')->nullable();
+            $table->string('celular')->nullable();
+            $table->string('imagen')->nullable();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->unsignedBigInteger('departamento_id')->comment('departamento al que pertenece el usuario');
+            $table->rememberToken()->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('departamento_id')->references('id')->on('departamentos');
         });
     }
 
