@@ -75,4 +75,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Historial::class, 'user_id', 'id');
     }
+
+    public function compartidos()
+    {
+        return $this->belongsToMany(Documento::class, 'documento_usuario', 'user_id', 'documento_id');
+    }
 }

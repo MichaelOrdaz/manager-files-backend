@@ -40,4 +40,9 @@ class Documento extends Model
     {
         return $this->belongsTo(Departamento::class, 'departamento_id', 'id');
     }
+
+    public function compartidos()
+    {
+        return $this->belongsToMany(User::class, 'documento_usuario', 'documento_id', 'user_id');
+    }
 }
