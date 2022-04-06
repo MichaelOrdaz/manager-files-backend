@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Departamento;
+use App\Models\TiposDeDocumentos;
 use Illuminate\Http\Request;
 
-class DepartamentoController extends Controller
+class TiposDeDocumentosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class DepartamentoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Departamento  $departamento
+     * @param  \App\Models\TiposDeDocumentos  $tiposDeDocumentos
      * @return \Illuminate\Http\Response
      */
-    public function show(Departamento $departamento)
+    public function show(TiposDeDocumentos $tiposDeDocumentos)
     {
         //
     }
@@ -52,10 +52,10 @@ class DepartamentoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Departamento  $departamento
+     * @param  \App\Models\TiposDeDocumentos  $tiposDeDocumentos
      * @return \Illuminate\Http\Response
      */
-    public function edit(Departamento $departamento)
+    public function edit(TiposDeDocumentos $tiposDeDocumentos)
     {
         //
     }
@@ -64,10 +64,10 @@ class DepartamentoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Departamento  $departamento
+     * @param  \App\Models\TiposDeDocumentos  $tiposDeDocumentos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Departamento $departamento)
+    public function update(Request $request, TiposDeDocumentos $tiposDeDocumentos)
     {
         //
     }
@@ -75,10 +75,10 @@ class DepartamentoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Departamento  $departamento
+     * @param  \App\Models\TiposDeDocumentos  $tiposDeDocumentos
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Departamento $departamento)
+    public function destroy(TiposDeDocumentos $tiposDeDocumentos)
     {
         //
     }
