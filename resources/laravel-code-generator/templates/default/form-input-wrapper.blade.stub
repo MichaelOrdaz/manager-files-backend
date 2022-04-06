@@ -1,5 +1,0 @@
-<div class="form-group {{ $errors->has('[% field_name %]') ? 'has-danger' : '' }}">
-  [% field_label %]
-  [% field_input %]
-  [% field_validation_helper %]
-</div>

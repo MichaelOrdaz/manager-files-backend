@@ -1,1 +1,0 @@
-{!! $errors->first('[% field_name %]', '<small class="form-control-feedback">:message</small>') !!}

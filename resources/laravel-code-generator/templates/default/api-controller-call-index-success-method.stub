@@ -1,9 +1,0 @@
-$[% data_variable %] = $[% model_name_plural_variable %]->transform(function ($[% model_name_singular_variable %]) {
-            return $this->transform($[% model_name_singular_variable %]);
-        });
-
-        return $this->successResponse(
-            [% models_were_retrieved %],
-            $[% data_variable %],
-            $this->pagination($[% model_name_plural_variable %])
-        );

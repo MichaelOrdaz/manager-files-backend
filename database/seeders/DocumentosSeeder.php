@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class DesarrolloSeeder extends Seeder
+class DocumentosSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,7 +13,6 @@ class DesarrolloSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-        ]);
+        //
     }
 }
