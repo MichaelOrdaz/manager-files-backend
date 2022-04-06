@@ -19,7 +19,6 @@ class UserSeeder extends Seeder
         $user = User::create([
             'email' => 'webmaster@puller.mx',
             'password' => Hash::make('12345678'),
-            'activo' =>   true,
             'firebase_uid' => 'sYrJNFrpSK1vKNRbODfS',
             'email_verified_at' => Carbon::now(),
         ]);

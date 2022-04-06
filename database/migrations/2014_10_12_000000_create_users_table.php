@@ -15,19 +15,17 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
-            $table->string('email_zoom')->nullable();
+            $table->string('email');
+            $table->string('nombre');
+            $table->string('paterno');
+            $table->string('materno');
+            $table->string('celular');
+            $table->string('imagen');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('password_zoom')->nullable();
             $table->rememberToken();
-            $table->string('firebase_uid')->nullable();
-            $table->unsignedBigInteger('tutor_id')->nullable()->comment('Usuario que es tutor (Rol: Padre de familia) del usuario con rol alumno');
-            $table->boolean('activo')->default(1);
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('tutor_id')->references('id')->on('users');
         });
     }
 

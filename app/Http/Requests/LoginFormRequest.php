@@ -27,11 +27,9 @@ class LoginFormRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'email' => 'required|string',
+            'email' => 'required|email',
             'password' => 'required|string',
-            'remember_me' => 'boolean'
         ];
-
         return $rules;
     }
 
@@ -45,16 +43,5 @@ class LoginFormRequest extends FormRequest
     {
         $data = $this->validated();
         return $data;
-    }
-
-
-    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
-    {
-        $response = new \Illuminate\Http\Response([
-            'errors' => $validator->errors()->all(),
-            'success' => false,
-        ], 422);
-
-        throw new \Illuminate\Validation\ValidationException($validator, $response);
     }
 }
