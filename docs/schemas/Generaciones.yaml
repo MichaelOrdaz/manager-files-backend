@@ -1,7 +1,0 @@
-type: object
-properties:
-  generaciones:
-    type: array
-    items:
-      type: integer
-      example: 1
