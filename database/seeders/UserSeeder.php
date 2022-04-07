@@ -30,6 +30,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'remember_token' => $faker->word(),
         ]);
+        $admin->assignRole('Administrador');
 
         $jefe1 = User::create([
             'email' => 'jefe1@puller.mx',
@@ -42,10 +43,10 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'remember_token' => $faker->word(),
         ]);
-
         $departamento1 = Departamento::all()->random();
         $jefe1->departamento()->associate($departamento1);
         $jefe1->save();
+        $jefe1->assignRole('Jefe de departamento');
 
         $jefe2 = User::create([
             'email' => 'jefe2@puller.mx',
@@ -61,6 +62,7 @@ class UserSeeder extends Seeder
         $departamento2 = Departamento::all()->random();
         $jefe2->departamento()->associate($departamento2);
         $jefe2->save();
+        $jefe2->assignRole('Jefe de departamento');
 
         $analista = User::create([
             'email' => 'analista1@puller.mx',
@@ -75,6 +77,7 @@ class UserSeeder extends Seeder
         ]);
         $analista->departamento()->associate($departamento1);
         $analista->save();
+        $analista->assignRole('Analista');
 
         $analista2 = User::create([
             'email' => 'analista1@puller.mx',
@@ -89,5 +92,6 @@ class UserSeeder extends Seeder
         ]);
         $analista2->departamento()->associate($departamento2);
         $analista2->save();
+        $analista2->assignRole('Analista');
     }
 }
