@@ -15,9 +15,9 @@ class CreateHistorialsTable extends Migration
     {
         Schema::create('historial', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('documento_id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('accion_id');
+            $table->unsignedBigInteger('documento_id')->nullable()->comment('documento al cual se le lleva el seguimiento');
+            $table->unsignedBigInteger('user_id')->nullable()->comment('usuario que realizo la accion sobre el documento');
+            $table->unsignedBigInteger('accion_id')->nullable()->comment('el tipo de accion que realizo el usuario');
             $table->timestamps();
             $table->softDeletes();
 

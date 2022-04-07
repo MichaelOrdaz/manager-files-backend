@@ -1,14 +1,14 @@
 openapi: 3.0.0
 info:
-  title: Bachiller API
-  description: Bachiller API
+  title: DIXA API
+  description: Proyecto DIXA API, gestión de documentación
   version: 0.0.1
 servers:
   - url: http://localhost:8000/api/v1
-    description: Sevidor local
-  - url: http://api.qa-bachiller.puller.mx/api/v1
+    description: Servidor local
+  - url: http://api.qa-dixa.puller.mx/api/v1
     description: Servidor de qa
-  - url: http://staging-bachiller.puller.mx
+  - url: http://staging-dixa.puller.mx
     description: Servidor de staging
 
 paths:
