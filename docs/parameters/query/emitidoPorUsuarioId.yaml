@@ -1,6 +1,0 @@
-in: query
-name: emitidoPorUsuarioId
-description: Usuario que emitio el aviso/encuesta
-required: false
-schema:
-  type: string

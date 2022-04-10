@@ -1,6 +1,0 @@
-in: query
-name: periodoIdByGrupo
-description: Obtiene las tareas a traves del periodo del grupo
-required: false
-schema:
-  type: string

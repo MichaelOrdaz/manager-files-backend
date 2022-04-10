@@ -1,6 +1,0 @@
-name: pregunta_tipo_id
-in: path
-description: id del tipo de pregunta
-schema:
-  type: integer
-required: true

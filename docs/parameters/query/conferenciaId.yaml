@@ -1,6 +1,0 @@
-in: query
-name: conferenciaId
-description: Id de la conferencia
-required: false
-schema:
-  type: string

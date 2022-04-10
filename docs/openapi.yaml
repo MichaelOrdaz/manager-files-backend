@@ -8,19 +8,23 @@ servers:
     description: Servidor local
   - url: http://api.qa-dixa.puller.mx/api/v1
     description: Servidor de qa
-  - url: http://staging-dixa.puller.mx
+  - url: http://staging-dixa.puller.mx/api/v1
     description: Servidor de staging
 
 paths:
   /login:
-    $ref: "./paths/Auth.yaml"
+    $ref: './paths/Login.yaml'
+  /logout:
+    $ref: './paths/Logout.yaml'
+  /account:
+    $ref: './paths/Account.yaml'
 
 components:
   schemas:
-    $ref: "./schemas/_index.yaml"
+    $ref: './schemas/_index.yaml'
 
   parameters:
-    $ref: "./parameters/_index.yaml"
+    $ref: './parameters/_index.yaml'
 
   securitySchemes:
     bearerAuth:            # arbitrary name for the security scheme
@@ -29,7 +33,7 @@ components:
       bearerFormat: JWT    # optional, arbitrary value for documentation purposes
 
   responses:
-    $ref: "./responses/_index.yaml"
+    $ref: './responses/_index.yaml'
 
 security:
   - bearerAuth: []

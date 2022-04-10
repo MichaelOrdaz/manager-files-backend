@@ -1,23 +1,20 @@
 post:
   tags: 
-    - Login
-  security: []
-  summary: Login de usuarios
-  operationId: login
-  description: login de usuario para la plataforma
-  requestBody: 
-    description: Petición en formato json
-    content: 
-      application/json:
-        schema:
-          $ref: '../schemas/Login.yaml'
+    - Auth
+  summary: Logout de usuarios
+  operationId: logout
+  description: elimina el token del usuario que realiza la petición
   responses:
     '200': 
       description: "Estructura básica de la respuesta"
       content: 
         application/json: 
           schema:
-            $ref: '../schemas/Auth.yaml'
+            type: object
+            properties:
+              message:
+                type: string
+                example: Ok
     '400':
       $ref: "../responses/error400.yaml"
     '401':

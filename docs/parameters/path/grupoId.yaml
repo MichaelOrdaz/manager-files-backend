@@ -1,6 +1,0 @@
-name: grupo_id
-in: path
-description: id del grupo
-schema:
-  type: integer
-required: true

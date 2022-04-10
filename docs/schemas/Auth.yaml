@@ -4,8 +4,7 @@ properties:
     type: string
     example: "AS599879879sa87d98a7sd987ae7987a9"
   user:
-    type: string
-    example: "2023-02-23 21:48:26"
+    $ref: "./Usuarios.yaml"
   message:
     type: string
     example: Ok

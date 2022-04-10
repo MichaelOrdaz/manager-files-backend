@@ -6,3 +6,5 @@ Login:
   $ref: './Login.yaml'
 Auth:
   $ref: './Auth.yaml'
+Account:
+  $ref: './Account.yaml'

@@ -8,13 +8,13 @@ servers:
     description: Servidor local
   - url: 'http://api.qa-dixa.puller.mx/api/v1'
     description: Servidor de qa
-  - url: 'http://staging-dixa.puller.mx'
+  - url: 'http://staging-dixa.puller.mx/api/v1'
     description: Servidor de staging
 paths:
   /login:
     post:
       tags:
-        - Login
+        - Auth
       security: []
       summary: Login de usuarios
       operationId: login
@@ -32,6 +32,58 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Auth'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+  /logout:
+    post:
+      tags:
+        - Auth
+      summary: Logout de usuarios
+      operationId: logout
+      description: elimina el token del usuario que realiza la petición
+      responses:
+        '200':
+          description: Estructura básica de la respuesta
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Ok
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+  /account:
+    get:
+      tags:
+        - Auth
+      summary: Cuenta
+      operationId: account
+      description: información del  usuario para la plataforma actualmente autenticado
+      responses:
+        '200':
+          description: Estructura básica de la respuesta
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -65,606 +117,116 @@ components:
           type: string
           example: AS599879879sa87d98a7sd987ae7987a9
         user:
-          type: string
-          example: '2023-02-23 21:48:26'
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+              readOnly: true
+            email:
+              type: string
+              format: email
+              example: correo@puller.mx
+            email_verified_at:
+              type: string
+              example: '2020-01-01 12:00:00'
+              readOnly: true
+            nombre:
+              type: string
+              example: John
+            paterno:
+              type: string
+              example: Doe
+            materno:
+              type: string
+              example: Roblox
+            celular:
+              type: string
+              example: 55 54 89 67 87
+            password:
+              type: string
+              format: password
+              example: C0ntr4s3n14
+            imagen_file:
+              type: string
+              format: binary
+              nullable: true
+              writeOnly: true
+            imagen:
+              type: string
+              format: url
+              nullable: true
+              readOnly: true
+              example: 'https://s3.amazon/profile/46798a7fsd98f79asd8f7'
+            departamento_id:
+              type: integer
+              nullable: true
+              example: 1
+            departamento:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                nombre:
+                  type: string
+                  example: Recursos Humanos
+              nullable: true
+              readOnly: true
+          required:
+            - email
+            - nombre
+            - paterno
+            - materno
+            - password
         message:
           type: string
           example: Ok
         success:
           type: boolean
           example: true
-  parameters:
-    filter:
-      in: query
-      name: filter
-      description: filtro por string
-      required: true
-      schema:
-        type: string
-    page:
-      in: query
-      name: page
-      description: Número de la página a consultar
-      required: false
-      schema:
-        type: integer
-    tipoId:
-      in: query
-      name: tipoId
-      description: Valor para filtrar por campo tipo_id
-      required: false
-      schema:
-        type: integer
-    nombre:
-      in: query
-      name: nombre
-      description: Valor para filtrar por campo nombre
-      required: false
-      schema:
-        type: string
-    pregunta:
-      in: query
-      name: pregunta
-      description: Valor para filtrar por campo pregunta
-      required: false
-      schema:
-        type: string
-    materiaId:
-      in: query
-      name: materiaId
-      description: Valor para filtrar por campo materia_id
-      required: false
-      schema:
-        type: integer
-    statusAspirante:
-      in: query
-      name: statusAspirante
-      description: 'Valor para filtrar por el status del aspirante, puede ser.. Todos, Calificados, Rechazados, Aceptados, No calificados'
-      required: false
-      schema:
-        type: string
-    rol:
-      in: query
-      name: rol
-      description: Valor string para filtrar por rol
-      required: false
-      schema:
-        type: string
-    permiso:
-      in: query
-      name: permiso
-      description: Valor string para filtrar por permiso
-      required: false
-      schema:
-        type: string
-    docenteId:
-      name: docenteId
-      in: query
-      description: Id del usuario docente
-      schema:
-        type: integer
-    periodoIdByGrupo:
-      in: query
-      name: periodoIdByGrupo
-      description: Obtiene las tareas a traves del periodo del grupo
-      required: false
-      schema:
-        type: string
-    periodoIdByMateria:
-      in: query
-      name: periodoIdByMateria
-      description: Obtiene las tareas a traves del periodo de la materia
-      required: false
-      schema:
-        type: string
-    grupoId:
-      in: query
-      name: grupoId
-      description: Valor para filtrar por id de grupo
-      required: false
-      schema:
-        type: integer
-    generacion:
-      in: query
-      name: generacion
-      description: Valor para filtrar por generacion los grupos
-      required: false
-      schema:
-        type: integer
-    temaId:
-      in: query
-      name: temaId
-      description: Valor para filtrar por campo tema_id
-      required: false
-      schema:
-        type: integer
-    fechaInicio:
-      in: query
-      name: fechaInicio
-      description: Valor de inicio para filtrar por rango de fechas
-      required: false
-      schema:
-        type: string
-    docenteMateriaId:
-      in: query
-      name: docenteMateriaId
-      description: DocenteMateriaId al que va dirigido el aviso/encuesta
-      required: false
-      schema:
-        type: string
-    especialidadPeriodoGrupoId:
-      in: query
-      name: especialidadPeriodoGrupoId
-      description: Id de la EspecialidadPeriodoGrupo
-      required: false
-      schema:
-        type: string
-    emitidoPorRol:
-      in: query
-      name: emitidoPorRol
-      description: Rol que emitio el aviso/encuesta
-      required: false
-      schema:
-        type: string
-    emitidoPorUsuarioId:
-      in: query
-      name: emitidoPorUsuarioId
-      description: Usuario que emitio el aviso/encuesta
-      required: false
-      schema:
-        type: string
-    dirigidoARol:
-      in: query
-      name: dirigidoARol
-      description: Rol al que va dirigido el aviso/encuesta
-      required: false
-      schema:
-        type: string
-    fecha:
-      in: query
-      name: fecha
-      description: '<b>Opciones</b> <br><b>Semana actual:</b> retorna los examenes y tareas de de la semana actual <br><b>Semana anterior:</b> retorna los examenes y tareas de de la semana anterior <br><b>Semana siguiente:</b> retorna los examenes y tareas de de la semana siguiente'
-      required: false
-      schema:
-        type: string
-    conferenciaStatus:
-      in: query
-      name: conferenciaStatus
-      description: Valor para filtrar por campo status
-      required: false
-      schema:
-        type: string
-    numberMeeting:
-      in: query
-      name: numberMeeting
-      description: Valor opcional del meeting para la signature
-      required: false
-      schema:
-        type: string
-    alumnoId:
-      name: alumnoId
-      in: query
-      description: Id del usuario alumno
-      schema:
-        type: string
-    conferencia_id:
-      in: query
-      name: conferenciaId
-      description: Id de la conferencia
-      required: false
-      schema:
-        type: string
-    fechaFin:
-      in: query
-      name: fechaFin
-      description: Valor de finalización para filtrar por rango de fechas
-      required: false
-      schema:
-        type: string
-    materialId:
-      in: query
-      name: materialId
-      description: Valor para filtrar por id del material didáctico
-      required: false
-      schema:
-        type: integer
-    todos:
-      in: query
-      name: todos
-      description: Valor para filtrar Todos de coleccion Avisos/Encuesta
-      required: false
-      schema:
-        type: string
-    matricula:
-      in: query
-      name: matricula
-      description: Valor para filtrar por campo matricula
-      required: false
-      schema:
-        type: string
-    email:
-      in: query
-      name: email
-      description: Valor para filtrar por campo email
-      required: false
-      schema:
-        type: string
-    usuarioId:
-      in: query
-      name: usuarioId
-      description: Valor para filtrar por id
-      required: false
-      schema:
-        type: integer
-    acusadoId:
-      name: acusadoId
-      in: query
-      description: Id del usuario que es acusado
-      schema:
-        type: integer
-    alumnosSinGrupo:
-      in: query
-      name: alumnosSinGrupo
-      description: True - trae los alumnos que tienen relacionado un grupo
-      required: false
-      schema:
-        type: integer
-    estado_id:
-      name: estado_id
-      in: path
-      description: id del estado
-      schema:
-        type: integer
-      required: true
-    id:
-      name: id
-      in: path
-      description: ID del contenido o slug para buscar
-      schema:
-        type: string
-      required: true
-    municipio_id:
-      name: municipio_id
-      in: path
-      description: id del municipio
-      schema:
-        type: integer
-      required: true
-    material_id:
-      name: material_id
-      in: path
-      description: id del tipos de material didáctico
-      schema:
-        type: integer
-      required: true
-    usuario_id:
-      name: usuario_id
-      in: path
-      description: id del usuario
-      schema:
-        type: integer
-      required: true
-    componente_id:
-      name: componente_id
-      in: path
-      description: id del componente
-      schema:
-        type: integer
-      required: true
-    aviso_id:
-      name: aviso_id
-      in: path
-      description: id del aviso
-      schema:
-        type: integer
-      required: true
-    examen_tipo_id:
-      name: examen_tipo_id
-      in: path
-      description: id del tipo de examen
-      schema:
-        type: integer
-      required: true
-    pregunta_tipo_id:
-      name: pregunta_tipo_id
-      in: path
-      description: id del tipo de pregunta
-      schema:
-        type: integer
-      required: true
-    examenes_respuestas_id:
-      name: examenes_respuestas_id
-      in: path
-      description: id de la respuesta a la pregunta del examen
-      schema:
-        type: integer
-      required: true
-    examenes_preguntas_id:
-      name: examenes_preguntas_id
-      in: path
-      description: id de la pregunta del examen
-      schema:
-        type: integer
-      required: true
-    examenes_calificaciones_id:
-      name: examenes_calificaciones_id
-      in: path
-      description: id de la calificación del examen
-      schema:
-        type: integer
-      required: true
-    examen_id:
-      name: examen_id
-      in: path
-      description: id del examen
-      schema:
-        type: integer
-      required: true
-    grupo_id:
-      name: grupo_id
-      in: path
-      description: id del grupo
-      schema:
-        type: integer
-      required: true
-    especialidad_id:
-      name: especialidad_id
-      in: path
-      description: id de la especialidad
-      schema:
-        type: integer
-      required: true
-    actividades_id:
-      name: actividades_id
-      in: path
-      description: id de la actividad
-      schema:
-        type: integer
-      required: true
-    periodo_extra_id:
-      name: periodo_extra_id
-      in: path
-      description: id del periodo contenido extra
-      schema:
-        type: integer
-      required: true
-    periodo_id:
-      name: periodo_id
-      in: path
-      description: id del periodo
-      schema:
-        type: integer
-      required: true
-    repositorio_id:
-      name: repositorio_id
-      in: path
-      description: id del repositorio material didáctico
-      schema:
-        type: integer
-      required: true
-    tarea_enviada_id:
-      name: tarea_enviada_id
-      in: path
-      description: id de la tarea enviada
-      schema:
-        type: integer
-      required: true
-    tarea_id:
-      name: tarea_id
-      in: path
-      description: id de la tarea
-      schema:
-        type: integer
-      required: true
-    materia_id:
-      name: materia_id
-      in: path
-      description: id de la materia
-      schema:
-        type: integer
-      required: true
-    tema_id:
-      name: tema_id
-      in: path
-      description: id del tema
-      schema:
-        type: integer
-      required: true
-    tutoria_id:
-      name: tutoria_id
-      in: path
-      description: id de la tutoría
-      schema:
-        type: integer
-      required: true
-    encuesta_id:
-      name: encuesta_id
-      in: path
-      description: id de la encuesta
-      schema:
-        type: integer
-      required: true
-    encuestas_preguntas_id:
-      name: encuestas_preguntas_id
-      in: path
-      description: id de la pregunta
-      schema:
-        type: integer
-      required: true
-    encuestas_respuestas_id:
-      name: encuestas_respuestas_id
-      in: path
-      description: id de la respuesta de una encuesta
-      schema:
-        type: integer
-      required: true
-    datos_generales_id:
-      name: datos_generales_id
-      in: path
-      description: id de datos generales
-      schema:
-        type: integer
-      required: true
-    banco_pregunta_id:
-      name: banco_pregunta_id
-      in: path
-      description: id de ExamenBancoPreguntas
-      schema:
-        type: integer
-      required: true
-    datos_familiares_id:
-      name: datos_familiares_id
-      in: path
-      description: id de datos familiares
-      schema:
-        type: integer
-      required: true
-    datos_academicos_id:
-      name: datos_academicos_id
-      in: path
-      description: id de datos academicos
-      schema:
-        type: integer
-      required: true
-    configuracion_admision_id:
-      name: configuracion_admision_id
-      in: path
-      description: id de la configuración admisión
-      schema:
-        type: integer
-      required: true
-    unidad_id:
-      name: unidad_id
-      in: path
-      description: id de la unidad
-      schema:
-        type: integer
-      required: true
-    especialidadId:
-      in: query
-      name: especialidadId
-      description: Valor para filtrar por campo especialidad_id
-      required: false
-      schema:
-        type: integer
-    periodoId:
-      in: query
-      name: periodoId
-      description: Valor para filtrar por campo periodo_id
-      required: false
-      schema:
-        type: integer
-    unidadId:
-      in: query
-      name: unidadId
-      description: Valor para filtrar por campo unidad_id
-      required: false
-      schema:
-        type: integer
-    especialidad_periodo_id:
-      name: especialidad_periodo_id
-      in: path
-      description: id de la relacion de una especialidad con un periodo
-      schema:
-        type: integer
-      required: true
-    contenido_extra_id:
-      name: contenido_extra_id
-      in: path
-      description: id de contenido extra
-      schema:
-        type: integer
-      required: true
-    bajaTipoId:
-      name: bajaTipoId
-      in: query
-      description: Id del tipo de baja del estudiante
-      schema:
-        type: integer
-    especialidad_periodo_grupo_id:
-      name: especialidad_periodo_grupo_id
-      in: path
-      description: id de EspecialidadPeriodoGrupo
-      schema:
-        type: integer
-      required: true
-    configuracionId:
-      name: configuracion_id
-      in: path
-      description: id de la configuración
-      schema:
-        type: integer
-      required: true
-    conferenciaId:
-      name: conferencia_id
-      in: path
-      description: id de la conferencia
-      schema:
-        type: integer
-      required: true
-    docente_materia_id:
-      name: docente_materia_id
-      in: path
-      description: id de DocenteMateria
-      schema:
-        type: integer
-      required: true
-    uuid:
-      name: uuid
-      in: path
-      description: uuid de elemento
-      schema:
-        type: string
-      required: true
-    rubrica_id:
-      name: rubrica_id
-      in: path
-      description: id de la rubrica
-      schema:
-        type: integer
-      required: true
-    evento_id:
-      name: evento_id
-      in: path
-      description: id del evento
-      schema:
-        type: integer
-      required: true
-    infraccion_id:
-      name: infraccion_id
-      in: path
-      description: id de la infracción
-      schema:
-        type: integer
-      required: true
-    curp:
-      name: curp
-      in: path
-      description: curp a comprobar si existe
-      schema:
-        type: string
-      required: true
-    examen_grupo_id:
-      name: examen_grupo_id
-      in: path
-      description: id del examen grupo
-      schema:
-        type: integer
-      required: true
-    rolAcusado:
-      in: query
-      name: rolAcusado
-      description: Valor string para filtrar por rol del acusado
-      required: false
-      schema:
-        type: string
-    materiasDeLaEspecialidadPeriodoGrupoId:
-      in: query
-      name: materiasDeLaEspecialidadPeriodoGrupoId
-      description: Id de la EspecialidadPeriodoGrupo en el cual se buscaran las materias y a partir de ahi se obtendras los avisos de esas materias de esa especialidad periodo grupo id
-      required: false
-      schema:
-        type: string
+    Account:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            user:
+              $ref: '#/components/schemas/Auth/properties/user'
+            roles:
+              type: array
+              items:
+                type: string
+                example:
+                  - Administrador
+            permissions:
+              type: object
+              properties:
+                nombre.permiso:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+            views:
+              type: object
+              properties:
+                nombre.permiso.vista:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    path:
+                      type: integer
+                      example: /dashboard
+        message:
+          type: string
+          example: Ok
+        success:
+          type: boolean
+          example: true
+  parameters: null
   securitySchemes:
     bearerAuth:
       type: http

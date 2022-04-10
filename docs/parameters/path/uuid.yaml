@@ -1,6 +1,0 @@
-name: uuid
-in: path
-description: uuid de elemento
-schema:
-  type: string
-required: true

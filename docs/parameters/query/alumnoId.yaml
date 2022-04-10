@@ -1,5 +1,0 @@
-name: alumnoId
-in: query
-description: Id del usuario alumno
-schema:
-  type: string

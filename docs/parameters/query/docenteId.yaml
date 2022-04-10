@@ -1,5 +1,0 @@
-name: docenteId
-in: query
-description: Id del usuario docente
-schema:
-  type: integer

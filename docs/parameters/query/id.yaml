@@ -1,6 +1,0 @@
-in: query
-name: id
-description: Valor para filtrar por id
-required: false
-schema:
-  type: integer

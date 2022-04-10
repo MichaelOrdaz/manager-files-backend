@@ -1,6 +1,0 @@
-in: query
-name: periodoIdByMateria
-description: Obtiene las tareas a traves del periodo de la materia
-required: false
-schema:
-  type: string

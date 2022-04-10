@@ -1,6 +1,0 @@
-in: query
-name: numberMeeting
-description: Valor opcional del meeting para la signature
-required: false
-schema:
-  type: string

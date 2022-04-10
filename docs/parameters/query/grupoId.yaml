@@ -1,6 +1,0 @@
-in: query
-name: grupoId
-description: Valor para filtrar por id de grupo
-required: false
-schema:
-  type: integer

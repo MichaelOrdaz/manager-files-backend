@@ -1,6 +1,0 @@
-in: query
-name: materialId
-description: Valor para filtrar por id del material didáctico
-required: false
-schema:
-  type: integer
