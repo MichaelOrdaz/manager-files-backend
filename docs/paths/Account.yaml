@@ -1,0 +1,23 @@
+get:
+  tags: 
+    - Auth
+  summary: Cuenta
+  operationId: account
+  description: información del  usuario para la plataforma actualmente autenticado
+  responses:
+    '200': 
+      description: "Estructura básica de la respuesta"
+      content: 
+        application/json: 
+          schema:
+            $ref: '../schemas/Account.yaml'
+    '400':
+      $ref: "../responses/error400.yaml"
+    '401':
+      $ref: "../responses/error401.yaml"
+    '403':
+      $ref: "../responses/error403.yaml"
+    '404':
+      $ref: "../responses/error404.yaml"
+    '422':
+      $ref: "../responses/error422.yaml"

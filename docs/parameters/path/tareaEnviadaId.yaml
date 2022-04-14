@@ -1,6 +1,0 @@
-name: tarea_enviada_id
-in: path
-description: id de la tarea enviada
-schema:
-  type: integer
-required: true

@@ -1,5 +1,0 @@
-type: object
-properties:
-  url:
-    type: string
-    example: http://localhost/imgs/materias/kardex.pdf

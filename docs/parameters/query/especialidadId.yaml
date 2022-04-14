@@ -1,6 +1,0 @@
-in: query
-name: especialidadId
-description: Valor para filtrar por campo especialidad_id
-required: false
-schema:
-  type: integer

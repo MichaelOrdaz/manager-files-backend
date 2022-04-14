@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\PreguntaTipo;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,12 +15,10 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RolesSeeder::class,
+            DepartamentoSeeder::class,
+            TiposDeDocumentosSeeder::class,
+            AccionHistorialSeeder::class,
             UserSeeder::class,
-
-            ResourceSeeder::class,
-            AdministracionSeeder::class,
-
-            // DesarrolloSeeder::class,
         ]);
     }
 }

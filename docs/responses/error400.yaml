@@ -1,0 +1,12 @@
+description: Petición erronea
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        errors:
+          type: string
+          example: "Bad Request"
+        success:
+          type: boolean
+          example: false

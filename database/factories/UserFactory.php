@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Departamento;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
@@ -25,11 +26,15 @@ class UserFactory extends Factory
     {
         return [
             'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
+            'nombre' => $this->faker->name(),
+            'paterno' => $this->faker->lastName(),
+            'materno' => $this->faker->lastName(),
+            'celular' => $this->faker->phoneNumber(),
+            'imagen' => $this->faker->imageUrl(),
             'password' => Hash::make('12345'),
+            'email_verified_at' => now(),
             'remember_token' => Str::random(10),
-            'firebase_uid' => $this->faker->uuid(),
-            'activo' => 1,
+            'departamento_id' => Departamento::factory()
         ];
     }
 
@@ -55,15 +60,4 @@ class UserFactory extends Factory
             ];
         });
     }
-
-    public function correoAspirante()
-    {
-        return $this->state(function (array $attributes) {
-            return [
-                'email' => 'aspirante' . $this->faker->bothify('_???_####') . '@test-puller.mx',
-            ];
-        }); 
-    }
-
-
 }

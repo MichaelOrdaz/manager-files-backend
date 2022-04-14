@@ -1,6 +1,0 @@
-in: query
-name: unidadId
-description: Valor para filtrar por campo unidad_id
-required: false
-schema:
-  type: integer

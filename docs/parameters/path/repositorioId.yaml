@@ -1,6 +1,0 @@
-name: repositorio_id
-in: path
-description: id del repositorio material didáctico
-schema:
-  type: integer
-required: true

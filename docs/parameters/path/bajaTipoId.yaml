@@ -1,6 +1,0 @@
-name: baja_tipo_id
-in: path
-description: id del tipo de baja del estudiante
-schema:
-  type: integer
-required: true

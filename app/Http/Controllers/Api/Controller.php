@@ -31,25 +31,6 @@ class Controller extends BaseController
     }
 
     /**
-     * Create new resource
-     *
-     * @param mix $message
-     * @param mix $data
-     * @param array $meta
-     *
-     * @return Illuminate\Http\Response
-     */
-    protected function successCreate($message, $data, array $meta = [])
-    {
-        return response()->json(
-            array_merge([
-                'data' => $data,
-                'message' => $message,
-                'success' => true,
-            ], $meta), 201);
-    }
-
-    /**
      * Get an error response
      *
      * @param mix $message

@@ -1,0 +1,13 @@
+type: object
+properties:
+  email:
+    type: string
+    format: email
+    example: "email@puller.mx"
+  password:
+    type: string
+    format: password
+    example: "password"
+required:
+  - email
+  - password
