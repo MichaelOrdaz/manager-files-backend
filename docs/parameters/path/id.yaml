@@ -1,6 +1,0 @@
-name: id
-in: path
-description: ID del contenido o slug para buscar
-schema:
-  type: string
-required: true

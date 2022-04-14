@@ -1,5 +1,0 @@
-type: object
-properties:
-  examen_respondido:
-    type: boolean
-    example: true

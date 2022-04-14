@@ -1,6 +1,0 @@
-type: object
-properties:
-  url:
-    type: string
-    example: "https://bachiller.s3.us-east-2.amazonaws.com/public/exportacion_examenes/Matematicas_omnis_-_Grupo_A_para_pruebas4.zip?..."
-    readOnly: true

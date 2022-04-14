@@ -15,8 +15,8 @@ class DocumentoUsuario extends Migration
     {
         Schema::create('documento_usuario', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('documento_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('documento_id')->nullable()->comment('el documento, que debe ser carpeta');
+            $table->unsignedBigInteger('user_id')->nullable()->comment('usuario al cual se le esta relacionando (compartiendo la carpeta (documento))');
             $table->timestamps();
             $table->softDeletes();
 

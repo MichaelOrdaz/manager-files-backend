@@ -1,6 +1,0 @@
-name: especialidad_id
-in: path
-description: id de la especialidad
-schema:
-  type: integer
-required: true

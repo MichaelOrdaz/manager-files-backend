@@ -1,6 +1,0 @@
-in: query
-name: tipoId
-description: Valor para filtrar por campo tipo_id
-required: false
-schema:
-  type: integer

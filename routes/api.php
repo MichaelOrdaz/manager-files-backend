@@ -20,7 +20,7 @@ Route::prefix('v1')->group(function () {
         ->withoutMiddleware('auth:api');
 
         Route::post('logout', [App\Http\Controllers\AuthController::class, 'logout']);
-        Route::get('user', [App\Http\Controllers\AuthController::class, 'show']);
+        Route::get('account', [App\Http\Controllers\AuthController::class, 'account_data']);
 
         // Route::get('permissions/{id}', ['App\Http\Controllers\UserController', 'permissions']);
         // Route::get('views/{id}', ['App\Http\Controllers\UserController', 'views']);

@@ -1,7 +1,0 @@
-post:
-  tags: [Email]
-  summary: "VerificarEmail - Email"
-  operationId: verificarEmail
-  description: "Manda una solicitud para poder verificar su correo electrónico en la plataforma"
-  requestBody: { description: "Petición en formato json", required: true, content: { application/json: { schema: { $ref: "../schemas/VerificarEmail.yaml" } } } }
-  responses: { 200: { description: "Estructura básica de la respuesta", content: { application/json: { schema: { $ref: "../schemas/VerificarEmail.yaml" } } } }, 422: { $ref: "../responses/error422.yaml" }, 404: { $ref: "../responses/error404.yaml" }, 401: { $ref: "../responses/error401.yaml" } }

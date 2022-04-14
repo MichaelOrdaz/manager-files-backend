@@ -1,6 +1,0 @@
-name: configuracion_id
-in: path
-description: id de la configuración
-schema:
-  type: integer
-required: true

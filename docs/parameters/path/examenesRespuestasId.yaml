@@ -1,6 +1,0 @@
-name: examenes_respuestas_id
-in: path
-description: id de la respuesta a la pregunta del examen
-schema:
-  type: integer
-required: true  

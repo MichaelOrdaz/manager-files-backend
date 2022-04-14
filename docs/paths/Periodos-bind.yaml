@@ -1,7 +1,0 @@
-post:
-  tags: [Periodos]
-  summary: "Bind - Periodos"
-  operationId: bindPeriodo
-  description: "Crea una relación periodo con especialidad"
-  requestBody: { description: "Petición en formato json", content: { application/json: { schema: { $ref: "../schemas/PeriodosBind.yaml" } } } }
-  responses: { 200: { description: "Estructura básica de la respuesta", content: { application/json: { schema: { $ref: "../schemas/PeriodosBind.yaml" } } } }, 422: { $ref: "../responses/error422.yaml" }, 404: { $ref: "../responses/error404.yaml" }, 401: { $ref: "../responses/error401.yaml" } }

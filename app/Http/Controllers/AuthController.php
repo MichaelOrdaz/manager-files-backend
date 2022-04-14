@@ -25,9 +25,11 @@ class AuthController extends Controller
 
         $token = Auth::user()->createToken('authToken')->accessToken;
         
+        $user = Auth::user();
+        $user->load('departamento');
         return $this->successResponse('Ok', [
             'token' => $token,
-            'user' => Auth::user(),
+            'user' => $user,
         ]);
     }
 
@@ -39,7 +41,7 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
-        return $this->errorResponse('Successfully logged out');
+        return $this->successResponse('Successfully logged out', []);
     }
 
     /**
@@ -50,5 +52,42 @@ class AuthController extends Controller
     public function user(Request $request)
     {
         return response()->json($request->user());
+        return $this->successResponse('ok', [
+            'user' => $request->user()
+        ]);
+    }
+
+    public function account_data()
+    {
+        $user = Auth::user();
+        $permissions = $user->getAllPermissions();
+
+        $regularPermissions = $permissions->whereNull('is_view');
+        $tmp = [];
+        foreach ($regularPermissions as $item) {
+            $tmp[$item->name] = [
+                'id' => $item->id,
+            ];
+        }
+        $regularPermissions = $tmp;
+        $tmp = [];
+        $viewPermissions = $permissions->whereNotNull('is_view');
+        foreach ($viewPermissions as $item) {
+            $tmp[$item->name] = [
+                'id' => $item->id,
+                'ruta' => $item->is_view,
+            ];
+        }
+        $viewPermissions = $tmp;
+        
+        $userFresh = $user->fresh();
+        $userFresh->load('departamento');
+
+        return $this->successResponse('Ok', [
+            'user' => $userFresh,
+            'roles' => $user->getRoleNames(),
+            'permissions' => $regularPermissions,
+            'views' => $viewPermissions,
+        ]);
     }
 }

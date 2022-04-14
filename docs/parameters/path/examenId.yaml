@@ -1,6 +1,0 @@
-name: examen_id
-in: path
-description: id del examen
-schema:
-  type: integer
-required: true

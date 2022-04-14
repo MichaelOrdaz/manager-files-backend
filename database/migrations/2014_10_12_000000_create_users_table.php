@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('celular')->nullable();
             $table->string('imagen')->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->unsignedBigInteger('departamento_id')->comment('departamento al que pertenece el usuario');
+            $table->unsignedBigInteger('departamento_id')->nullable()->comment('departamento al que pertenece el usuario');
             $table->rememberToken()->nullable();
             $table->timestamps();
             $table->softDeletes();

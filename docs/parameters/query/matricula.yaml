@@ -1,6 +1,0 @@
-in: query
-name: matricula
-description: Valor para filtrar por campo matricula
-required: false
-schema:
-  type: string
