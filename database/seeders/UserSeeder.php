@@ -17,6 +17,10 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        $this->call([
+            DepartamentoSeeder::class
+        ]);
+
         $faker = Factory::create();
 
         $admin = User::create([
