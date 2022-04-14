@@ -24,18 +24,15 @@ variables:
   DOCKER_TLS_CERTDIR: ""
   TAG_LATEST: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest #Variable docker
   TAG_COMMIT: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_COMMIT_SHORT_SHA #Variable docker
-  CONTAINER_PORT_QA: 102
-  CONTAINER_PORT_STAGING: 103
-  CONTAINER_PORT_TESTING: 105
+  CONTAINER_PORT_QA: 106
+  CONTAINER_PORT_STAGING: 107
   CONTAINER_PORT_PRODUCTION: 80
-  WEBSOCKET_PORT_QA: 6102
-  WEBSOCKET_PORT_STAGING: 6103
-  WEBSOCKET_PORT_TESTING: 6105
+  WEBSOCKET_PORT_QA: 6106
+  WEBSOCKET_PORT_STAGING: 6107
   CLI_VERSION: 3.0.27
 
   CONTAINER_NAME: $CI_PROJECT_NAME
   SOURCE_PATH_QA: /home/server/${CI_PROJECT_NAME}_qa
-  SOURCE_PATH_TESTING: /home/server/${CI_PROJECT_NAME}_testing
   SOURCE_PATH_STAGING: /home/server/${CI_PROJECT_NAME}_staging
   SOURCE_PATH_PRODUCTION: /home/server/${CI_PROJECT_NAME}_production
 
@@ -118,33 +115,9 @@ deploy_qa:
     - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "${SOURCE_PATH_QA}/./deploy.sh -n \"${CONTAINER_NAME}_qa\""
   only:
     - qa
-
-deploy_testing:
-  image: alpine
-  stage: deploy
-  before_script:
-    ## Install ssh agent (so we can access the Digital Ocean Droplet) and run it.
-    - apk update && apk add openssh-client
-    - eval $(ssh-agent -s)
-    ## Write the environment variable value to the agent store, create the ssh directory and give the right permissions to it.
-    - echo "$SECRETS_DIGITAL_OCEAN_DROPLET_SSH_KEY" | tr -d '\r' | ssh-add - > /dev/null
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-
-    ## Make sure that ssh will trust the new host, instead of asking
-    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-    ## Test it!
-    - ssh -t ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "echo $HOME"
-  script:
-    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "./docker_clean_images.sh"
-    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY"
-    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker pull $TAG_COMMIT"
-    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "pwd"
-    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker ps -qa --filter \"name=${CONTAINER_NAME}_testing\" | grep -q . && docker stop ${CONTAINER_NAME}_testing && docker rm -fv ${CONTAINER_NAME}_testing && docker rmi -f ${TAG_LATEST} || true"
-    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker run -v ${SOURCE_PATH_TESTING}/.env:/var/www/.env -d --restart unless-stopped -p $CONTAINER_PORT_TESTING:80 -p $WEBSOCKET_PORT_TESTING:6001 --name ${CI_PROJECT_NAME}_testing --network pullermx-mysql-server $TAG_COMMIT"
-    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "${SOURCE_PATH_TESTING}/./deploy.sh -n \"${CONTAINER_NAME}_testing\""
-  only:
-    - qa
+  environment:
+    name: qa
+    url: http://qa-dixa.puller.mx/
 
 
 build_staging:
@@ -215,7 +188,6 @@ deploy_production:
     - ssh ${DO_PRODUCTION_USER}@${DO_PRODUCTION_IP} "${SOURCE_PATH_PRODUCTION}/./deploy.sh -n \"${CONTAINER_NAME}_production\""
   environment:
     name: production
-    url: https://aizeducacion.com/
   when: manual
   only:
     - master
@@ -257,7 +229,7 @@ deploy documentacion:
     - ssh ${DO_SERVER_TOOLS_USER}@${DO_SERVER_TOOLS_IP} "docker exec -i 2b9cd9092a99 chown -R www-data:www-data /var/www/${PROJECT_NAME}/documentacion/"
   environment:
     name: qa
-    url: http://documentacion.qa-bachiller.puller.mx/
+    url: http://documentacion.qa-dixa.puller.mx/
   only:
     - qa
 

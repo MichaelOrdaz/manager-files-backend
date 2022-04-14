@@ -12,53 +12,52 @@ properties:
     type: string
     example: "2020-01-01 12:00:00"
     readOnly: true
-  role:
-    writeOnly: true
-    type: array
-    items:
-      type: string
-      example: "Aspirante a ingreso"
-  roles:
-    readOnly: true
-    type: array
-    items:
-      type: string
-      example: "Aspirante a ingreso"
-  generacion:
-    type: integer
-    example: 6
-  anio_ingreso:
-    type: integer
-    example: 2020
-    pattern: '^\d{4}'
-  activo:
-    type: integer
-    example: 1
-    writeOnly: true
-  firebase_uid:
+  nombre:
     type: string
-    example: Quyas91k
-  tutorado_id:
-    type: integer
-    example: 1
+    example: John
+  paterno:
+    type: string
+    example: Doe
+  materno:
+    type: string
+    example: Roblox
+  celular:
+    type: string
+    example: '55 54 89 67 87'
+  password:
+    type: string
+    format: password
+    example: C0ntr4s3n14
+  imagen_file:
+    type: string
+    format: binary
+    nullable: true
     writeOnly: true
-  datos_generales:
+  imagen:
+    type: string
+    format: url
+    nullable: true
     readOnly: true
-    allOf:
-      - $ref: "./DatosGeneralesJson.yaml"
-  datos_familiares:
+    example: 'https://s3.amazon/profile/46798a7fsd98f79asd8f7'
+  departamento_id:
+    type: integer
+    nullable: true
+    example: 1
+  departamento:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      nombre:
+        type: string
+        example: Recursos Humanos
+    nullable: true
     readOnly: true
-    type: array
-    items:
-      allOf:
-        - $ref: "./DatosFamiliares.yaml"
-  datos_academicos:
-    readOnly: true
-    allOf:
-      - $ref: "./DatosAcademicos.yaml"
-
 
 required:
   - email
+  - nombre
+  - paterno
+  - materno
   - password
-  - role

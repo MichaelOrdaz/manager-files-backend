@@ -1,6 +1,0 @@
-name: periodo_extra_id
-in: path
-description: id del periodo contenido extra
-schema:
-  type: integer
-required: true

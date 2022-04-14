@@ -1,6 +1,0 @@
-in: query
-name: pregunta
-description: Valor para filtrar por campo pregunta
-required: false
-schema:
-  type: string

@@ -1,5 +1,0 @@
-type: object
-properties:
-  curp_existe:
-    type: boolean
-    example: true

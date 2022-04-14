@@ -1,6 +1,0 @@
-name: curp
-in: path
-description: curp a comprobar si existe
-schema:
-  type: string
-required: true

@@ -1,0 +1,13 @@
+type: object
+properties:
+  access_token:
+    type: string
+    example: "AS599879879sa87d98a7sd987ae7987a9"
+  user:
+    $ref: "./Usuarios.yaml"
+  message:
+    type: string
+    example: Ok
+  success:
+    type: boolean
+    example: true

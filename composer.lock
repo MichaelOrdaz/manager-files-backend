@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "11cedac09019bb7b4119c7cd6d5efff8",
+    "content-hash": "de644275057d19a270de2b6660d1c28c",
     "packages": [
         {
             "name": "askedio/laravel-soft-cascade",
@@ -1647,16 +1647,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.75.0",
+            "version": "v8.78.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "0bb91d3176357da232da69762a64b0e0a0988637"
+                "reference": "16359b5ebafba6579b397d7505b082a6d1bb2e31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/0bb91d3176357da232da69762a64b0e0a0988637",
-                "reference": "0bb91d3176357da232da69762a64b0e0a0988637",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/16359b5ebafba6579b397d7505b082a6d1bb2e31",
+                "reference": "16359b5ebafba6579b397d7505b082a6d1bb2e31",
                 "shasum": ""
             },
             "require": {
@@ -1674,7 +1674,7 @@
                 "opis/closure": "^3.6",
                 "php": "^7.3|^8.0",
                 "psr/container": "^1.0",
-                "psr/log": "^1.0 || ^2.0",
+                "psr/log": "^1.0|^2.0",
                 "psr/simple-cache": "^1.0",
                 "ramsey/uuid": "^4.2.2",
                 "swiftmailer/swiftmailer": "^6.3",
@@ -1815,34 +1815,34 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-12-07T14:55:46+00:00"
+            "time": "2022-01-05T14:52:50+00:00"
         },
         {
             "name": "laravel/passport",
-            "version": "v10.2.2",
+            "version": "v10.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/passport.git",
-                "reference": "7981abed1a0979afd4a5a8bec81624b8127a287f"
+                "reference": "1039d8b4aa71c45dbea2f140b131cae8802237e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/passport/zipball/7981abed1a0979afd4a5a8bec81624b8127a287f",
-                "reference": "7981abed1a0979afd4a5a8bec81624b8127a287f",
+                "url": "https://api.github.com/repos/laravel/passport/zipball/1039d8b4aa71c45dbea2f140b131cae8802237e7",
+                "reference": "1039d8b4aa71c45dbea2f140b131cae8802237e7",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "firebase/php-jwt": "^5.0",
-                "illuminate/auth": "^8.2",
-                "illuminate/console": "^8.2",
-                "illuminate/container": "^8.2",
-                "illuminate/contracts": "^8.2",
-                "illuminate/cookie": "^8.2",
-                "illuminate/database": "^8.2",
-                "illuminate/encryption": "^8.2",
-                "illuminate/http": "^8.2",
-                "illuminate/support": "^8.2",
+                "illuminate/auth": "^8.37|^9.0",
+                "illuminate/console": "^8.37|^9.0",
+                "illuminate/container": "^8.37|^9.0",
+                "illuminate/contracts": "^8.37|^9.0",
+                "illuminate/cookie": "^8.37|^9.0",
+                "illuminate/database": "^8.37|^9.0",
+                "illuminate/encryption": "^8.37|^9.0",
+                "illuminate/http": "^8.37|^9.0",
+                "illuminate/support": "^8.37|^9.0",
                 "lcobucci/jwt": "^3.4|^4.0",
                 "league/oauth2-server": "^8.2",
                 "nyholm/psr7": "^1.3",
@@ -1852,7 +1852,7 @@
             },
             "require-dev": {
                 "mockery/mockery": "^1.0",
-                "orchestra/testbench": "^6.0",
+                "orchestra/testbench": "^6.0|^7.0",
                 "phpunit/phpunit": "^9.3"
             },
             "type": "library",
@@ -1892,7 +1892,7 @@
                 "issues": "https://github.com/laravel/passport/issues",
                 "source": "https://github.com/laravel/passport"
             },
-            "time": "2021-12-07T16:57:03+00:00"
+            "time": "2022-02-23T15:04:04+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -3880,93 +3880,6 @@
             "time": "2021-04-09T13:42:10+00:00"
         },
         {
-            "name": "owen-it/laravel-auditing",
-            "version": "v12.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/owen-it/laravel-auditing.git",
-                "reference": "5659c736f17aa75805b60c0d0a23783f3bf5c2a1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/owen-it/laravel-auditing/zipball/5659c736f17aa75805b60c0d0a23783f3bf5c2a1",
-                "reference": "5659c736f17aa75805b60c0d0a23783f3bf5c2a1",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/console": "^6.0|^7.0|^8.0",
-                "illuminate/database": "^6.0|^7.0|^8.0",
-                "illuminate/filesystem": "^6.0|^7.0|^8.0",
-                "php": "^7.3|^8.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.0",
-                "orchestra/testbench": "^4.0",
-                "phpunit/phpunit": "^9.0",
-                "ramsey/uuid": "^3.0"
-            },
-            "suggest": {
-                "laravelista/lumen-vendor-publish": "Needed to publish the package configuration in Lumen"
-            },
-            "type": "package",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "10.0-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "OwenIt\\Auditing\\AuditingServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "OwenIt\\Auditing\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Antério Vieira",
-                    "email": "anteriovieira@gmail.com"
-                },
-                {
-                    "name": "Quetzy Garcia",
-                    "email": "quetzyg@altek.org"
-                },
-                {
-                    "name": "Raphael França",
-                    "email": "raphaelfrancabsb@gmail.com"
-                }
-            ],
-            "description": "Audit changes of your Eloquent models in Laravel/Lumen",
-            "homepage": "http://laravel-auditing.com",
-            "keywords": [
-                "Accountability",
-                "Audit",
-                "auditing",
-                "changes",
-                "eloquent",
-                "history",
-                "laravel",
-                "log",
-                "logging",
-                "lumen",
-                "observer",
-                "record",
-                "revision",
-                "tracking"
-            ],
-            "support": {
-                "issues": "https://github.com/owen-it/laravel-auditing/issues",
-                "source": "https://github.com/owen-it/laravel-auditing"
-            },
-            "time": "2020-12-15T19:19:43+00:00"
-        },
-        {
             "name": "paragonie/constant_time_encoding",
             "version": "v2.4.0",
             "source": {
@@ -5215,28 +5128,28 @@
         },
         {
             "name": "spatie/laravel-permission",
-            "version": "4.4.3",
+            "version": "5.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "779797a47689d0bc1666e26f566cca44603e56fa"
+                "reference": "eb838cd2c539d1c97f8c997e67479cb68c2d0e36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/779797a47689d0bc1666e26f566cca44603e56fa",
-                "reference": "779797a47689d0bc1666e26f566cca44603e56fa",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/eb838cd2c539d1c97f8c997e67479cb68c2d0e36",
+                "reference": "eb838cd2c539d1c97f8c997e67479cb68c2d0e36",
                 "shasum": ""
             },
             "require": {
-                "illuminate/auth": "^6.0|^7.0|^8.0",
-                "illuminate/container": "^6.0|^7.0|^8.0",
-                "illuminate/contracts": "^6.0|^7.0|^8.0",
-                "illuminate/database": "^6.0|^7.0|^8.0",
-                "php": "^7.2.5|^8.0"
+                "illuminate/auth": "^7.0|^8.0|^9.0",
+                "illuminate/container": "^7.0|^8.0|^9.0",
+                "illuminate/contracts": "^7.0|^8.0|^9.0",
+                "illuminate/database": "^7.0|^8.0|^9.0",
+                "php": "^7.3|^8.0|^8.1"
             },
             "require-dev": {
-                "orchestra/testbench": "^4.0|^5.0|^6.0",
-                "phpunit/phpunit": "^8.0|^9.0",
+                "orchestra/testbench": "^5.0|^6.0|^7.0",
+                "phpunit/phpunit": "^9.4",
                 "predis/predis": "^1.1"
             },
             "type": "library",
@@ -5245,15 +5158,19 @@
                     "providers": [
                         "Spatie\\Permission\\PermissionServiceProvider"
                     ]
+                },
+                "branch-alias": {
+                    "dev-main": "5.x-dev",
+                    "dev-master": "5.x-dev"
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Spatie\\Permission\\": "src"
-                },
                 "files": [
                     "src/helpers.php"
-                ]
+                ],
+                "psr-4": {
+                    "Spatie\\Permission\\": "src"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -5281,7 +5198,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-permission/issues",
-                "source": "https://github.com/spatie/laravel-permission/tree/4.4.3"
+                "source": "https://github.com/spatie/laravel-permission/tree/5.5.2"
             },
             "funding": [
                 {
@@ -5289,7 +5206,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-10-28T07:33:49+00:00"
+            "time": "2022-03-09T10:21:20+00:00"
         },
         {
             "name": "stechstudio/laravel-zipstream",

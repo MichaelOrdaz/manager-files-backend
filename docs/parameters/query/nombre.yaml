@@ -1,6 +1,0 @@
-in: query
-name: nombre
-description: Valor para filtrar por campo nombre
-required: false
-schema:
-  type: string

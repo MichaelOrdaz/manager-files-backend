@@ -1,6 +1,0 @@
-name: encuesta_id
-in: path
-description: id de la encuesta
-schema:
-  type: integer
-required: true

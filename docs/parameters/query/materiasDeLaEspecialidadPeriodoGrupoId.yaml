@@ -1,6 +1,0 @@
-in: query
-name: materiasDeLaEspecialidadPeriodoGrupoId
-description: Id de la EspecialidadPeriodoGrupo en el cual se buscaran las materias y a partir de ahi se obtendras los avisos de esas materias de esa especialidad periodo grupo id
-required: false
-schema:
-  type: string

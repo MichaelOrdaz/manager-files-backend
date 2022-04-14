@@ -1,6 +1,0 @@
-name: material_id
-in: path
-description: id del tipos de material didáctico
-schema:
-  type: integer
-required: true

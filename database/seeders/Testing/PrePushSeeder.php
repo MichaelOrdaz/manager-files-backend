@@ -3,14 +3,11 @@
 namespace Database\Seeders\Testing;
 
 use Illuminate\Database\Seeder;
-use Database\Seeders\UserSeeder;
+use Database\Seeders\AccionHistorialSeeder;
+use Database\Seeders\DepartamentoSeeder;
 use Database\Seeders\RolesSeeder;
-use Database\Seeders\Admin\BajasTipoSeeder;
-use Database\Seeders\Admin\MaterialTipoSeeder;
-use Database\Seeders\Admin\PreguntasTipoSeeder;
-use Database\Seeders\Admin\AspiranteStatusSeeder;
-use Database\Seeders\Admin\ExamenesCalificacionesStatusSeeder;
-
+use Database\Seeders\TiposDeDocumentosSeeder;
+use Database\Seeders\UserSeeder;
 
 class PrePushSeeder extends Seeder
 {
@@ -22,8 +19,6 @@ class PrePushSeeder extends Seeder
     public function run()
     {
         $this->call([
-          RolesSeeder::class,
-          UserSeeder::class,
         ]);
     }
 }

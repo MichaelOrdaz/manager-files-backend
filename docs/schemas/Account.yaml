@@ -1,0 +1,39 @@
+type: object
+properties:
+  data:
+   type: object
+   properties:
+    user:
+      $ref: "./Usuarios.yaml"
+    roles:
+      type: array
+      items:
+        type: string
+        example: ['Administrador']
+    permissions:
+      type: object
+      properties:
+        nombre.permiso:
+          type: object
+          properties:
+            id: 
+              type: integer
+              example: 1
+    views:
+      type: object
+      properties:
+        nombre.permiso.vista:
+          type: object
+          properties:
+            id: 
+              type: integer
+              example: 1
+            path: 
+              type: integer
+              example: '/dashboard'
+  message:
+    type: string
+    example: Ok
+  success:
+    type: boolean
+    example: true
