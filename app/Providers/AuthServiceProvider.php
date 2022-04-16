@@ -21,12 +21,7 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $policies = [
-        Estado::class => EstadoPolicy::class,
-        Municipio::class => MunicipioPolicy::class,
-        User::class => UsuarioPolicy::class,
-        Permisos::class => PermisoPolicy::class,
-    ];
+    protected $policies = [];
 
     /**
      * Register any authentication / authorization services.

@@ -15,8 +15,9 @@ class AuthTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_login()
+    public function test_user_login_success()
     {
+      $this->handleValidationExceptions();
       $this->artisan('passport:install');
       $user = User::factory()->password1_5()->create();
 
@@ -24,6 +25,7 @@ class AuthTest extends TestCase
         'email' => $user->email,
         'password' => '12345',
       ]);
+
       $response->assertStatus(200)
       ->assertJson(fn (AssertableJson $json) => 
         $json->has('data', fn ($json) => 

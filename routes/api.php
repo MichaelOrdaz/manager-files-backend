@@ -25,7 +25,7 @@ Route::prefix('v1')->group(function () {
 
         Route::prefix('users')->group(function () {
             Route::get('/', [App\Http\Controllers\Api\UserController::class, 'index']);
-            // Route::get('/search', [App\Http\Controllers\Api\UserController::class, 'search']);
+            Route::get('/search', [App\Http\Controllers\Api\UserController::class, 'search']);
         });
 
         // Route::get('permissions/{id}', ['App\Http\Controllers\UserController', 'permissions']);
