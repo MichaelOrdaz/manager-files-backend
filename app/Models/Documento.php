@@ -15,6 +15,7 @@ class Documento extends Model
         'nombre',
         'descripcion',
         'ubicacion',
+        'etiquetas',
     ];
 
     protected $hidden = [

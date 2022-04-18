@@ -1,14 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\LoginFormRequest;
+use Illuminate\Support\Facades\Hash;
 
+use App\Http\Requests\LoginFormRequest;
 use App\Http\Controllers\Api\Controller;
-use App\Http\Requests\SignUpFormRequest;
+use App\Models\User;
+
 
 class AuthController extends Controller
 {
@@ -17,15 +17,20 @@ class AuthController extends Controller
     {
         $credentials = $request->getData();
 
-        if (!Auth::attempt($credentials, true)) {
+        $user = User::where('email', $credentials['email'])->first();
+        if (is_null($user)) {
             return $this->errorResponse([
                 'errors' => 'Credenciales incorrectas'
-            ], 403);
+            ], 400);
+        }
+        if (!Hash::check($credentials['password'], $user->password)) {
+            return $this->errorResponse([
+                'errors' => 'Credenciales incorrectas'
+            ], 400);
         }
 
-        $token = Auth::user()->createToken('authToken')->accessToken;
-        
-        $user = Auth::user();
+        $token = $user->createToken('authToken')->accessToken;
+
         $user->load('departamento');
         return $this->successResponse('Ok', [
             'token' => $token,
@@ -59,7 +64,7 @@ class AuthController extends Controller
 
     public function account_data()
     {
-        $user = Auth::user();
+        $user = User::find(Auth::id());
         $permissions = $user->getAllPermissions();
 
         $regularPermissions = $permissions->whereNull('is_view');
