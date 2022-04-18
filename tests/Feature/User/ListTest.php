@@ -200,7 +200,7 @@ class ListTest extends TestCase
 
         $role = Role::all()->random()->id;
         $total = User::whereHas('roles', function ($query) use ($role) {
-            $query->where('name', $role);
+            $query->where('id', $role);
         })->count();
         $totalPerPage = $total > 10 ? 10 : $total;
         $response = $this->getJson('api/v1/users/search?role=' . $role);
