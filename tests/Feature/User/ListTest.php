@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Laravel\Passport\Passport;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class ListTest extends TestCase
@@ -197,7 +198,7 @@ class ListTest extends TestCase
         Passport::actingAs($user);
         $this->assertAuthenticated();
 
-        $role = 'analista';
+        $role = Role::all()->random()->id;
         $total = User::whereHas('roles', function ($query) use ($role) {
             $query->where('name', $role);
         })->count();
