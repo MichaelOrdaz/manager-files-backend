@@ -20,8 +20,8 @@ paths:
     $ref: './paths/Account.yaml'
   /users:
     $ref: './paths/Users.yaml'
-  /users:search:
-    $ref: './paths/Users.yaml'
+  /users/search:
+    $ref: './paths/UsersSearch.yaml'
 
 components:
   schemas:

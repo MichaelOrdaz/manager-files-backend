@@ -15,11 +15,28 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('viewAny', User::class);
 
-        $users = User::with(['roles', 'departamento'])->get();
+        $validated = $request->validate([
+            'nombre' => 'nullable',
+            'role' => 'nullable|integer',
+        ]);
+
+        $nombre = $validated['nombre'] ?? null;
+        $roleId = $validated['role'] ?? null;
+
+        $users = User::with(['roles', 'departamento'])
+        ->when($nombre, function ($query, $nombre) {
+            return $query->whereRaw("CONCAT(nombre,' ',paterno,' ',materno) LIKE ?", "%{$nombre}%");
+        })
+        ->when($roleId, function ($query, $roleId) {
+            return $query->whereHas('roles', function ($query) use ($roleId) {
+                $query->where('id', $roleId);
+            });
+        })
+        ->get();
         return new UserCollection($users);
     }
 
@@ -75,7 +92,7 @@ class UserController extends Controller
         $validated = $request->validate([
             'perPage' => 'nullable|integer',
             'nombre' => 'nullable',
-            'role' => 'nullable',
+            'role' => 'nullable|integer',
             'sortBy' => 'nullable|string',
             'order' => 'nullable|string|in:asc,desc',
         ]);
@@ -85,20 +102,16 @@ class UserController extends Controller
         $order = $validated['order'] ?? 'asc';
         
         $nombre = $validated['nombre'] ?? null;
-        $role = $validated['role'] ?? null;
+        $roleId = $validated['role'] ?? null;
 
         $users = User::with(['roles', 'departamento'])
-        ->where(function ($query) use ($nombre, $role) {
-            if (isset($nombre)) {
-                $query->orWhere('nombre', 'like', "%{$nombre}%");
-                $query->orWhere('paterno', 'like', "%{$nombre}%");
-                $query->orWhere('materno', 'like', "%{$nombre}%");
-            }
-            if (isset($role)) {
-                $query->whereHas('roles', function ($query) use ($role) {
-                    $query->where('name', $role);
-                });
-            }
+        ->when($nombre, function ($query, $nombre) {
+            return $query->whereRaw("CONCAT(nombre,' ',paterno,' ',materno) LIKE ?", "%{$nombre}%");
+        })
+        ->when($roleId, function ($query, $roleId) {
+            return $query->whereHas('roles', function ($query) use ($roleId) {
+                $query->where('id', $roleId);
+            });
         })
         ->orderBy($sortBy, $order)
         ->paginate($perPage);

@@ -1,0 +1,7 @@
+in: query
+name: sortBy
+description: campo por el cual se desea ordenar
+required: false
+schema:
+  type: string
+  example: nombre

@@ -9,7 +9,7 @@ properties:
       type: array
       items:
         type: string
-        example: ['Administrador']
+      example: ['Administrador']
     permissions:
       type: object
       properties:
@@ -29,7 +29,7 @@ properties:
               type: integer
               example: 1
             path: 
-              type: integer
+              type: string
               example: '/dashboard'
   message:
     type: string

@@ -1,0 +1,7 @@
+in: query
+name: perPage
+description: cantidad de items que quieres que devuelva la respuesta
+required: false
+schema:
+  type: integer
+  example: 20

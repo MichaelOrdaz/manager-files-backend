@@ -1,0 +1,7 @@
+in: query
+name: order
+description: tipo de ordenamiento, descendente o ascendente
+required: false
+schema:
+  type: string
+  enum: [asc, desc]
