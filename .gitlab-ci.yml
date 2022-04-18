@@ -3,6 +3,7 @@ stages:
   - .pre
   - build
   - publish
+  - doc
   - deploy
   - config
 
@@ -196,7 +197,7 @@ deploy_production:
 
 deploy documentacion:
   image: node:12
-  stage: deploy
+  stage: doc
   cache:
     key: modules
     paths:
