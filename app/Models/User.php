@@ -29,12 +29,16 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'id',
         'email',
+        'nombre',
+        'paterno',
+        'materno',
+        'celular',
+        'imagen',
         'password',
-        'firebase_uid',
-        'tutor_id',
-        'activo'
+        'departamento_id',
+        'remember_token',
+        'email_verified_at',
     ];
 
     protected $softCascade = [

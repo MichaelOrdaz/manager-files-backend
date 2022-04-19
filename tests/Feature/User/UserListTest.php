@@ -12,7 +12,7 @@ use Laravel\Passport\Passport;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
-class ListTest extends TestCase
+class UserListTest extends TestCase
 {
     use RefreshDatabase;
     
@@ -29,7 +29,7 @@ class ListTest extends TestCase
 
         $users = User::factory()->create();
         $user = $users->first();
-        $user->assignRole('Administrador');
+        $user->assignRole('Admin');
 
         Passport::actingAs($user);
 
@@ -64,7 +64,7 @@ class ListTest extends TestCase
 
         $users = User::factory()->count(50)->create();
         $user = $users->first();
-        $user->assignRole('Administrador');
+        $user->assignRole('Admin');
 
         Passport::actingAs($user);
         $this->assertAuthenticated();
@@ -105,7 +105,7 @@ class ListTest extends TestCase
 
         $users = User::factory()->count(50)->create();
         $user = $users->first();
-        $user->assignRole('Administrador');
+        $user->assignRole('Admin');
 
         Passport::actingAs($user);
         $this->assertAuthenticated();
@@ -146,7 +146,7 @@ class ListTest extends TestCase
 
         $users = User::factory()->count(50)->create();
         $user = $users->first();
-        $user->assignRole('Administrador');
+        $user->assignRole('Admin');
 
         Passport::actingAs($user);
         $this->assertAuthenticated();
@@ -193,7 +193,7 @@ class ListTest extends TestCase
 
         $users = User::factory()->count(50)->create();
         $user = $users->first();
-        $user->assignRole('Administrador');
+        $user->assignRole('Admin');
 
         Passport::actingAs($user);
         $this->assertAuthenticated();
@@ -240,10 +240,9 @@ class ListTest extends TestCase
         $this->assertDatabaseCount('permissions', 5);
 
         $user = User::factory()->create();
-        $user->assignRole('Administrador');
+        $user->assignRole('Admin');
         Passport::actingAs($user);
         $this->assertAuthenticated();
-        // dump($user->hasPermissionTo());
         $this->assertTrue($user->can('user.show'));
         $this->assertTrue($user->can('user.create'));
         $this->assertTrue($user->can('user.update'));

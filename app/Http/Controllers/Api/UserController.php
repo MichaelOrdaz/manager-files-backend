@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserCollection;
+use App\Http\Resources\UserResource;
 use App\Models\Historial;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -46,9 +48,21 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        $this->authorize('create', User::class);
+        
+        $data = $request->getData();
+        $user = User::create($data);
+        $user->assignRole($data['role']->name);
+        
+        $user->departamento()->associate($data['departamento']);
+        $user->save();
+        
+        return (new UserResource($user))->additional([
+            'success' => true,
+            'message' => 'Usuario creado correctamente'
+        ]);
     }
 
     /**
