@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Documento;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\Response;
 
-class DocumentosPolicy
+class UserPolicy
 {
     use HandlesAuthorization;
 
@@ -18,19 +18,19 @@ class DocumentosPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->can('user.show');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Documentos  $documentos
+     * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Documento $documentos)
+    public function view(User $user, User $model)
     {
-        //
+        return $user->can('user.show');
     }
 
     /**
@@ -41,41 +41,41 @@ class DocumentosPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->can('user.create');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Documentos  $documentos
+     * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Documento $documentos)
+    public function update(User $user, User $model)
     {
-        //
+        return $user->can('user.update');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Documentos  $documentos
+     * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Documento $documentos)
+    public function delete(User $user, User $model)
     {
-        //
+        return $user->can('user.delete');
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Documentos  $documentos
+     * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Documento $documentos)
+    public function restore(User $user, User $model)
     {
         //
     }
@@ -84,10 +84,10 @@ class DocumentosPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Documentos  $documentos
+     * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Documento $documentos)
+    public function forceDelete(User $user, User $model)
     {
         //
     }
