@@ -65,9 +65,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function departamento()
+    public function department()
     {
-        return $this->belongsTo(Departamento::class, 'departamento_id', 'id');
+        return $this->belongsTo(Department::class, 'departamento_id', 'id');
     }
 
     public function documentos()

@@ -35,9 +35,9 @@ Route::prefix('v1')->group(function () {
             Route::get('/{role_id}', [App\Http\Controllers\Api\RoleController::class, 'show']);
         });
 
-        Route::prefix('department')->group(function () {
+        Route::prefix('departments')->group(function () {
             Route::get('/', [App\Http\Controllers\Api\DepartmentController::class, 'index']);
-            Route::get('/{role_id}', [App\Http\Controllers\Api\DepartmentController::class, 'show']);
+            Route::get('/{department_id}', [App\Http\Controllers\Api\DepartmentController::class, 'show']);
         });
         
     });

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Permissions\DeparmentPermissionsSeeder;
 use Database\Seeders\Permissions\RolePermissionsSeeder;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
@@ -27,6 +28,7 @@ class RolesSeeder extends Seeder
             VistasPermissionsSeeder::class,
             UsuarioPermissionsSeeder::class,
             RolePermissionsSeeder::class,
+            DeparmentPermissionsSeeder::class,
         ]);
 
     }
