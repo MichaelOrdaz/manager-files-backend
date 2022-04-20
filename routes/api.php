@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
     Route::middleware(['auth:api'])->group(function () {
+        
         Route::post('login', [App\Http\Controllers\AuthController::class, 'login'])
         ->middleware('guest')
         ->withoutMiddleware('auth:api');
@@ -22,9 +23,22 @@ Route::prefix('v1')->group(function () {
         Route::post('logout', [App\Http\Controllers\AuthController::class, 'logout']);
         Route::get('account', [App\Http\Controllers\AuthController::class, 'account_data']);
 
-        // Route::get('permissions/{id}', ['App\Http\Controllers\UserController', 'permissions']);
-        // Route::get('views/{id}', ['App\Http\Controllers\UserController', 'views']);
-        // Route::get('roles', ['App\Http\Controllers\Api\RolesController', 'list']);
-        // Route::get('roles/{id}', ['App\Http\Controllers\UserController', 'roles']);
+        Route::prefix('users')->group(function () {
+            Route::get('/', [App\Http\Controllers\Api\UserController::class, 'index']);
+            Route::get('/search', [App\Http\Controllers\Api\UserController::class, 'search']);
+            Route::post('/', [App\Http\Controllers\Api\UserController::class, 'store']);
+            Route::get('/{user_id}', [App\Http\Controllers\Api\UserController::class, 'show']);
+        });
+
+        Route::prefix('roles')->group(function () {
+            Route::get('/', [App\Http\Controllers\Api\RoleController::class, 'index']);
+            Route::get('/{role_id}', [App\Http\Controllers\Api\RoleController::class, 'show']);
+        });
+
+        Route::prefix('departments')->group(function () {
+            Route::get('/', [App\Http\Controllers\Api\DepartmentController::class, 'index']);
+            Route::get('/{department_id}', [App\Http\Controllers\Api\DepartmentController::class, 'show']);
+        });
+        
     });
 });

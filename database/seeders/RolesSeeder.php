@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Permissions\DeparmentPermissionsSeeder;
+use Database\Seeders\Permissions\RolePermissionsSeeder;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 
@@ -18,13 +20,15 @@ class RolesSeeder extends Seeder
     {
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        Role::create(['name' => 'Administrador']);
-        Role::create(['name' => 'Jefe de departamento']);
-        Role::create(['name' => 'Analista']);
+        Role::create(['name' => 'Admin']);
+        Role::create(['name' => 'Head of Department']);
+        Role::create(['name' => 'Analyst']);
 
         $this->call([
             VistasPermissionsSeeder::class,
             UsuarioPermissionsSeeder::class,
+            RolePermissionsSeeder::class,
+            DeparmentPermissionsSeeder::class,
         ]);
 
     }

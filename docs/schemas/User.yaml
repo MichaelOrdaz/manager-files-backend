@@ -3,7 +3,6 @@ properties:
   id:
     type: integer
     example: 1
-    readOnly: true
   email:
     type: string
     format: email
@@ -11,7 +10,6 @@ properties:
   email_verified_at:
     type: string
     example: "2020-01-01 12:00:00"
-    readOnly: true
   nombre:
     type: string
     example: John
@@ -28,36 +26,11 @@ properties:
     type: string
     format: password
     example: C0ntr4s3n14
-  imagen_file:
-    type: string
-    format: binary
-    nullable: true
-    writeOnly: true
   imagen:
     type: string
     format: url
-    nullable: true
-    readOnly: true
     example: 'https://s3.amazon/profile/46798a7fsd98f79asd8f7'
-  departamento_id:
-    type: integer
-    nullable: true
-    example: 1
+  role:
+    $ref: './Role.yaml'
   departamento:
-    type: object
-    properties:
-      id:
-        type: integer
-        example: 1
-      nombre:
-        type: string
-        example: Recursos Humanos
-    nullable: true
-    readOnly: true
-
-required:
-  - email
-  - nombre
-  - paterno
-  - materno
-  - password
+    $ref: './Department.yaml'

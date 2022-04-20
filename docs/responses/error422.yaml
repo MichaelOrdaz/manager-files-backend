@@ -1,4 +1,4 @@
-description: Error general de la petición
+description: Error validation
 content:
   application/json:
     schema:

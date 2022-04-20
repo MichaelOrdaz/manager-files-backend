@@ -15,21 +15,22 @@ class UsuarioPermissionsSeeder extends Seeder
      */
     public function run ()
     {
-      Permission::create(['name' => 'usuario.show']);
-      Permission::create(['name' => 'usuario.update']);
-      Permission::create(['name' => 'usuario.create']);
-      Permission::create(['name' => 'usuario.delete']);
+      Permission::create(['name' => 'user.show']);
+      Permission::create(['name' => 'user.update']);
+      Permission::create(['name' => 'user.create']);
+      Permission::create(['name' => 'user.delete']);
 
-      $admin = Role::findByName('Administrador');
-      $admin->givePermissionTo('usuario.show');
-      $admin->givePermissionTo('usuario.update');
-      $admin->givePermissionTo('usuario.create');
-      $admin->givePermissionTo('usuario.delete');
+      $admin = Role::findByName('Admin');
+      $admin->givePermissionTo('user.show');
+      $admin->givePermissionTo('user.update');
+      $admin->givePermissionTo('user.create');
+      $admin->givePermissionTo('user.delete');
 
-      $jefe = Role::findByName('Jefe de departamento');
-      $jefe->givePermissionTo('usuario.show');
+      $jefe = Role::findByName('Head of Department');
+      $jefe->givePermissionTo('user.show');
+      $jefe->givePermissionTo('user.update');
 
-      $analista = Role::findByName('Analista');
-      $analista->givePermissionTo('usuario.show');
+      $analista = Role::findByName('Analyst');
+      $analista->givePermissionTo('user.show');
     }
 }

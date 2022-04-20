@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Departamento;
+use App\Models\Department;
 use Illuminate\Database\Seeder;
 
-class DepartamentoSeeder extends Seeder
+class DepartmentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,19 +14,19 @@ class DepartamentoSeeder extends Seeder
      */
     public function run()
     {
-        Departamento::create([
+        Department::create([
             'nombre' => 'Backend'
         ]);
 
-        Departamento::create([
+        Department::create([
             'nombre' => 'Frontend'
         ]);
 
-        Departamento::create([
+        Department::create([
             'nombre' => 'QA'
         ]);
 
-        Departamento::create([
+        Department::create([
             'nombre' => 'Diseño UI/UX'
         ]);
     }

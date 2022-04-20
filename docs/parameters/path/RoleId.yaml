@@ -1,0 +1,6 @@
+name: role_id
+in: path
+description: role id
+schema:
+  type: integer
+required: true

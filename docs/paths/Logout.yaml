@@ -1,12 +1,12 @@
 post:
   tags: 
     - Auth
-  summary: Logout de usuarios
+  summary: Logout of user
   operationId: logout
-  description: elimina el token del usuario que realiza la petición
+  description: removes the token of the user making the request
   responses:
     '200': 
-      description: "Estructura básica de la respuesta"
+      description: Basic structure of the response
       content: 
         application/json: 
           schema:

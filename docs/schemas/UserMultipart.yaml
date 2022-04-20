@@ -1,0 +1,42 @@
+type: object
+properties:
+  email:
+    type: string
+    format: email
+    example: correo@puller.mx
+  nombre:
+    type: string
+    example: John
+  paterno:
+    type: string
+    example: Doe
+  materno:
+    type: string
+    example: Roblox
+  celular:
+    type: string
+    example: '55 54 89 67 87'
+  password:
+    type: string
+    format: password
+    example: C0ntr4s3n14
+  imagen_file:
+    type: string
+    format: binary
+    nullable: true
+  role_id:
+    type: integer
+    example: 1
+  departamento_id:
+    type: integer
+    nullable: true
+    example: 1
+
+required:
+  - email
+  - nombre
+  - paterno
+  - materno
+  - celular
+  - password
+  - role_id

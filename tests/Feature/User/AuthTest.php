@@ -15,8 +15,9 @@ class AuthTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_login()
+    public function test_user_login_success()
     {
+      $this->handleValidationExceptions();
       $this->artisan('passport:install');
       $user = User::factory()->password1_5()->create();
 
@@ -24,6 +25,7 @@ class AuthTest extends TestCase
         'email' => $user->email,
         'password' => '12345',
       ]);
+
       $response->assertStatus(200)
       ->assertJson(fn (AssertableJson $json) => 
         $json->has('data', fn ($json) => 
@@ -60,7 +62,7 @@ class AuthTest extends TestCase
       $this->seed(RolesSeeder::class);
       
       $user = User::factory()->create();
-      $user->assignRole('Administrador');
+      $user->assignRole('Admin');
       
       Passport::actingAs($user);
 
@@ -79,7 +81,7 @@ class AuthTest extends TestCase
       $this->seed(RolesSeeder::class);
       
       $user = User::factory()->create();
-      $user->assignRole('Administrador');
+      $user->assignRole('Admin');
       
       Passport::actingAs($user);
 
@@ -107,7 +109,7 @@ class AuthTest extends TestCase
       $this->seed(RolesSeeder::class);
       
       $user = User::factory()->create();
-      $user->assignRole('Analista');
+      $user->assignRole('Analyst');
       
       Passport::actingAs($user);
 
@@ -135,7 +137,7 @@ class AuthTest extends TestCase
       $this->seed(RolesSeeder::class);
       
       $user = User::factory()->create();
-      $user->assignRole('Jefe de departamento');
+      $user->assignRole('Head of Department');
       
       Passport::actingAs($user);
 

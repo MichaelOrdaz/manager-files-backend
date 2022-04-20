@@ -1,9 +1,0 @@
-in: query
-name: fecha
-description: "<b>Opciones</b>
-<br><b>Semana actual:</b> retorna los examenes y tareas de de la semana actual
-<br><b>Semana anterior:</b> retorna los examenes y tareas de de la semana anterior
-<br><b>Semana siguiente:</b> retorna los examenes y tareas de de la semana siguiente"
-required: false
-schema:
-  type: string

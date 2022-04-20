@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\Documentos;
+use App\Models\Documento;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -28,7 +28,7 @@ class DocumentosPolicy
      * @param  \App\Models\Documentos  $documentos
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Documentos $documentos)
+    public function view(User $user, Documento $documentos)
     {
         //
     }
@@ -51,7 +51,7 @@ class DocumentosPolicy
      * @param  \App\Models\Documentos  $documentos
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Documentos $documentos)
+    public function update(User $user, Documento $documentos)
     {
         //
     }
@@ -63,7 +63,7 @@ class DocumentosPolicy
      * @param  \App\Models\Documentos  $documentos
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Documentos $documentos)
+    public function delete(User $user, Documento $documentos)
     {
         //
     }
@@ -75,7 +75,7 @@ class DocumentosPolicy
      * @param  \App\Models\Documentos  $documentos
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Documentos $documentos)
+    public function restore(User $user, Documento $documentos)
     {
         //
     }
@@ -87,7 +87,7 @@ class DocumentosPolicy
      * @param  \App\Models\Documentos  $documentos
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Documentos $documentos)
+    public function forceDelete(User $user, Documento $documentos)
     {
         //
     }

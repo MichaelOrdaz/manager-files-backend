@@ -18,6 +18,7 @@ class CreateDocumentosTable extends Migration
             $table->string('nombre', 255);
             $table->text('descripcion')->nullable();
             $table->string('ubicacion', 255)->nullable();
+            $table->json('etiquetas')->nullable();
             $table->unsignedBigInteger('tipo_id')->nullable()->comment('tipo de documento');
             $table->unsignedBigInteger('antecesor_id')->nullable()->comment('Si el documento esta dentro de otra carpeta aqui se sabra cual es su carpeta contenedora');
             $table->unsignedBigInteger('creador_id')->nullable()->comment('usuario que creo el documento');

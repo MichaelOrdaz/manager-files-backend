@@ -1,4 +1,4 @@
-description: No Autorizado
+description: Not authorized
 content:
   application/json:
     schema:

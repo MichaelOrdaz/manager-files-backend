@@ -18,6 +18,20 @@ paths:
     $ref: './paths/Logout.yaml'
   /account:
     $ref: './paths/Account.yaml'
+  /users:
+    $ref: './paths/Users.yaml'
+  /users/{user_id}:
+    $ref: './paths/UsersById.yaml'
+  /users/search:
+    $ref: './paths/UsersSearch.yaml'
+  /roles:
+    $ref: './paths/Roles.yaml'
+  /roles/{role_id}:
+    $ref: './paths/RolesById.yaml'
+  /departments:
+    $ref: './paths/Departments.yaml'
+  /departments/{department_id}:
+    $ref: './paths/DepartmentsById.yaml'
 
 components:
   schemas:

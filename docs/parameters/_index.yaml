@@ -1,2 +1,21 @@
-# fecha:
-#   $ref: "./query/fecha.yaml"
+#path
+userId:
+  $ref: "./path/UserId.yaml"
+roleId:
+  $ref: "./path/RoleId.yaml"
+departmentId:
+  $ref: "./path/DepartmentId.yaml"
+
+#query
+page:
+  $ref: "./query/page.yaml"
+order:
+  $ref: "./query/order.yaml"
+sortBy:
+  $ref: "./query/sortBy.yaml"
+perPage:
+  $ref: "./query/perPage.yaml"
+role:
+  $ref: "./query/role.yaml"
+nombre:
+  $ref: "./query/nombre.yaml"
