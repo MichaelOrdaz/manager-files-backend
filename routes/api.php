@@ -25,14 +25,20 @@ Route::prefix('v1')->group(function () {
 
         Route::prefix('users')->group(function () {
             Route::get('/', [App\Http\Controllers\Api\UserController::class, 'index']);
+            Route::get('/{user_id}', [App\Http\Controllers\Api\UserController::class, 'show']);
             Route::post('/', [App\Http\Controllers\Api\UserController::class, 'store']);
             Route::get('/search', [App\Http\Controllers\Api\UserController::class, 'search']);
         });
 
-        // Route::get('permissions/{id}', ['App\Http\Controllers\UserController', 'permissions']);
-        // Route::get('views/{id}', ['App\Http\Controllers\UserController', 'views']);
-        // Route::get('roles', ['App\Http\Controllers\Api\RolesController', 'list']);
-        // Route::get('roles/{id}', ['App\Http\Controllers\UserController', 'roles']);
+        Route::prefix('roles')->group(function () {
+            Route::get('/', [App\Http\Controllers\Api\RoleController::class, 'index']);
+            Route::get('/{role_id}', [App\Http\Controllers\Api\RoleController::class, 'show']);
+        });
+
+        Route::prefix('department')->group(function () {
+            Route::get('/', [App\Http\Controllers\Api\DepartmentController::class, 'index']);
+            Route::get('/{role_id}', [App\Http\Controllers\Api\DepartmentController::class, 'show']);
+        });
         
     });
 });

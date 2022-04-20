@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Permissions\RolePermissionsSeeder;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 
@@ -25,6 +26,7 @@ class RolesSeeder extends Seeder
         $this->call([
             VistasPermissionsSeeder::class,
             UsuarioPermissionsSeeder::class,
+            RolePermissionsSeeder::class,
         ]);
 
     }
