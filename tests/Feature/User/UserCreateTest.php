@@ -92,7 +92,7 @@ class UserCreateTest extends TestCase
             'email' => 'johndoe@mail.com',
             'celular' => '2221245678',
             'password' => '12345678',
-            'imagen' => $file,// optional
+            'imagen_file' => $file,// optional
             'role_id' => $role->id,
             'departamento_id' => $departamento->id, // optional
         ]);
@@ -102,7 +102,7 @@ class UserCreateTest extends TestCase
             $json->has('data', fn ($json) => 
                 $json->has('id')
                 ->has('email')
-                ->has('imagen')
+                ->whereType('imagen', 'string')
                 ->has('nombre')
                 ->has('paterno')
                 ->has('materno')
@@ -139,7 +139,6 @@ class UserCreateTest extends TestCase
             'email' => 'johndoe@mail.com',
             'celular' => '2221245678',
             'password' => '12345678',
-            'imagen' => '',// optional
             'role_id' => $role->id,
             'departamento_id' => $departamento->id, // optional
         ]);
@@ -171,7 +170,6 @@ class UserCreateTest extends TestCase
             'email' => 'johndoe@mail.com',
             'celular' => '2221245678',
             'password' => '',
-            'imagen' => '',// optional
             'role_id' => '',
             'departamento_id' => null, // optional
         ]);
@@ -205,7 +203,7 @@ class UserCreateTest extends TestCase
             'email' => 'johndoe@mail.com',
             'celular' => '2221245678',
             'password' => '',
-            'imagen' => $file,// optional
+            'imagen_file' => $file,// optional
             'role_id' => '',
             'departamento_id' => null, // optional
         ]);
@@ -241,7 +239,7 @@ class UserCreateTest extends TestCase
             'email' => $userActive->email,
             'celular' => '2221245678',
             'password' => '12345678',
-            'imagen' => null,// optional
+            'imagen_file' => null,// optional
             'role_id' => $role->id,
             'departamento_id' => null, // optional
         ]);
@@ -279,17 +277,17 @@ class UserCreateTest extends TestCase
             'email' => $userSoft->email,
             'celular' => '2221245678',
             'password' => '12345678',
-            'imagen' => null,// optional
             'role_id' => $role->id,
             'departamento_id' => null, // optional
         ]);
 
+        $response->dump();
         $response->assertStatus(201)
         ->assertJson(fn (AssertableJson $json) => 
             $json->has('data', fn ($json) => 
                 $json->has('id')
                 ->has('email')
-                ->has('imagen')
+                ->whereType('imagen', 'null')
                 ->has('nombre')
                 ->has('paterno')
                 ->has('materno')

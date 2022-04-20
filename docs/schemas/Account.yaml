@@ -4,7 +4,7 @@ properties:
    type: object
    properties:
     user:
-      $ref: "./Usuarios.yaml"
+      $ref: "./User.yaml"
     roles:
       type: array
       items:

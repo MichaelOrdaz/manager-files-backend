@@ -1,4 +1,4 @@
-description: No autenticado
+description: unauthenticated
 content:
   application/json:
     schema:

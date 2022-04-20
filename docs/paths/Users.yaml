@@ -1,15 +1,15 @@
 get:
   tags: 
-    - Usuarios
-  summary: Get - Usuarios
-  operationId: getUsuarios
-  description: Obtiene el listado de todos los usuarios en una sola peticion
+    - Users
+  summary: List - Users
+  operationId: getUsers
+  description: Get the list of all users in a single request
   parameters:
     - $ref: "../parameters/query/nombre.yaml"
     - $ref: "../parameters/query/role.yaml"
   responses:
     '200': 
-      description: "Estructura básica de la respuesta"
+      description: Basic structure of the response
       content:
         application/json:
           schema:
@@ -18,12 +18,42 @@ get:
               data:
                 type: array
                 items:
-                  $ref: "../schemas/Usuarios.yaml"
+                  $ref: "../schemas/User.yaml"
               message:
                 type: string
+                example: Ok
               success:
                 type: boolean
                 example: true
+    '400':
+      $ref: "../responses/error400.yaml"
+    '401':
+      $ref: "../responses/error401.yaml"
+    '403':
+      $ref: "../responses/error403.yaml"
+    '404':
+      $ref: "../responses/error404.yaml"
+    '422':
+      $ref: "../responses/error422.yaml"
+post:
+  tags: 
+    - Users
+  summary: Create - Users
+  operationId: createUsers
+  description: create a user in the system
+  requestBody: 
+    description: Request in json format
+    content: 
+      multipart/form-data:
+        schema:
+          $ref: '../schemas/User.yaml'
+  responses:
+    '200': 
+      description: Basic structure of the response
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/User.yaml"
     '400':
       $ref: "../responses/error400.yaml"
     '401':

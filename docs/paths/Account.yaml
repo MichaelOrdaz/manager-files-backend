@@ -1,12 +1,12 @@
 get:
   tags: 
-    - Auth
-  summary: Cuenta
+    - Users
+  summary: Account
   operationId: account
-  description: información del  usuario para la plataforma actualmente autenticado
+  description: user information for the currently authenticated platform
   responses:
     '200': 
-      description: "Estructura básica de la respuesta"
+      description: Basic structure of response
       content: 
         application/json: 
           schema:

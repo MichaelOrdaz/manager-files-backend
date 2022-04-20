@@ -16,18 +16,18 @@ paths:
       tags:
         - Auth
       security: []
-      summary: Login de usuarios
+      summary: Login of user
       operationId: login
-      description: login de usuario para la plataforma
+      description: user login for the platform
       requestBody:
-        description: Petición en formato json
+        description: null
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Login'
       responses:
         '200':
-          description: Estructura básica de la respuesta
+          description: Request in json format
           content:
             application/json:
               schema:
@@ -46,12 +46,12 @@ paths:
     post:
       tags:
         - Auth
-      summary: Logout de usuarios
+      summary: Logout of user
       operationId: logout
-      description: elimina el token del usuario que realiza la petición
+      description: removes the token of the user making the request
       responses:
         '200':
-          description: Estructura básica de la respuesta
+          description: Basic structure of the response
           content:
             application/json:
               schema:
@@ -73,13 +73,13 @@ paths:
   /account:
     get:
       tags:
-        - Auth
-      summary: Cuenta
+        - Users
+      summary: Account
       operationId: account
-      description: información del  usuario para la plataforma actualmente autenticado
+      description: user information for the currently authenticated platform
       responses:
         '200':
-          description: Estructura básica de la respuesta
+          description: Basic structure of response
           content:
             application/json:
               schema:
@@ -97,16 +97,16 @@ paths:
   /users:
     get:
       tags:
-        - Usuarios
-      summary: Get - Usuarios
-      operationId: getUsuarios
-      description: Obtiene el listado de todos los usuarios en una sola peticion
+        - Users
+      summary: List - Users
+      operationId: getUsers
+      description: Get the list of all users in a single request
       parameters:
         - $ref: '#/components/parameters/nombre'
         - $ref: '#/components/parameters/role'
       responses:
         '200':
-          description: Estructura básica de la respuesta
+          description: Basic structure of the response
           content:
             application/json:
               schema:
@@ -115,9 +115,74 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Usuarios'
+                      $ref: '#/components/schemas/User'
                   message:
                     type: string
+                    example: Ok
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+    post:
+      tags:
+        - Users
+      summary: Create - Users
+      operationId: createUsers
+      description: create a user in the system
+      requestBody:
+        description: Request in json format
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Basic structure of the response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+  '/users/{user_id}':
+    get:
+      tags:
+        - Users
+      summary: Get - Users
+      operationId: getUser
+      description: Get the user in a single request
+      parameters:
+        - $ref: '#/components/parameters/userId'
+      responses:
+        '200':
+          description: Basic structure of the response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/User'
+                  message:
+                    type: string
+                    example: Ok
                   success:
                     type: boolean
                     example: true
@@ -134,10 +199,10 @@ paths:
   /users/search:
     get:
       tags:
-        - Usuarios
-      summary: search - Usuarios
-      operationId: searchUsuarios
-      description: filtra usuarios paginado
+        - Users
+      summary: search - Users
+      operationId: searchUsers
+      description: filter users with pagination included
       parameters:
         - $ref: '#/components/parameters/role'
         - $ref: '#/components/parameters/nombre'
@@ -147,7 +212,7 @@ paths:
         - $ref: '#/components/parameters/sortBy'
       responses:
         '200':
-          description: Estructura básica de la respuesta
+          description: Basic structure of the response
           content:
             application/json:
               schema:
@@ -156,9 +221,150 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Usuarios'
+                      $ref: '#/components/schemas/User'
                   message:
                     type: string
+                    example: Ok
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+  /roles:
+    get:
+      tags:
+        - Roles
+      summary: List - Roles
+      operationId: getRoles
+      description: Get the list of all roles in a single request
+      responses:
+        '200':
+          description: Basic structure of the response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Role'
+                  message:
+                    type: string
+                    example: Ok
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+  '/roles/{role_id}':
+    get:
+      tags:
+        - Roles
+      summary: Get - Role
+      operationId: getRole
+      description: Get the role in a single request
+      parameters:
+        - $ref: '#/components/parameters/roleId'
+      responses:
+        '200':
+          description: Basic structure of the response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Role'
+                  message:
+                    type: string
+                    example: Ok
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+  /departments:
+    get:
+      tags:
+        - Departments
+      summary: List - Departments
+      operationId: getDepartments
+      description: Get the list of all departments in a single request
+      responses:
+        '200':
+          description: Basic structure of the response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Department'
+                  message:
+                    type: string
+                    example: Ok
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+  '/departments/{department_id}':
+    get:
+      tags:
+        - Departments
+      summary: Get - Department
+      operationId: getDepartment
+      description: Get the department in a single request
+      parameters:
+        - $ref: '#/components/parameters/departmentId'
+      responses:
+        '200':
+          description: Basic structure of the response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Department'
+                  message:
+                    type: string
+                    example: Ok
                   success:
                     type: boolean
                     example: true
@@ -195,7 +401,7 @@ components:
           type: string
           example: AS599879879sa87d98a7sd987ae7987a9
         user:
-          $ref: '#/components/schemas/Usuarios'
+          $ref: '#/components/schemas/User'
         message:
           type: string
           example: Ok
@@ -209,7 +415,7 @@ components:
           type: object
           properties:
             user:
-              $ref: '#/components/schemas/Usuarios'
+              $ref: '#/components/schemas/User'
             roles:
               type: array
               items:
@@ -243,7 +449,7 @@ components:
         success:
           type: boolean
           example: true
-    Usuarios:
+    User:
       type: object
       properties:
         id:
@@ -274,6 +480,7 @@ components:
           type: string
           format: password
           example: C0ntr4s3n14
+          writeOnly: true
         imagen_file:
           type: string
           format: binary
@@ -282,31 +489,69 @@ components:
         imagen:
           type: string
           format: url
-          nullable: true
           readOnly: true
           example: 'https://s3.amazon/profile/46798a7fsd98f79asd8f7'
+        role_id:
+          type: integer
+          example: 1
+        role:
+          $ref: '#/components/schemas/Role'
+          readOnly: true
         departamento_id:
           type: integer
           nullable: true
           example: 1
         departamento:
-          type: object
-          properties:
-            id:
-              type: integer
-              example: 1
-            nombre:
-              type: string
-              example: Recursos Humanos
-          nullable: true
+          $ref: '#/components/schemas/Department'
           readOnly: true
       required:
         - email
         - nombre
         - paterno
         - materno
+        - celular
         - password
+        - role_id
+    Role:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Jefe de departamento
+    Department:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Ordenes de pago
   parameters:
+    userId:
+      name: user_id
+      in: path
+      description: user id
+      schema:
+        type: integer
+      required: true
+    roleId:
+      name: role_id
+      in: path
+      description: role id
+      schema:
+        type: integer
+      required: true
+    departmentId:
+      name: department_id
+      in: path
+      description: department id
+      schema:
+        type: integer
+      required: true
     page:
       in: query
       name: page
@@ -364,7 +609,7 @@ components:
       bearerFormat: JWT
   responses:
     '400':
-      description: Petición erronea
+      description: bad request
       content:
         application/json:
           schema:
@@ -377,7 +622,7 @@ components:
                 type: boolean
                 example: false
     '401':
-      description: No autenticado
+      description: unauthenticated
       content:
         application/json:
           schema:
@@ -390,7 +635,7 @@ components:
                 type: boolean
                 example: false
     '403':
-      description: No Autorizado
+      description: Not authorized
       content:
         application/json:
           schema:
@@ -403,7 +648,7 @@ components:
                 type: boolean
                 example: false
     '404':
-      description: Elemento no encontrado
+      description: Not found
       content:
         application/json:
           schema:
@@ -418,7 +663,7 @@ components:
                 type: boolean
                 example: false
     '422':
-      description: Error general de la petición
+      description: Error validation
       content:
         application/json:
           schema:
@@ -433,7 +678,7 @@ components:
                 type: boolean
                 example: false
     '500':
-      description: Error del servidor
+      description: server error
       content:
         application/json:
           schema:

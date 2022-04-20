@@ -22,7 +22,7 @@ class UserResource extends JsonResource
             'materno' => $this->materno,
             'nombreCompleto' => "{$this->nombre} {$this->paterno} {$this->materno}",
             'celular' => $this->celular,
-            'imagen' => asset("storage/{$this->imagen}"),
+            'imagen' => $this->imagen ? asset("storage/{$this->imagen}") : $this->imagen,
             'departamento' => new DepartmentResource($this->departamento),
             'role' => $this->getRoleNames(),
         ];

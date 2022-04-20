@@ -45,7 +45,7 @@ class UserRequest extends FormRequest
             'materno' => 'required|min:2|max:100',
             'celular' => 'required|min:7|max:20',
             'password' => 'required|min:2|max:60',
-            'imagen' => "nullable|image|max:{$MAX_FILE_SIZE}",
+            'imagen_file' => "nullable|image|max:{$MAX_FILE_SIZE}",
             'role_id' => 'required|integer',
             'departamento_id' => 'nullable|integer',
         ];
@@ -60,8 +60,8 @@ class UserRequest extends FormRequest
         
         $validated['password'] = Hash::make($validated['password']);
 
-        if ($this->hasFile('imagen') && $this->file('imagen')->isValid()) {
-            $path = $this->file('imagen')->store('profiles', 'public');
+        if ($this->hasFile('imagen_file') && $this->file('imagen_file')->isValid()) {
+            $path = $this->file('imagen_file')->store('profiles', 'public');
             $validated['imagen'] = $path;
         }
         return $validated;

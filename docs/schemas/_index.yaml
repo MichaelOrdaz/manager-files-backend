@@ -8,5 +8,9 @@ Auth:
   $ref: './Auth.yaml'
 Account:
   $ref: './Account.yaml'
-Usuarios:
-  $ref: './Usuarios.yaml'
+User:
+  $ref: './User.yaml'
+Role:
+  $ref: './Role.yaml'
+Department:
+  $ref: './Department.yaml'
