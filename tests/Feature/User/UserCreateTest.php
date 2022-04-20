@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\User;
 
-use App\Models\Departamento;
+use App\Models\Department;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -34,7 +34,7 @@ class UserCreateTest extends TestCase
         $this->assertAuthenticated();
 
         $role = Role::findByName('Analyst');
-        $departamento = Departamento::all()->random();
+        $departamento = Department::all()->random();
 
         $response = $this->postJson('api/v1/users', [
             'nombre' => 'John',
@@ -81,7 +81,7 @@ class UserCreateTest extends TestCase
         $this->assertAuthenticated();
 
         $role = Role::findByName('Analyst');
-        $departamento = Departamento::all()->random();
+        $departamento = Department::all()->random();
 
         $file = UploadedFile::fake()->image('avatar.jpg');
 
@@ -130,7 +130,7 @@ class UserCreateTest extends TestCase
         $this->assertAuthenticated();
 
         $role = Role::findByName('Analyst');
-        $departamento = Departamento::all()->random();
+        $departamento = Department::all()->random();
 
         $response = $this->postJson('api/v1/users', [
             'nombre' => 'John',

@@ -23,7 +23,7 @@ class UserResource extends JsonResource
             'nombreCompleto' => "{$this->nombre} {$this->paterno} {$this->materno}",
             'celular' => $this->celular,
             'imagen' => asset("storage/{$this->imagen}"),
-            'departamento' => new DepartamentoResource($this->departamento),
+            'departamento' => new DepartmentResource($this->departamento),
             'role' => $this->getRoleNames(),
         ];
     }

@@ -31,7 +31,7 @@ class AuthController extends Controller
 
         $token = $user->createToken('authToken')->accessToken;
 
-        $user->load('departamento');
+        $user->load('department');
         return $this->successResponse('Ok', [
             'token' => $token,
             'user' => $user,
@@ -86,7 +86,7 @@ class AuthController extends Controller
         $viewPermissions = $tmp;
         
         $userFresh = $user->fresh();
-        $userFresh->load('departamento');
+        $userFresh->load('department');
 
         return $this->successResponse('Ok', [
             'user' => $userFresh,

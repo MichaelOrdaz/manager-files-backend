@@ -3,8 +3,6 @@
 namespace Tests\Feature\User;
 
 use App\Models\User;
-use Database\Seeders\RolesSeeder;
-use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -56,7 +54,7 @@ class UserListTest extends TestCase
         );
     }
 
-    public function test_users_list_search()
+    public function test_users_list_search_clear()
     {
         $this->seed();
 
@@ -235,9 +233,7 @@ class UserListTest extends TestCase
     {
         $this->seed();
 
-        $this->assertDatabaseCount('users', 5);
         $this->assertDatabaseCount('roles', 3);
-        $this->assertDatabaseCount('permissions', 5);
 
         $user = User::factory()->create();
         $user->assignRole('Admin');
@@ -247,6 +243,39 @@ class UserListTest extends TestCase
         $this->assertTrue($user->can('user.create'));
         $this->assertTrue($user->can('user.update'));
         $this->assertTrue($user->can('user.delete'));
+    }
+
+    public function test_users_show_success_admin()
+    {
+        $this->seed();
+
+        $user = User::factory()->create();
+        $user->assignRole('Admin');
+
+        Passport::actingAs($user);
+        $this->assertAuthenticated();
+
+        $userToQuery = User::all()->random();
+
+        $response = $this->getJson("api/v1/users/{$userToQuery->id}");
+
+        $response->assertOk()
+        ->assertJson(fn (AssertableJson $json) => 
+            $json->has('data', fn ($json) => 
+                $json->has('id')
+                ->has('email')
+                ->has('imagen')
+                ->has('nombre')
+                ->has('paterno')
+                ->has('materno')
+                ->has('role')
+                ->has('departamento')
+                ->has('celular')
+                ->etc()
+            )
+            ->has('message')
+            ->where('success', true)
+        );
     }
 
 }

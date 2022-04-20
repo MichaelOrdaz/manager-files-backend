@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Department;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
@@ -55,7 +56,7 @@ class UserRequest extends FormRequest
         $validated = $this->validated();
 
         $validated['role'] = Role::findOrFail($validated['role_id']);
-        $validated['departamento'] = Role::find($validated['departamento_id']);
+        $validated['departamento'] = Department::find($validated['departamento_id']);
         
         $validated['password'] = Hash::make($validated['password']);
 

@@ -25,9 +25,9 @@ Route::prefix('v1')->group(function () {
 
         Route::prefix('users')->group(function () {
             Route::get('/', [App\Http\Controllers\Api\UserController::class, 'index']);
-            Route::get('/{user_id}', [App\Http\Controllers\Api\UserController::class, 'show']);
-            Route::post('/', [App\Http\Controllers\Api\UserController::class, 'store']);
             Route::get('/search', [App\Http\Controllers\Api\UserController::class, 'search']);
+            Route::post('/', [App\Http\Controllers\Api\UserController::class, 'store']);
+            Route::get('/{user_id}', [App\Http\Controllers\Api\UserController::class, 'show']);
         });
 
         Route::prefix('roles')->group(function () {
