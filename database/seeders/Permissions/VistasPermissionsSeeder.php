@@ -10,14 +10,19 @@ class VistasPermissionsSeeder extends Seeder
 {
   public function run ()
   {
-    // SECTION: Create permissions for role
     Permission::create(['name' => 'Dashboard', 'is_view' => '/dashboard']);
+    Permission::create(['name' => 'Home', 'is_view' => '/home']);
+    Permission::create(['name' => 'Collaborators', 'is_view' => '/collaborators']);
+    Permission::create(['name' => 'Shared files', 'is_view' => '/shared-files']);
 
     $admin = Role::findByName('Admin');
-    $admin->givePermissionTo(Permission::all());
+    $admin->givePermissionTo('Dashboard');
 
     $jefe = Role::findByName('Head of Department');
     $jefe->givePermissionTo('Dashboard');
+    $jefe->givePermissionTo('Home');
+    $jefe->givePermissionTo('Collaborators');
+    $jefe->givePermissionTo('Shared files');
 
     $analista = Role::findByName('Analyst');
     $analista->givePermissionTo('Dashboard');
