@@ -20,7 +20,7 @@ paths:
       operationId: login
       description: user login for the platform
       requestBody:
-        description: null
+        description: Structure of request
         content:
           application/json:
             schema:
@@ -143,7 +143,7 @@ paths:
         content:
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/UserMultipart'
       responses:
         '200':
           description: Basic structure of the response
@@ -455,7 +455,6 @@ components:
         id:
           type: integer
           example: 1
-          readOnly: true
         email:
           type: string
           format: email
@@ -463,7 +462,6 @@ components:
         email_verified_at:
           type: string
           example: '2020-01-01 12:00:00'
-          readOnly: true
         nombre:
           type: string
           example: John
@@ -480,30 +478,48 @@ components:
           type: string
           format: password
           example: C0ntr4s3n14
-          writeOnly: true
+        imagen:
+          type: string
+          format: url
+          example: 'https://s3.amazon/profile/46798a7fsd98f79asd8f7'
+        role:
+          $ref: '#/components/schemas/Role'
+        departamento:
+          $ref: '#/components/schemas/Department'
+    UserMultipart:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: correo@puller.mx
+        nombre:
+          type: string
+          example: John
+        paterno:
+          type: string
+          example: Doe
+        materno:
+          type: string
+          example: Roblox
+        celular:
+          type: string
+          example: 55 54 89 67 87
+        password:
+          type: string
+          format: password
+          example: C0ntr4s3n14
         imagen_file:
           type: string
           format: binary
           nullable: true
-          writeOnly: true
-        imagen:
-          type: string
-          format: url
-          readOnly: true
-          example: 'https://s3.amazon/profile/46798a7fsd98f79asd8f7'
         role_id:
           type: integer
           example: 1
-        role:
-          $ref: '#/components/schemas/Role'
-          readOnly: true
         departamento_id:
           type: integer
           nullable: true
           example: 1
-        departamento:
-          $ref: '#/components/schemas/Department'
-          readOnly: true
       required:
         - email
         - nombre

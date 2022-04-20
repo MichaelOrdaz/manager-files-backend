@@ -10,6 +10,8 @@ Account:
   $ref: './Account.yaml'
 User:
   $ref: './User.yaml'
+UserMultipart:
+  $ref: './UserMultipart.yaml'
 Role:
   $ref: './Role.yaml'
 Department:

@@ -6,7 +6,7 @@ post:
   operationId: login
   description: user login for the platform
   requestBody: 
-    description: 
+    description: Structure of request
     content: 
       application/json:
         schema:

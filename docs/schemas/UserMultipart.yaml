@@ -1,15 +1,9 @@
 type: object
 properties:
-  id:
-    type: integer
-    example: 1
   email:
     type: string
     format: email
     example: correo@puller.mx
-  email_verified_at:
-    type: string
-    example: "2020-01-01 12:00:00"
   nombre:
     type: string
     example: John
@@ -26,11 +20,23 @@ properties:
     type: string
     format: password
     example: C0ntr4s3n14
-  imagen:
+  imagen_file:
     type: string
-    format: url
-    example: 'https://s3.amazon/profile/46798a7fsd98f79asd8f7'
-  role:
-    $ref: './Role.yaml'
-  departamento:
-    $ref: './Department.yaml'
+    format: binary
+    nullable: true
+  role_id:
+    type: integer
+    example: 1
+  departamento_id:
+    type: integer
+    nullable: true
+    example: 1
+
+required:
+  - email
+  - nombre
+  - paterno
+  - materno
+  - celular
+  - password
+  - role_id

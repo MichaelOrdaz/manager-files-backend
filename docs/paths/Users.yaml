@@ -46,7 +46,7 @@ post:
     content: 
       multipart/form-data:
         schema:
-          $ref: '../schemas/User.yaml'
+          $ref: '../schemas/UserMultipart.yaml'
   responses:
     '200': 
       description: Basic structure of the response
