@@ -3,8 +3,6 @@
 namespace Tests\Feature\User;
 
 use App\Models\User;
-use Database\Seeders\RolesSeeder;
-use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -12,7 +10,7 @@ use Laravel\Passport\Passport;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
-class ListTest extends TestCase
+class UserListTest extends TestCase
 {
     use RefreshDatabase;
     
@@ -29,7 +27,7 @@ class ListTest extends TestCase
 
         $users = User::factory()->create();
         $user = $users->first();
-        $user->assignRole('Administrador');
+        $user->assignRole('Admin');
 
         Passport::actingAs($user);
 
@@ -56,7 +54,7 @@ class ListTest extends TestCase
         );
     }
 
-    public function test_users_list_search()
+    public function test_users_list_search_clear()
     {
         $this->seed();
 
@@ -64,7 +62,7 @@ class ListTest extends TestCase
 
         $users = User::factory()->count(50)->create();
         $user = $users->first();
-        $user->assignRole('Administrador');
+        $user->assignRole('Admin');
 
         Passport::actingAs($user);
         $this->assertAuthenticated();
@@ -105,7 +103,7 @@ class ListTest extends TestCase
 
         $users = User::factory()->count(50)->create();
         $user = $users->first();
-        $user->assignRole('Administrador');
+        $user->assignRole('Admin');
 
         Passport::actingAs($user);
         $this->assertAuthenticated();
@@ -146,7 +144,7 @@ class ListTest extends TestCase
 
         $users = User::factory()->count(50)->create();
         $user = $users->first();
-        $user->assignRole('Administrador');
+        $user->assignRole('Admin');
 
         Passport::actingAs($user);
         $this->assertAuthenticated();
@@ -193,7 +191,7 @@ class ListTest extends TestCase
 
         $users = User::factory()->count(50)->create();
         $user = $users->first();
-        $user->assignRole('Administrador');
+        $user->assignRole('Admin');
 
         Passport::actingAs($user);
         $this->assertAuthenticated();
@@ -235,19 +233,49 @@ class ListTest extends TestCase
     {
         $this->seed();
 
-        $this->assertDatabaseCount('users', 5);
         $this->assertDatabaseCount('roles', 3);
-        $this->assertDatabaseCount('permissions', 5);
 
         $user = User::factory()->create();
-        $user->assignRole('Administrador');
+        $user->assignRole('Admin');
         Passport::actingAs($user);
         $this->assertAuthenticated();
-        // dump($user->hasPermissionTo());
         $this->assertTrue($user->can('user.show'));
         $this->assertTrue($user->can('user.create'));
         $this->assertTrue($user->can('user.update'));
         $this->assertTrue($user->can('user.delete'));
+    }
+
+    public function test_users_show_success_admin()
+    {
+        $this->seed();
+
+        $user = User::factory()->create();
+        $user->assignRole('Admin');
+
+        Passport::actingAs($user);
+        $this->assertAuthenticated();
+
+        $userToQuery = User::all()->random();
+
+        $response = $this->getJson("api/v1/users/{$userToQuery->id}");
+
+        $response->assertOk()
+        ->assertJson(fn (AssertableJson $json) => 
+            $json->has('data', fn ($json) => 
+                $json->has('id')
+                ->has('email')
+                ->has('imagen')
+                ->has('nombre')
+                ->has('paterno')
+                ->has('materno')
+                ->has('role')
+                ->has('departamento')
+                ->has('celular')
+                ->etc()
+            )
+            ->has('message')
+            ->where('success', true)
+        );
     }
 
 }

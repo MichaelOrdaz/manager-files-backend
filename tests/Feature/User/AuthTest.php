@@ -62,7 +62,7 @@ class AuthTest extends TestCase
       $this->seed(RolesSeeder::class);
       
       $user = User::factory()->create();
-      $user->assignRole('Administrador');
+      $user->assignRole('Admin');
       
       Passport::actingAs($user);
 
@@ -81,7 +81,7 @@ class AuthTest extends TestCase
       $this->seed(RolesSeeder::class);
       
       $user = User::factory()->create();
-      $user->assignRole('Administrador');
+      $user->assignRole('Admin');
       
       Passport::actingAs($user);
 
@@ -109,7 +109,7 @@ class AuthTest extends TestCase
       $this->seed(RolesSeeder::class);
       
       $user = User::factory()->create();
-      $user->assignRole('Analista');
+      $user->assignRole('Analyst');
       
       Passport::actingAs($user);
 
@@ -137,7 +137,7 @@ class AuthTest extends TestCase
       $this->seed(RolesSeeder::class);
       
       $user = User::factory()->create();
-      $user->assignRole('Jefe de departamento');
+      $user->assignRole('Head of Department');
       
       Passport::actingAs($user);
 

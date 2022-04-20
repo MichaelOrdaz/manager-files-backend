@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Departamento;
+use App\Models\Department;
 use App\Models\User;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         $this->call([
-            DepartamentoSeeder::class
+            DepartmentSeeder::class
         ]);
 
         $faker = Factory::create();
@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'remember_token' => $faker->word(),
         ]);
-        $admin->assignRole('Administrador');
+        $admin->assignRole('Admin');
 
         $jefe1 = User::create([
             'email' => 'jefe1@puller.mx',
@@ -47,10 +47,10 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'remember_token' => $faker->word(),
         ]);
-        $departamento1 = Departamento::all()->random();
-        $jefe1->departamento()->associate($departamento1);
+        $departamento1 = Department::all()->random();
+        $jefe1->department()->associate($departamento1);
         $jefe1->save();
-        $jefe1->assignRole('Jefe de departamento');
+        $jefe1->assignRole('Head of Department');
 
         $jefe2 = User::create([
             'email' => 'jefe2@puller.mx',
@@ -63,10 +63,10 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'remember_token' => $faker->word(),
         ]);
-        $departamento2 = Departamento::all()->random();
-        $jefe2->departamento()->associate($departamento2);
+        $departamento2 = Department::all()->random();
+        $jefe2->department()->associate($departamento2);
         $jefe2->save();
-        $jefe2->assignRole('Jefe de departamento');
+        $jefe2->assignRole('Head of Department');
 
         $analista = User::create([
             'email' => 'analista1@puller.mx',
@@ -79,9 +79,9 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'remember_token' => $faker->word(),
         ]);
-        $analista->departamento()->associate($departamento1);
+        $analista->department()->associate($departamento1);
         $analista->save();
-        $analista->assignRole('Analista');
+        $analista->assignRole('Analyst');
 
         $analista2 = User::create([
             'email' => 'analista1@puller.mx',
@@ -94,8 +94,8 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'remember_token' => $faker->word(),
         ]);
-        $analista2->departamento()->associate($departamento2);
+        $analista2->department()->associate($departamento2);
         $analista2->save();
-        $analista2->assignRole('Analista');
+        $analista2->assignRole('Analyst');
     }
 }

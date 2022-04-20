@@ -1,4 +1,4 @@
-description: Petición erronea
+description: bad request
 content:
   application/json:
     schema:

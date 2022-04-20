@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\UserCollection;
-use App\Models\Historial;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\UserRequest;
+use App\Http\Resources\UserCollection;
+use App\Http\Resources\UserResource;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -27,7 +27,7 @@ class UserController extends Controller
         $nombre = $validated['nombre'] ?? null;
         $roleId = $validated['role'] ?? null;
 
-        $users = User::with(['roles', 'departamento'])
+        $users = User::with(['roles', 'department'])
         ->when($nombre, function ($query, $nombre) {
             return $query->whereRaw("CONCAT(nombre,' ',paterno,' ',materno) LIKE ?", "%{$nombre}%");
         })
@@ -46,30 +46,50 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        $this->authorize('create', User::class);
+        
+        $data = $request->getData();
+        $user = User::create($data);
+        $user->assignRole($data['role']->name);
+        
+        $user->department()->associate($data['departamento']);
+        $user->save();
+        
+        return (new UserResource($user))->additional([
+            'success' => true,
+            'message' => 'user created successfully'
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Historial  $historial
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Historial $historial)
+    public function show($userId)
     {
-        //
+        $user = User::findOrFail($userId);
+        $this->authorize('view', $user);
+
+        $user->load(['roles', 'department']);
+
+        return (new UserResource($user))->additional([
+            'message' => 'user retrieved successfully',
+            'success' => true,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Historial  $historial
+     * @param  \App\Models\User  $historial
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Historial $historial)
+    public function update(Request $request, User $historial)
     {
         //
     }
@@ -77,10 +97,10 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Historial  $historial
+     * @param  \App\Models\User  $historial
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Historial $historial)
+    public function destroy(User $historial)
     {
         //
     }
@@ -104,7 +124,7 @@ class UserController extends Controller
         $nombre = $validated['nombre'] ?? null;
         $roleId = $validated['role'] ?? null;
 
-        $users = User::with(['roles', 'departamento'])
+        $users = User::with(['roles', 'department'])
         ->when($nombre, function ($query, $nombre) {
             return $query->whereRaw("CONCAT(nombre,' ',paterno,' ',materno) LIKE ?", "%{$nombre}%");
         })

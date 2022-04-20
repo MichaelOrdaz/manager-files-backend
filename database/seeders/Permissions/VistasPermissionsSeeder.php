@@ -13,13 +13,13 @@ class VistasPermissionsSeeder extends Seeder
     // SECTION: Create permissions for role
     Permission::create(['name' => 'Dashboard', 'is_view' => '/dashboard']);
 
-    $admin = Role::findByName('Administrador');
+    $admin = Role::findByName('Admin');
     $admin->givePermissionTo(Permission::all());
 
-    $jefe = Role::findByName('Jefe de departamento');
+    $jefe = Role::findByName('Head of Department');
     $jefe->givePermissionTo('Dashboard');
 
-    $analista = Role::findByName('Analista');
+    $analista = Role::findByName('Analyst');
     $analista->givePermissionTo('Dashboard');
 
     // $roles = Role::all();

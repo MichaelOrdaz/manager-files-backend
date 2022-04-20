@@ -1,0 +1,6 @@
+name: department_id
+in: path
+description: department id
+schema:
+  type: integer
+required: true

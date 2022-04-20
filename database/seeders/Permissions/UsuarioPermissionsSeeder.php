@@ -20,17 +20,17 @@ class UsuarioPermissionsSeeder extends Seeder
       Permission::create(['name' => 'user.create']);
       Permission::create(['name' => 'user.delete']);
 
-      $admin = Role::findByName('Administrador');
+      $admin = Role::findByName('Admin');
       $admin->givePermissionTo('user.show');
       $admin->givePermissionTo('user.update');
       $admin->givePermissionTo('user.create');
       $admin->givePermissionTo('user.delete');
 
-      $jefe = Role::findByName('Jefe de departamento');
+      $jefe = Role::findByName('Head of Department');
       $jefe->givePermissionTo('user.show');
       $jefe->givePermissionTo('user.update');
 
-      $analista = Role::findByName('Analista');
+      $analista = Role::findByName('Analyst');
       $analista->givePermissionTo('user.show');
     }
 }

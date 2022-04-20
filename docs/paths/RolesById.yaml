@@ -1,18 +1,13 @@
 get:
   tags: 
-    - Users
-  summary: "search - Users"
-  operationId: searchUsers
-  description: filter users with pagination included
+    - Roles
+  summary: Get - Role
+  operationId: getRole
+  description: Get the role in a single request
   parameters:
-    - $ref: "../parameters/query/role.yaml"
-    - $ref: "../parameters/query/nombre.yaml"
-    - $ref: "../parameters/query/page.yaml"
-    - $ref: "../parameters/query/perPage.yaml"
-    - $ref: "../parameters/query/order.yaml"
-    - $ref: "../parameters/query/sortBy.yaml"
+    - $ref: "../parameters/path/RoleId.yaml"
   responses:
-    '200':
+    '200': 
       description: Basic structure of the response
       content:
         application/json:
@@ -20,9 +15,7 @@ get:
             type: object
             properties:
               data:
-                type: array
-                items:
-                  $ref: "../schemas/User.yaml"
+                $ref: "../schemas/Role.yaml"
               message:
                 type: string
                 example: Ok

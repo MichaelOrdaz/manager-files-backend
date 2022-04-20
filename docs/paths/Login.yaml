@@ -2,18 +2,18 @@ post:
   tags: 
     - Auth
   security: []
-  summary: Login de usuarios
+  summary: Login of user
   operationId: login
-  description: login de usuario para la plataforma
+  description: user login for the platform
   requestBody: 
-    description: Petición en formato json
+    description: Structure of request
     content: 
       application/json:
         schema:
           $ref: '../schemas/Login.yaml'
   responses:
     '200': 
-      description: "Estructura básica de la respuesta"
+      description: Request in json format
       content: 
         application/json: 
           schema:
