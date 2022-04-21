@@ -1,6 +1,6 @@
 in: query
 name: role
-description: (id del rol) Valor para filtrar el tipo de rol de los usuarios
+description: (role id) Value to filter the role type of the users
 required: false
 schema:
   type: integer

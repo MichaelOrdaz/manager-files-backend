@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: DIXA API
-  description: Proyecto DIXA API, gestión de documentación
+  description: Project DIXA API, documentation management
   version: 0.0.1
 servers:
   - url: http://localhost:8000/api/v1
@@ -22,6 +22,8 @@ paths:
     $ref: './paths/Users.yaml'
   /users/{user_id}:
     $ref: './paths/UsersById.yaml'
+  /users/image:
+    $ref: './paths/UsersImage.yaml'
   /users/search:
     $ref: './paths/UsersSearch.yaml'
   /roles:

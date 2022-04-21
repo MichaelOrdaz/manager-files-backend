@@ -10,27 +10,27 @@ properties:
   email_verified_at:
     type: string
     example: "2020-01-01 12:00:00"
-  nombre:
+  name:
     type: string
     example: John
-  paterno:
+  lastname:
     type: string
     example: Doe
-  materno:
+  second_lastname:
     type: string
     example: Roblox
-  celular:
+  phone:
     type: string
     example: '55 54 89 67 87'
   password:
     type: string
     format: password
     example: C0ntr4s3n14
-  imagen:
+  image:
     type: string
     format: url
     example: 'https://s3.amazon/profile/46798a7fsd98f79asd8f7'
   role:
     $ref: './Role.yaml'
-  departamento:
+  department:
     $ref: './Department.yaml'

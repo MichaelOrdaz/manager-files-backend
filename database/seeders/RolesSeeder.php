@@ -4,11 +4,12 @@ namespace Database\Seeders;
 
 use Database\Seeders\Permissions\DeparmentPermissionsSeeder;
 use Database\Seeders\Permissions\RolePermissionsSeeder;
+use Database\Seeders\Permissions\UserPermissionsSeeder;
+use Database\Seeders\Permissions\ViewPermissionsSeeder;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 
-use Database\Seeders\Permissions\VistasPermissionsSeeder;
-use Database\Seeders\Permissions\UsuarioPermissionsSeeder;
+
 class RolesSeeder extends Seeder
 {
     /**
@@ -25,8 +26,8 @@ class RolesSeeder extends Seeder
         Role::create(['name' => 'Analyst']);
 
         $this->call([
-            VistasPermissionsSeeder::class,
-            UsuarioPermissionsSeeder::class,
+            ViewPermissionsSeeder::class,
+            UserPermissionsSeeder::class,
             RolePermissionsSeeder::class,
             DeparmentPermissionsSeeder::class,
         ]);

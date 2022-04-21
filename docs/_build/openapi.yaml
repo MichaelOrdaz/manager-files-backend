@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: DIXA API
-  description: 'Proyecto DIXA API, gestión de documentación'
+  description: 'Project DIXA API, documentation management'
   version: 0.0.1
 servers:
   - url: 'http://localhost:8000/api/v1'
@@ -102,7 +102,7 @@ paths:
       operationId: getUsers
       description: Get the list of all users in a single request
       parameters:
-        - $ref: '#/components/parameters/nombre'
+        - $ref: '#/components/parameters/name'
         - $ref: '#/components/parameters/role'
       responses:
         '200':
@@ -150,7 +150,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/User'
+                  message:
+                    type: string
+                    example: Ok
+                  success:
+                    type: boolean
+                    example: true
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -196,16 +205,93 @@ paths:
           $ref: '#/components/responses/404'
         '422':
           $ref: '#/components/responses/422'
+  /users/image:
+    post:
+      tags:
+        - Users
+      summary: Update - image user
+      operationId: updateImageUser
+      description: update image the user authenticate
+      requestBody:
+        description: Request in json format
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+              required:
+                - image
+      responses:
+        '200':
+          description: Basic structure of the response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/User'
+                  message:
+                    type: string
+                    example: Ok
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+    delete:
+      tags:
+        - Users
+      summary: Delete - imagen user
+      operationId: deleteImageUser
+      description: remove image avatar the user authenticate
+      responses:
+        '200':
+          description: Basic structure of the response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/User'
+                  message:
+                    type: string
+                    example: Ok
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
   /users/search:
     get:
       tags:
         - Users
-      summary: search - Users
+      summary: Search - Users
       operationId: searchUsers
       description: filter users with pagination included
       parameters:
         - $ref: '#/components/parameters/role'
-        - $ref: '#/components/parameters/nombre'
+        - $ref: '#/components/parameters/name'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/perPage'
         - $ref: '#/components/parameters/order'
@@ -425,7 +511,7 @@ components:
             permissions:
               type: object
               properties:
-                nombre.permiso:
+                name.permission:
                   type: object
                   properties:
                     id:
@@ -434,7 +520,7 @@ components:
             views:
               type: object
               properties:
-                nombre.permiso.vista:
+                name.permission.view:
                   type: object
                   properties:
                     id:
@@ -462,29 +548,29 @@ components:
         email_verified_at:
           type: string
           example: '2020-01-01 12:00:00'
-        nombre:
+        name:
           type: string
           example: John
-        paterno:
+        lastname:
           type: string
           example: Doe
-        materno:
+        second_lastname:
           type: string
           example: Roblox
-        celular:
+        phone:
           type: string
           example: 55 54 89 67 87
         password:
           type: string
           format: password
           example: C0ntr4s3n14
-        imagen:
+        image:
           type: string
           format: url
           example: 'https://s3.amazon/profile/46798a7fsd98f79asd8f7'
         role:
           $ref: '#/components/schemas/Role'
-        departamento:
+        department:
           $ref: '#/components/schemas/Department'
     UserMultipart:
       type: object
@@ -493,39 +579,39 @@ components:
           type: string
           format: email
           example: correo@puller.mx
-        nombre:
+        name:
           type: string
           example: John
-        paterno:
+        lastname:
           type: string
           example: Doe
-        materno:
+        second_lastname:
           type: string
           example: Roblox
-        celular:
+        phone:
           type: string
           example: 55 54 89 67 87
         password:
           type: string
           format: password
           example: C0ntr4s3n14
-        imagen_file:
+        image_file:
           type: string
           format: binary
           nullable: true
         role_id:
           type: integer
           example: 1
-        departamento_id:
+        department_id:
           type: integer
           nullable: true
           example: 1
       required:
         - email
-        - nombre
-        - paterno
-        - materno
-        - celular
+        - name
+        - lastname
+        - second_lastname
+        - phone
         - password
         - role_id
     Role:
@@ -571,7 +657,7 @@ components:
     page:
       in: query
       name: page
-      description: pagina a consultar
+      description: page to query
       required: false
       schema:
         type: integer
@@ -579,7 +665,7 @@ components:
     order:
       in: query
       name: order
-      description: 'tipo de ordenamiento, descendente o ascendente'
+      description: 'sort type, descending or ascending'
       required: false
       schema:
         type: string
@@ -589,7 +675,7 @@ components:
     sortBy:
       in: query
       name: sortBy
-      description: campo por el cual se desea ordenar
+      description: field by which you want to sort
       required: false
       schema:
         type: string
@@ -597,7 +683,7 @@ components:
     perPage:
       in: query
       name: perPage
-      description: cantidad de items que quieres que devuelva la respuesta
+      description: number of items you want the response to return
       required: false
       schema:
         type: integer
@@ -605,15 +691,15 @@ components:
     role:
       in: query
       name: role
-      description: (id del rol) Valor para filtrar el tipo de rol de los usuarios
+      description: (role id) Value to filter the role type of the users
       required: false
       schema:
         type: integer
         example: 1
-    nombre:
+    name:
       in: query
-      name: nombre
-      description: Valor para filtrar por nombre completo de usuario
+      name: name
+      description: Value to filter by full user name
       required: false
       schema:
         type: string

@@ -1,6 +1,6 @@
 in: query
 name: perPage
-description: cantidad de items que quieres que devuelva la respuesta
+description: number of items you want the response to return
 required: false
 schema:
   type: integer

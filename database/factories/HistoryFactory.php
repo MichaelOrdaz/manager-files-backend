@@ -2,9 +2,12 @@
 
 namespace Database\Factories;
 
+use App\Models\Action;
+use App\Models\Document;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class DepartmentFactory extends Factory
+class HistoryFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -14,7 +17,9 @@ class DepartmentFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->word(),
+            'document_id' => Document::factory(),
+            'user_id' => User::factory(),
+            'action_id' => Action::factory(),
         ];
     }
 }

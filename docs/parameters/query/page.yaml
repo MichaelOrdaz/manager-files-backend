@@ -1,6 +1,6 @@
 in: query
 name: page
-description: pagina a consultar
+description: page to query
 required: false
 schema:
   type: integer

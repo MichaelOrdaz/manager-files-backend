@@ -17,13 +17,13 @@ class UserResource extends JsonResource
         return [
             'id' => $this->id,
             'email' => $this->email,
-            'nombre' => $this->nombre,
-            'paterno' => $this->paterno,
-            'materno' => $this->materno,
-            'nombreCompleto' => "{$this->nombre} {$this->paterno} {$this->materno}",
-            'celular' => $this->celular,
-            'imagen' => $this->imagen ? asset("storage/{$this->imagen}") : $this->imagen,
-            'departamento' => new DepartmentResource($this->departamento),
+            'name' => $this->name,
+            'lastname' => $this->lastname,
+            'second_lastname' => $this->second_lastname,
+            'fullName' => "{$this->name} {$this->lastname} {$this->second_lastname}",
+            'phone' => $this->phone,
+            'image' => $this->image ? asset("storage/{$this->image}") : $this->image,
+            'department' => new DepartmentResource($this->department),
             'role' => $this->getRoleNames(),
         ];
     }

@@ -1,6 +1,6 @@
 in: query
 name: sortBy
-description: campo por el cual se desea ordenar
+description: field by which you want to sort
 required: false
 schema:
   type: string

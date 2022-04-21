@@ -34,18 +34,17 @@ class UserCreateTest extends TestCase
         $this->assertAuthenticated();
 
         $role = Role::findByName('Analyst');
-        $departamento = Department::all()->random();
+        $department = Department::all()->random();
 
         $response = $this->postJson('api/v1/users', [
-            'nombre' => 'John',
-            'paterno' => 'Doe',
-            'materno' => 'Roblox',
+            'name' => 'John',
+            'lastname' => 'Doe',
+            'second_lastname' => 'Roblox',
             'email' => 'johndoe@mail.com',
-            'celular' => '2221245678',
+            'phone' => '2221245678',
             'password' => '12345678',
-            'imagen' => '',// optional
             'role_id' => $role->id,
-            'departamento_id' => $departamento->id, // optional
+            'department_id' => $department->id, // optional
         ]);
 
         $response->assertStatus(201)
@@ -53,13 +52,13 @@ class UserCreateTest extends TestCase
             $json->has('data', fn ($json) => 
                 $json->has('id')
                 ->has('email')
-                ->has('imagen')
-                ->has('nombre')
-                ->has('paterno')
-                ->has('materno')
+                ->whereType('image', 'null')
+                ->has('name')
+                ->has('lastname')
+                ->has('second_lastname')
                 ->has('role')
-                ->has('departamento')
-                ->has('celular')
+                ->has('department')
+                ->has('phone')
                 ->etc()
             )
             ->has('message')
@@ -81,20 +80,20 @@ class UserCreateTest extends TestCase
         $this->assertAuthenticated();
 
         $role = Role::findByName('Analyst');
-        $departamento = Department::all()->random();
+        $department = Department::all()->random();
 
         $file = UploadedFile::fake()->image('avatar.jpg');
 
         $response = $this->postJson('api/v1/users', [
-            'nombre' => 'John',
-            'paterno' => 'Doe',
-            'materno' => 'Roblox',
+            'name' => 'John',
+            'lastname' => 'Doe',
+            'second_lastname' => 'Roblox',
             'email' => 'johndoe@mail.com',
-            'celular' => '2221245678',
+            'phone' => '2221245678',
             'password' => '12345678',
-            'imagen_file' => $file,// optional
+            'image_file' => $file,// optional
             'role_id' => $role->id,
-            'departamento_id' => $departamento->id, // optional
+            'department_id' => $department->id, // optional
         ]);
 
         $response->assertStatus(201)
@@ -102,13 +101,13 @@ class UserCreateTest extends TestCase
             $json->has('data', fn ($json) => 
                 $json->has('id')
                 ->has('email')
-                ->whereType('imagen', 'string')
-                ->has('nombre')
-                ->has('paterno')
-                ->has('materno')
+                ->whereType('image', 'string')
+                ->has('name')
+                ->has('lastname')
+                ->has('second_lastname')
                 ->has('role')
-                ->has('departamento')
-                ->has('celular')
+                ->has('department')
+                ->has('phone')
                 ->etc()
             )
             ->has('message')
@@ -130,17 +129,17 @@ class UserCreateTest extends TestCase
         $this->assertAuthenticated();
 
         $role = Role::findByName('Analyst');
-        $departamento = Department::all()->random();
+        $department = Department::all()->random();
 
         $response = $this->postJson('api/v1/users', [
-            'nombre' => 'John',
-            'paterno' => 'Doe',
-            'materno' => 'Roblox',
+            'name' => 'John',
+            'lastname' => 'Doe',
+            'second_lastname' => 'Roblox',
             'email' => 'johndoe@mail.com',
-            'celular' => '2221245678',
+            'phone' => '2221245678',
             'password' => '12345678',
             'role_id' => $role->id,
-            'departamento_id' => $departamento->id, // optional
+            'department_id' => $department->id, // optional
         ]);
 
         $response->assertStatus(403)
@@ -164,14 +163,14 @@ class UserCreateTest extends TestCase
         $this->assertAuthenticated();
 
         $response = $this->postJson('api/v1/users', [
-            'nombre' => 'John',
-            'paterno' => 'Doe',
-            'materno' => 'Roblox',
+            'name' => 'John',
+            'lastname' => 'Doe',
+            'second_lastname' => 'Roblox',
             'email' => 'johndoe@mail.com',
-            'celular' => '2221245678',
+            'phone' => '2221245678',
             'password' => '',
             'role_id' => '',
-            'departamento_id' => null, // optional
+            'department_id' => null, // optional
         ]);
 
         $response->assertStatus(422)
@@ -197,15 +196,14 @@ class UserCreateTest extends TestCase
         $file = UploadedFile::fake()->image('avatar.jpg')->size(1024 * 9);
 
         $response = $this->postJson('api/v1/users', [
-            'nombre' => 'John',
-            'paterno' => 'Doe',
-            'materno' => 'Roblox',
+            'name' => 'John',
+            'lastname' => 'Doe',
+            'second_lastname' => 'Roblox',
             'email' => 'johndoe@mail.com',
-            'celular' => '2221245678',
+            'phone' => '2221245678',
             'password' => '',
             'imagen_file' => $file,// optional
             'role_id' => '',
-            'departamento_id' => null, // optional
         ]);
 
         $response->assertStatus(422)
@@ -233,15 +231,13 @@ class UserCreateTest extends TestCase
         $userActive = User::factory()->create();
 
         $response = $this->postJson('api/v1/users', [
-            'nombre' => 'John',
-            'paterno' => 'Doe',
-            'materno' => 'Roblox',
+            'name' => 'John',
+            'lastname' => 'Doe',
+            'second_lastname' => 'Roblox',
             'email' => $userActive->email,
-            'celular' => '2221245678',
+            'phone' => '2221245678',
             'password' => '12345678',
-            'imagen_file' => null,// optional
             'role_id' => $role->id,
-            'departamento_id' => null, // optional
         ]);
 
         $response->assertStatus(422)
@@ -271,29 +267,201 @@ class UserCreateTest extends TestCase
         $this->assertSoftDeleted($userSoft);
 
         $response = $this->postJson('api/v1/users', [
-            'nombre' => 'John',
-            'paterno' => 'Doe',
-            'materno' => 'Roblox',
+            'name' => 'John',
+            'lastname' => 'Doe',
+            'second_lastname' => 'Roblox',
             'email' => $userSoft->email,
-            'celular' => '2221245678',
+            'phone' => '2221245678',
             'password' => '12345678',
             'role_id' => $role->id,
-            'departamento_id' => null, // optional
         ]);
 
-        $response->dump();
         $response->assertStatus(201)
         ->assertJson(fn (AssertableJson $json) => 
             $json->has('data', fn ($json) => 
                 $json->has('id')
                 ->has('email')
-                ->whereType('imagen', 'null')
-                ->has('nombre')
-                ->has('paterno')
-                ->has('materno')
+                ->whereType('image', 'null')
+                ->has('name')
+                ->has('lastname')
+                ->has('second_lastname')
                 ->has('role')
-                ->has('departamento')
-                ->has('celular')
+                ->has('department')
+                ->has('phone')
+                ->etc()
+            )
+            ->has('message')
+            ->where('success', true)
+        );
+    }
+
+    public function test_user_update_image_success_analyst()
+    {
+        $this->seed();
+
+        $user = User::factory()->create();
+        $user->assignRole('Analyst');
+
+        Passport::actingAs($user);
+
+        $this->assertAuthenticated();
+
+        $file = UploadedFile::fake()->image('avatar.jpg');
+
+        $response = $this->postJson("api/v1/users/image", [
+            'image' => $file,
+        ]);
+
+        $response->assertStatus(200)
+        ->assertJson(fn (AssertableJson $json) => 
+            $json->has('data', fn ($json) => 
+                $json->has('id')
+                ->has('email')
+                ->whereType('image', 'string')
+                ->has('name')
+                ->has('lastname')
+                ->has('second_lastname')
+                ->has('role')
+                ->has('department')
+                ->has('phone')
+                ->etc()
+            )
+            ->has('message')
+            ->where('success', true)
+        );
+    }
+
+    public function test_user_update_image_success_admin()
+    {
+        $this->seed();
+
+        $user = User::factory()->create();
+        $user->assignRole('Admin');
+
+        Passport::actingAs($user);
+
+        $this->assertAuthenticated();
+
+        $file = UploadedFile::fake()->image('avatar.jpg');
+
+        $response = $this->postJson("api/v1/users/image", [
+            'image' => $file,
+        ]);
+
+        $response->assertStatus(200)
+        ->assertJson(fn (AssertableJson $json) => 
+            $json->has('data', fn ($json) => 
+                $json->has('id')
+                ->has('email')
+                ->whereType('image', 'string')
+                ->has('name')
+                ->has('lastname')
+                ->has('second_lastname')
+                ->has('role')
+                ->has('department')
+                ->has('phone')
+                ->etc()
+            )
+            ->has('message')
+            ->where('success', true)
+        );
+    }
+
+    public function test_user_update_image_error_empty()
+    {
+        $this->seed();
+
+        $user = User::factory()->create();
+        $user->assignRole('Analyst');
+
+        Passport::actingAs($user);
+
+        $this->assertAuthenticated();
+
+        $response = $this->postJson("api/v1/users/image", [
+            'image' => null,
+        ]);
+
+        $response->assertStatus(422)
+        ->assertJson(fn (AssertableJson $json) => 
+            $json->has('errors')
+            ->where('success', false)
+        );
+    }
+
+    public function test_user_update_image_error_max_size()
+    {
+        $this->seed();
+
+        $user = User::factory()->create();
+        $user->assignRole('Analyst');
+
+        Passport::actingAs($user);
+
+        $this->assertAuthenticated();
+
+        $file = UploadedFile::fake()->image('avatar.jpg')->size(1024 * 10);
+
+        $response = $this->postJson("api/v1/users/image", [
+            'image' => $file,
+        ]);
+
+        $response->assertStatus(422)
+        ->assertJson(fn (AssertableJson $json) => 
+            $json->has('errors')
+            ->where('success', false)
+        );
+    }
+
+    public function test_user_update_image_error_pdf()
+    {
+        $this->seed();
+
+        $user = User::factory()->create();
+        $user->assignRole('Analyst');
+
+        Passport::actingAs($user);
+
+        $this->assertAuthenticated();
+
+        $file = UploadedFile::fake()->image('avatar.pdf');
+
+        $response = $this->postJson("api/v1/users/image", [
+            'image' => $file,
+        ]);
+
+        $response->assertStatus(422)
+        ->assertJson(fn (AssertableJson $json) => 
+            $json->has('errors')
+            ->where('success', false)
+        );
+    }
+
+    public function test_user_delete_image_success()
+    {
+        $this->seed();
+
+        $user = User::factory()->create();
+        $user->assignRole('Analyst');
+
+        Passport::actingAs($user);
+
+        $this->assertAuthenticated();
+
+        $response = $this->deleteJson("api/v1/users/image");
+
+        $response->assertStatus(200)
+        ->assertJson(fn (AssertableJson $json) => 
+            $json->has('data', fn ($json) => 
+                $json->has('id')
+                ->has('email')
+                ->whereType('image', 'null')
+                ->has('name')
+                ->has('lastname')
+                ->has('second_lastname')
+                ->has('role')
+                ->has('department')
+                ->has('phone')
                 ->etc()
             )
             ->has('message')
