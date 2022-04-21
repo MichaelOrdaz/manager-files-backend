@@ -13,7 +13,7 @@ properties:
     permissions:
       type: object
       properties:
-        nombre.permiso:
+        name.permission:
           type: object
           properties:
             id: 
@@ -22,7 +22,7 @@ properties:
     views:
       type: object
       properties:
-        nombre.permiso.vista:
+        name.permission.view:
           type: object
           properties:
             id: 

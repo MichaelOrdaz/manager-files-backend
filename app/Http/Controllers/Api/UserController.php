@@ -20,16 +20,16 @@ class UserController extends Controller
         $this->authorize('viewAny', User::class);
 
         $validated = $request->validate([
-            'nombre' => 'nullable',
+            'name' => 'nullable',
             'role' => 'nullable|integer',
         ]);
 
-        $nombre = $validated['nombre'] ?? null;
+        $name = $validated['name'] ?? null;
         $roleId = $validated['role'] ?? null;
 
         $users = User::with(['roles', 'department'])
-        ->when($nombre, function ($query, $nombre) {
-            return $query->whereRaw("CONCAT(nombre,' ',paterno,' ',materno) LIKE ?", "%{$nombre}%");
+        ->when($name, function ($query, $name) {
+            return $query->whereRaw("CONCAT(name,' ',lastname,' ',second_lastname) LIKE ?", "%{$name}%");
         })
         ->when($roleId, function ($query, $roleId) {
             return $query->whereHas('roles', function ($query) use ($roleId) {
@@ -54,8 +54,10 @@ class UserController extends Controller
         $user = User::create($data);
         $user->assignRole($data['role']->name);
         
-        $user->department()->associate($data['departamento']);
-        $user->save();
+        if (isset($data['department'])) {
+            $user->department()->associate($data['department']);
+            $user->save();
+        }
         
         return (new UserResource($user))->additional([
             'success' => true,
@@ -111,7 +113,7 @@ class UserController extends Controller
 
         $validated = $request->validate([
             'perPage' => 'nullable|integer',
-            'nombre' => 'nullable',
+            'name' => 'nullable',
             'role' => 'nullable|integer',
             'sortBy' => 'nullable|string',
             'order' => 'nullable|string|in:asc,desc',
@@ -121,12 +123,12 @@ class UserController extends Controller
         $sortBy = $validated['sortBy'] ?? 'id';
         $order = $validated['order'] ?? 'asc';
         
-        $nombre = $validated['nombre'] ?? null;
+        $name = $validated['name'] ?? null;
         $roleId = $validated['role'] ?? null;
 
         $users = User::with(['roles', 'department'])
-        ->when($nombre, function ($query, $nombre) {
-            return $query->whereRaw("CONCAT(nombre,' ',paterno,' ',materno) LIKE ?", "%{$nombre}%");
+        ->when($name, function ($query, $name) {
+            return $query->whereRaw("CONCAT(name,' ',lastname,' ',second_lastname) LIKE ?", "%{$name}%");
         })
         ->when($roleId, function ($query, $roleId) {
             return $query->whereHas('roles', function ($query) use ($roleId) {

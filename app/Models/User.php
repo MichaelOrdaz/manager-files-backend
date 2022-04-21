@@ -30,13 +30,13 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'email',
-        'nombre',
-        'paterno',
-        'materno',
-        'celular',
-        'imagen',
+        'name',
+        'lastname',
+        'second_lastname',
+        'phone',
+        'image',
         'password',
-        'departamento_id',
+        'department_id',
         'remember_token',
         'email_verified_at',
     ];
@@ -67,21 +67,21 @@ class User extends Authenticatable
 
     public function department()
     {
-        return $this->belongsTo(Department::class, 'departamento_id', 'id');
+        return $this->belongsTo(Department::class, 'department_id', 'id');
     }
 
-    public function documentos()
+    public function documents()
     {
-        return $this->hasMany(Documento::class, 'creador_id', 'id');
+        return $this->hasMany(Document::class, 'creator_id', 'id');
     }
 
-    public function historias()
+    public function histories()
     {
-        return $this->hasMany(Historial::class, 'user_id', 'id');
+        return $this->hasMany(History::class, 'user_id', 'id');
     }
 
-    public function compartidos()
+    public function shared()
     {
-        return $this->belongsToMany(Documento::class, 'documento_usuario', 'user_id', 'documento_id');
+        return $this->belongsToMany(Document::class, 'document_user', 'user_id', 'document_id');
     }
 }

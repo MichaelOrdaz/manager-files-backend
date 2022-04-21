@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Http\Requests\LoginFormRequest;
 use App\Http\Controllers\Api\Controller;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 
 
@@ -80,16 +81,15 @@ class AuthController extends Controller
         foreach ($viewPermissions as $item) {
             $tmp[$item->name] = [
                 'id' => $item->id,
-                'ruta' => $item->is_view,
+                'path' => $item->is_view,
             ];
         }
         $viewPermissions = $tmp;
         
-        $userFresh = $user->fresh();
-        $userFresh->load('department');
+        $user->load('department');
 
         return $this->successResponse('Ok', [
-            'user' => $userFresh,
+            'user' => new UserResource($user),
             'roles' => $user->getRoleNames(),
             'permissions' => $regularPermissions,
             'views' => $viewPermissions,

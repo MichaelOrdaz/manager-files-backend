@@ -31,7 +31,7 @@ class AuthTest extends TestCase
         $json->has('data', fn ($json) => 
           $json->has('user', fn ($json) => 
             $json->whereType('id', 'integer')
-            ->whereType('nombre', 'string')
+            ->whereType('name', 'string')
             ->where('email', $user->email)
             ->etc()
           )
@@ -92,7 +92,7 @@ class AuthTest extends TestCase
         $json->has('data', fn ($json) => 
           $json->has('user', fn ($json) => 
             $json->whereType('id', 'integer')
-            ->whereType('nombre', 'string')
+            ->whereType('name', 'string')
             ->etc()
           )
           ->has('permissions')
@@ -120,7 +120,7 @@ class AuthTest extends TestCase
         $json->has('data', fn ($json) => 
           $json->has('user', fn ($json) => 
             $json->whereType('id', 'integer')
-            ->whereType('nombre', 'string')
+            ->whereType('name', 'string')
             ->etc()
           )
           ->has('permissions')
@@ -148,7 +148,7 @@ class AuthTest extends TestCase
         $json->has('data', fn ($json) => 
           $json->has('user', fn ($json) => 
             $json->whereType('id', 'integer')
-            ->whereType('nombre', 'string')
+            ->whereType('name', 'string')
             ->etc()
           )
           ->has('permissions')

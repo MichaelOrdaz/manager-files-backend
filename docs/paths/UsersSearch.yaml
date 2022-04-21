@@ -1,12 +1,12 @@
 get:
   tags: 
     - Users
-  summary: "search - Users"
+  summary: "Search - Users"
   operationId: searchUsers
   description: filter users with pagination included
   parameters:
     - $ref: "../parameters/query/role.yaml"
-    - $ref: "../parameters/query/nombre.yaml"
+    - $ref: "../parameters/query/name.yaml"
     - $ref: "../parameters/query/page.yaml"
     - $ref: "../parameters/query/perPage.yaml"
     - $ref: "../parameters/query/order.yaml"

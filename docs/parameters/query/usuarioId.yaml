@@ -1,6 +1,0 @@
-in: query
-name: usuarioId
-description: Valor para filtrar por id
-required: false
-schema:
-  type: integer

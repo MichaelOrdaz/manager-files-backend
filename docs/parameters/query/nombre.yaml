@@ -1,7 +1,0 @@
-in: query
-name: nombre
-description: Valor para filtrar por nombre completo de usuario
-required: false
-schema:
-  type: string
-  example: John Doe

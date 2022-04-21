@@ -17,18 +17,18 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('email');
             $table->string('password');
-            $table->string('nombre');
-            $table->string('paterno')->nullable();
-            $table->string('materno')->nullable();
-            $table->string('celular')->nullable();
-            $table->string('imagen')->nullable();
+            $table->string('name');
+            $table->string('lastname')->nullable();
+            $table->string('second_lastname')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('image')->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->unsignedBigInteger('departamento_id')->nullable()->comment('departamento al que pertenece el usuario');
+            $table->unsignedBigInteger('department_id')->nullable()->comment('department belongs to user');
             $table->rememberToken()->nullable();
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('departamento_id')->references('id')->on('departamentos');
+            $table->foreign('department_id')->references('id')->on('departments');
         });
     }
 
