@@ -1,0 +1,7 @@
+in: query
+name: name
+description: Value to filter by full user name
+required: false
+schema:
+  type: string
+  example: John Doe

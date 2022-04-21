@@ -39,13 +39,13 @@ class UserListTest extends TestCase
             $json->has('data', 6, fn ($json) => 
                 $json->has('id')
                 ->has('email')
-                ->has('imagen')
-                ->has('nombre')
-                ->has('paterno')
-                ->has('materno')
+                ->has('image')
+                ->has('name')
+                ->has('lastname')
+                ->has('second_lastname')
                 ->has('role')
-                ->has('departamento')
-                ->has('celular')
+                ->has('department')
+                ->has('phone')
                 ->etc()
             )
             ->has('message')
@@ -74,13 +74,13 @@ class UserListTest extends TestCase
             $json->has('data', 10, fn ($json) => 
                 $json->has('id')
                 ->has('email')
-                ->has('imagen')
-                ->has('nombre')
-                ->has('paterno')
-                ->has('materno')
+                ->has('image')
+                ->has('name')
+                ->has('lastname')
+                ->has('second_lastname')
                 ->has('role')
-                ->has('departamento')
-                ->has('celular')
+                ->has('department')
+                ->has('phone')
                 ->etc()
             )
             ->has('meta', fn ($json) => 
@@ -109,20 +109,20 @@ class UserListTest extends TestCase
         $this->assertAuthenticated();
 
         $perPage = 20;
-        $response = $this->getJson("api/v1/users/search?page=2&perPage={$perPage}&sortBy=nombre");
+        $response = $this->getJson("api/v1/users/search?page=2&perPage={$perPage}&sortBy=name");
 
         $response->assertOk()
         ->assertJson(fn (AssertableJson $json) => 
             $json->has('data', $perPage, fn ($json) => 
                 $json->has('id')
                 ->has('email')
-                ->has('imagen')
-                ->has('nombre')
-                ->has('paterno')
-                ->has('materno')
+                ->has('image')
+                ->has('name')
+                ->has('lastname')
+                ->has('second_lastname')
                 ->has('role')
-                ->has('departamento')
-                ->has('celular')
+                ->has('department')
+                ->has('phone')
                 ->etc()
             )
             ->has('meta', fn ($json) => 
@@ -150,25 +150,25 @@ class UserListTest extends TestCase
         $this->assertAuthenticated();
 
         $search = 'no';
-        $total = User::where('nombre', 'like', "%{$search}%")
-        ->orWhere('paterno', 'like', "%{$search}%")
-        ->orWhere('materno', 'like', "%{$search}%")
+        $total = User::where('name', 'like', "%{$search}%")
+        ->orWhere('lastname', 'like', "%{$search}%")
+        ->orWhere('second_lastname', 'like', "%{$search}%")
         ->count();
         $totalPerPage = $total > 10 ? 10 : $total;
-        $response = $this->getJson('api/v1/users/search?nombre=' . $search);
+        $response = $this->getJson('api/v1/users/search?name=' . $search);
 
         $response->assertOk()
         ->assertJson(fn (AssertableJson $json) => 
             $json->has('data', $totalPerPage, fn ($json) => 
                 $json->has('id')
                 ->has('email')
-                ->has('imagen')
-                ->has('nombre')
-                ->has('paterno')
-                ->has('materno')
+                ->has('image')
+                ->has('name')
+                ->has('lastname')
+                ->has('second_lastname')
                 ->has('role')
-                ->has('departamento')
-                ->has('celular')
+                ->has('department')
+                ->has('phone')
                 ->etc()
             )
             ->has('meta', fn ($json) => 
@@ -208,13 +208,13 @@ class UserListTest extends TestCase
             $json->has('data', $totalPerPage, fn ($json) => 
                 $json->has('id')
                 ->has('email')
-                ->has('imagen')
-                ->has('nombre')
-                ->has('paterno')
-                ->has('materno')
+                ->has('image')
+                ->has('name')
+                ->has('lastname')
+                ->has('second_lastname')
                 ->has('role')
-                ->has('departamento')
-                ->has('celular')
+                ->has('department')
+                ->has('phone')
                 ->etc()
             )
             ->has('meta', fn ($json) => 
@@ -264,13 +264,13 @@ class UserListTest extends TestCase
             $json->has('data', fn ($json) => 
                 $json->has('id')
                 ->has('email')
-                ->has('imagen')
-                ->has('nombre')
-                ->has('paterno')
-                ->has('materno')
+                ->has('image')
+                ->has('name')
+                ->has('lastname')
+                ->has('second_lastname')
                 ->has('role')
-                ->has('departamento')
-                ->has('celular')
+                ->has('department')
+                ->has('phone')
                 ->etc()
             )
             ->has('message')

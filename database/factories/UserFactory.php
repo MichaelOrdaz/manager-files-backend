@@ -3,20 +3,12 @@
 namespace Database\Factories;
 
 use App\Models\Department;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class UserFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = User::class;
-
     /**
      * Define the model's default state.
      *
@@ -26,15 +18,15 @@ class UserFactory extends Factory
     {
         return [
             'email' => $this->faker->unique()->safeEmail(),
-            'nombre' => $this->faker->name(),
-            'paterno' => $this->faker->lastName(),
-            'materno' => $this->faker->lastName(),
-            'celular' => $this->faker->phoneNumber(),
-            'imagen' => $this->faker->imageUrl(),
+            'name' => $this->faker->name(),
+            'lastname' => $this->faker->lastName(),
+            'second_lastname' => $this->faker->lastName(),
+            'phone' => $this->faker->phoneNumber(),
+            'image' => $this->faker->imageUrl(),
             'password' => Hash::make('12345'),
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
-            'departamento_id' => Department::factory()
+            'department_id' => Department::factory()
         ];
     }
 

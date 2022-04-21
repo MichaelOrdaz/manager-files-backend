@@ -4,39 +4,39 @@ properties:
     type: string
     format: email
     example: correo@puller.mx
-  nombre:
+  name:
     type: string
     example: John
-  paterno:
+  lastname:
     type: string
     example: Doe
-  materno:
+  second_lastname:
     type: string
     example: Roblox
-  celular:
+  phone:
     type: string
     example: '55 54 89 67 87'
   password:
     type: string
     format: password
     example: C0ntr4s3n14
-  imagen_file:
+  image_file:
     type: string
     format: binary
     nullable: true
   role_id:
     type: integer
     example: 1
-  departamento_id:
+  department_id:
     type: integer
     nullable: true
     example: 1
 
 required:
   - email
-  - nombre
-  - paterno
-  - materno
-  - celular
+  - name
+  - lastname
+  - second_lastname
+  - phone
   - password
   - role_id

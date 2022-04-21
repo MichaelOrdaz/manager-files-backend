@@ -40,14 +40,14 @@ class UserRequest extends FormRequest
                 'max:100',
                 Rule::unique('users')->ignore($user)->whereNull('deleted_at'),
             ],
-            'nombre' => 'required|min:2|max:100',
-            'paterno' => 'required|min:2|max:100',
-            'materno' => 'required|min:2|max:100',
-            'celular' => 'required|min:7|max:20',
+            'name' => 'required|min:2|max:100',
+            'lastname' => 'required|min:2|max:100',
+            'second_lastname' => 'required|min:2|max:100',
+            'phone' => 'required|min:7|max:20',
             'password' => 'required|min:2|max:60',
-            'imagen_file' => "nullable|image|max:{$MAX_FILE_SIZE}",
+            'image_file' => "nullable|image|max:{$MAX_FILE_SIZE}",
             'role_id' => 'required|integer',
-            'departamento_id' => 'nullable|integer',
+            'department_id' => 'nullable|integer',
         ];
     }
 
@@ -56,13 +56,14 @@ class UserRequest extends FormRequest
         $validated = $this->validated();
 
         $validated['role'] = Role::findOrFail($validated['role_id']);
-        $validated['departamento'] = Department::find($validated['departamento_id']);
+        if (isset($validated['department_id']))
+            $validated['department'] = Department::find($validated['department_id']);
         
         $validated['password'] = Hash::make($validated['password']);
 
-        if ($this->hasFile('imagen_file') && $this->file('imagen_file')->isValid()) {
-            $path = $this->file('imagen_file')->store('profiles', 'public');
-            $validated['imagen'] = $path;
+        if ($this->hasFile('image_file') && $this->file('image_file')->isValid()) {
+            $path = $this->file('image_file')->store('profiles', 'public');
+            $validated['image'] = $path;
         }
         return $validated;
     }

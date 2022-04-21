@@ -17,5 +17,5 @@ perPage:
   $ref: "./query/perPage.yaml"
 role:
   $ref: "./query/role.yaml"
-nombre:
-  $ref: "./query/nombre.yaml"
+name:
+  $ref: "./query/name.yaml"

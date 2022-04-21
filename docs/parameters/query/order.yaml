@@ -1,6 +1,6 @@
 in: query
 name: order
-description: tipo de ordenamiento, descendente o ascendente
+description: sort type, descending or ascending
 required: false
 schema:
   type: string

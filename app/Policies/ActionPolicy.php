@@ -2,20 +2,14 @@
 
 namespace App\Policies;
 
+use App\Models\Action;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Auth\Access\Response;
 
-class UserPolicy
+class ActionPolicy
 {
     use HandlesAuthorization;
 
-    public function before(User $user)
-    {
-        if ($user->hasRole('Admin')) {
-            return true;
-        }
-    }
     /**
      * Determine whether the user can view any models.
      *
@@ -24,19 +18,19 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->can('user.show');
+        //
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Action  $accionHistorial
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, User $model)
+    public function view(User $user, Action $accionHistorial)
     {
-        return $user->can('user.show');
+        //
     }
 
     /**
@@ -47,42 +41,41 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return $user->can('user.create');
+        //
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Action  $accionHistorial
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, User $model)
+    public function update(User $user, Action $accionHistorial)
     {
-        $hasPermission = $user->can('user.update');
-        return $hasPermission && $user->id === $model->id;
+        //
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Action  $accionHistorial
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, User $model)
+    public function delete(User $user, Action $accionHistorial)
     {
-        return $user->can('user.delete');
+        //
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Action  $accionHistorial
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, User $model)
+    public function restore(User $user, Action $accionHistorial)
     {
         //
     }
@@ -91,10 +84,10 @@ class UserPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Action  $accionHistorial
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, User $model)
+    public function forceDelete(User $user, Action $accionHistorial)
     {
         //
     }

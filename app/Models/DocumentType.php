@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Department extends Model
+class DocumentType extends Model
 {
     use HasFactory;
 
-    protected $table = 'departments';
+    protected $table = 'document_types';
 
     protected $fillable = [
         'name',
@@ -19,13 +19,8 @@ class Department extends Model
         'deleted_at',
     ];
 
-    public function users()
-    {
-        return $this->hasMany(User::class, 'department_id', 'id');
-    }
-
     public function documents()
     {
-        return $this->hasMany(Document::class, 'department_id', 'id');
+        return $this->hasMany(Document::class, 'type_id', 'id');
     }
 }
