@@ -36,7 +36,6 @@ class User extends Authenticatable
         'phone',
         'image',
         'password',
-        'department_id',
         'remember_token',
         'email_verified_at',
     ];

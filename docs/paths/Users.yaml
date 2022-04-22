@@ -42,11 +42,11 @@ post:
   operationId: createUsers
   description: create a user in the system
   requestBody: 
-    description: Request in json format
+    description: Request in multipart/form-data format
     content: 
       multipart/form-data:
         schema:
-          $ref: '../schemas/UserMultipart.yaml'
+          $ref: '../schemas/UserMultipartCreate.yaml'
   responses:
     '200': 
       description: Basic structure of the response

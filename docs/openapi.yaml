@@ -16,12 +16,18 @@ paths:
     $ref: './paths/Login.yaml'
   /logout:
     $ref: './paths/Logout.yaml'
+  /verify-auth:
+    $ref: './paths/VerifyAuth.yaml'
   /account:
     $ref: './paths/Account.yaml'
+  /admin/users/{user_id}/reset-password:
+    $ref: './paths/AdminUsersByIdResetPassword.yaml'
   /users:
     $ref: './paths/Users.yaml'
   /users/{user_id}:
     $ref: './paths/UsersById.yaml'
+  /users/{user_id}/change-password:
+    $ref: './paths/UsersByIdChangePassword.yaml'
   /users/image:
     $ref: './paths/UsersImage.yaml'
   /users/search:

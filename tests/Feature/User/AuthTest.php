@@ -42,6 +42,29 @@ class AuthTest extends TestCase
       );
     }
 
+    public function test_user_login_soft()
+    {
+      $this->seed();
+
+      $user = User::factory()->create();
+      $user->assignRole('analyst');
+      $user->delete();
+
+      $this->assertSoftDeleted($user);
+
+      $response = $this->postJson("api/v1/login",[
+        'email' => $user->email,
+        'password' => '12345678',
+      ]);
+
+      $response->assertStatus(404)
+      ->assertJson(fn (AssertableJson $json) => 
+        $json->where('success', false)
+        ->has('errors')
+        ->etc()
+      ); 
+    }
+
     public function test_user_login_error()
     {
       $response = $this->postJson("api/v1/login",[
@@ -50,6 +73,26 @@ class AuthTest extends TestCase
       ]);
 
       $response->assertStatus(422)
+      ->assertJson(fn (AssertableJson $json) => 
+        $json->where('success', false)
+        ->has('errors')
+        ->etc()
+      ); 
+    }
+
+    public function test_user_login_error_password()
+    {
+      $this->seed();
+
+      $user = User::factory()->create();
+      $user->assignRole('analyst');
+
+      $response = $this->postJson("api/v1/login",[
+        'email' => $user->email,
+        'password' => 'badPassword',
+      ]);
+
+      $response->assertStatus(401)
       ->assertJson(fn (AssertableJson $json) => 
         $json->where('success', false)
         ->has('errors')

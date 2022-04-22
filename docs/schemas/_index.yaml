@@ -10,9 +10,13 @@ Account:
   $ref: './Account.yaml'
 User:
   $ref: './User.yaml'
-UserMultipart:
-  $ref: './UserMultipart.yaml'
+UserMultipartCreate:
+  $ref: './UserMultipartCreate.yaml'
+UserMultipartUpdate:
+  $ref: './UserMultipartUpdate.yaml'
 Role:
   $ref: './Role.yaml'
 Department:
   $ref: './Department.yaml'
+UpdatePassword:
+  $ref: './UpdatePassword.yaml'
