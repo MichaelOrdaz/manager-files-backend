@@ -15,11 +15,18 @@ class Document extends Model
         'name',
         'description',
         'location',
+        'date',
+        'min_identifier',
+        'max_identifier',
         'tags',
     ];
 
     protected $hidden = [
         'deleted_at',
+    ];
+
+    protected $cast = [
+        'tags' => 'array'
     ];
 
     public function creator()

@@ -18,6 +18,9 @@ class CreateDocumentsTable extends Migration
             $table->string('name', 255);
             $table->text('description')->nullable();
             $table->string('location', 255)->nullable();
+            $table->date('date')->nullable();
+            $table->string('min_identifier')->nullable();
+            $table->string('max_identifier')->nullable();
             $table->json('tags')->nullable();
             $table->unsignedBigInteger('type_id')->nullable()->comment('document_type belong to document');
             $table->unsignedBigInteger('parent_id')->nullable()->comment('If the document is inside another folder, here it will be known which is its containing folder');

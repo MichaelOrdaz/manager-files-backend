@@ -2,12 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Department;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
-use Spatie\Permission\Models\Role;
+use Illuminate\Validation\Rules\Password;
 
 class UserRequest extends FormRequest
 {
@@ -32,7 +31,7 @@ class UserRequest extends FormRequest
         $MAX_FILE_SIZE = (8 * $MB);
 
         $user = User::find($this->route('user_id'));
-        return [
+        $rules = [
             'email' => [
                 'required',
                 'email',
@@ -44,22 +43,28 @@ class UserRequest extends FormRequest
             'lastname' => 'required|min:2|max:100',
             'second_lastname' => 'required|min:2|max:100',
             'phone' => 'required|min:7|max:20',
-            'password' => 'required|min:2|max:60',
             'image_file' => "nullable|image|max:{$MAX_FILE_SIZE}",
             'role_id' => 'required|integer',
             'department_id' => 'nullable|integer',
+            'password' => [Password::defaults()],
         ];
+
+        if (is_null($this->route('user_id'))) {
+            $rules['password'][] = 'required';
+        } else {
+            $rules['password'][] = 'nullable';
+        }
+        return $rules;
     }
 
     public function getData()
     {
         $validated = $this->validated();
-
-        $validated['role'] = Role::findOrFail($validated['role_id']);
-        if (isset($validated['department_id']))
-            $validated['department'] = Department::find($validated['department_id']);
         
-        $validated['password'] = Hash::make($validated['password']);
+        if (isset($validated['password']))
+            $validated['password'] = Hash::make($validated['password']);
+        else
+            unset($validated['password']);
 
         if ($this->hasFile('image_file') && $this->file('image_file')->isValid()) {
             $path = $this->file('image_file')->store('profiles', 'public');

@@ -40,7 +40,9 @@ class Controller extends BaseController
     protected function errorResponse($message, $httpCode = 422)
     {
         return response()->json([
-            'errors' => (array) $message,
+            'errors' => [
+                'message' => (array) $message
+            ],
             'success' => false,
         ], $httpCode);
     }

@@ -10,12 +10,6 @@ class UserPolicy
 {
     use HandlesAuthorization;
 
-    public function before(User $user)
-    {
-        if ($user->hasRole('Admin')) {
-            return true;
-        }
-    }
     /**
      * Determine whether the user can view any models.
      *
@@ -60,7 +54,10 @@ class UserPolicy
     public function update(User $user, User $model)
     {
         $hasPermission = $user->can('user.update');
-        return $hasPermission && $user->id === $model->id;
+        return (
+            $user->hasRole('Admin') 
+            || ($hasPermission && $user->id === $model->id)
+        );
     }
 
     /**
@@ -97,5 +94,10 @@ class UserPolicy
     public function forceDelete(User $user, User $model)
     {
         //
+    }
+
+    public function resetPassword(User $user, User $model)
+    {
+        return $user->can('user.reset-password');
     }
 }

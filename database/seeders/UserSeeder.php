@@ -84,7 +84,7 @@ class UserSeeder extends Seeder
         $analista->assignRole('Analyst');
 
         $analista2 = User::create([
-            'email' => 'analista1@puller.mx',
+            'email' => 'analista2@puller.mx',
             'password' => Hash::make('12345678'),
             'name' => $faker->name(),
             'lastname' => $faker->lastName(),

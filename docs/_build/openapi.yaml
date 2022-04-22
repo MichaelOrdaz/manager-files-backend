@@ -70,6 +70,35 @@ paths:
           $ref: '#/components/responses/404'
         '422':
           $ref: '#/components/responses/422'
+  /verify-auth:
+    get:
+      tags:
+        - Auth
+      security: []
+      summary: verifyAuth
+      operationId: verifyAuth
+      description: verify that the user is still authenticated
+      responses:
+        '200':
+          description: Basic structure of response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isAuth:
+                    type: boolean
+                    example: true
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
   /account:
     get:
       tags:
@@ -84,6 +113,50 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Account'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+  '/admin/users/{user_id}/reset-password':
+    post:
+      tags:
+        - Admin
+      summary: Reset Password - User
+      operationId: resetPasswordUser
+      description: update password of user in the system from role admin
+      parameters:
+        - $ref: '#/components/parameters/userId'
+      requestBody:
+        description: Request in json format
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                new_password:
+                  type: string
+                  format: password
+                  example: newPassword
+                new_password_confirmation:
+                  type: string
+                  format: password
+                  example: newPassword
+              required:
+                - new_password
+                - new_password_confirmation
+      responses:
+        '200':
+          description: Basic structure of the response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -139,11 +212,11 @@ paths:
       operationId: createUsers
       description: create a user in the system
       requestBody:
-        description: Request in json format
+        description: Request in multipart/form-data format
         content:
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/UserMultipart'
+              $ref: '#/components/schemas/UserMultipartCreate'
       responses:
         '200':
           description: Basic structure of the response
@@ -195,6 +268,69 @@ paths:
                   success:
                     type: boolean
                     example: true
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+    post:
+      tags:
+        - Users
+      summary: Update - User
+      operationId: updateUser
+      description: update a user in the system
+      parameters:
+        - $ref: '#/components/parameters/userId'
+      requestBody:
+        description: Request in multipart/form-data format
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserMultipartUpdate'
+      responses:
+        '200':
+          description: Basic structure of the response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+  '/users/{user_id}/change-password':
+    post:
+      tags:
+        - Users
+      summary: Change Password - User
+      operationId: changePasswordUser
+      description: update password of user in the system
+      parameters:
+        - $ref: '#/components/parameters/userId'
+      requestBody:
+        description: Request in json format
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePassword'
+      responses:
+        '200':
+          description: Basic structure of the response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -572,7 +708,7 @@ components:
           $ref: '#/components/schemas/Role'
         department:
           $ref: '#/components/schemas/Department'
-    UserMultipart:
+    UserMultipartCreate:
       type: object
       properties:
         email:
@@ -614,6 +750,47 @@ components:
         - phone
         - password
         - role_id
+    UserMultipartUpdate:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: correo@puller.mx
+        name:
+          type: string
+          example: John
+        lastname:
+          type: string
+          example: Doe
+        second_lastname:
+          type: string
+          example: Roblox
+        phone:
+          type: string
+          example: 55 54 89 67 87
+        password:
+          type: string
+          format: password
+          example: C0ntr4s3n14
+        image_file:
+          type: string
+          format: binary
+          nullable: true
+        role_id:
+          type: integer
+          example: 1
+        department_id:
+          type: integer
+          nullable: true
+          example: 1
+      required:
+        - email
+        - name
+        - lastname
+        - second_lastname
+        - phone
+        - role_id
     Role:
       type: object
       properties:
@@ -632,6 +809,25 @@ components:
         name:
           type: string
           example: Ordenes de pago
+    UpdatePassword:
+      type: object
+      properties:
+        password:
+          type: string
+          format: password
+          example: currentPass
+        password_confirmation:
+          type: string
+          format: password
+          example: currentPass
+        new_password:
+          type: string
+          format: password
+          example: newPassword
+      required:
+        - password
+        - password_confirmation
+        - new_password
   parameters:
     userId:
       name: user_id
