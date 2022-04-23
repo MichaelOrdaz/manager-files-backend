@@ -18,16 +18,12 @@ class AuthController extends Controller
     {
         $credentials = $request->getData();
 
-        $user = User::where('email', $credentials['email'])->first();
-        if (is_null($user)) {
-            return $this->errorResponse([
-                'errors' => 'Credenciales incorrectas'
-            ], 400);
-        }
+        $user = User::where('email', $credentials['email'])->firstOrFail();
+
         if (!Hash::check($credentials['password'], $user->password)) {
             return $this->errorResponse([
                 'errors' => 'Credenciales incorrectas'
-            ], 400);
+            ], 401);
         }
 
         $token = $user->createToken('authToken')->accessToken;
@@ -93,6 +89,13 @@ class AuthController extends Controller
             'roles' => $user->getRoleNames(),
             'permissions' => $regularPermissions,
             'views' => $viewPermissions,
+        ]);
+    }
+
+    public function verifyAuth()
+    {
+        return response()->json([
+            'isAuth' => Auth::check()
         ]);
     }
 }

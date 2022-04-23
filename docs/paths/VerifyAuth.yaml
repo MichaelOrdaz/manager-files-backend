@@ -1,0 +1,28 @@
+get:
+  tags: 
+    - Auth
+  security: []
+  summary: verifyAuth
+  operationId: verifyAuth
+  description: verify that the user is still authenticated
+  responses:
+    '200': 
+      description: Basic structure of response
+      content: 
+        application/json: 
+          schema:
+            type: object
+            properties:
+              isAuth:
+                type: boolean
+                example: true
+    '400':
+      $ref: "../responses/error400.yaml"
+    '401':
+      $ref: "../responses/error401.yaml"
+    '403':
+      $ref: "../responses/error403.yaml"
+    '404':
+      $ref: "../responses/error404.yaml"
+    '422':
+      $ref: "../responses/error422.yaml"

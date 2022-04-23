@@ -13,9 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('v1/verify-auth', [App\Http\Controllers\AuthController::class, 'verifyAuth']);
+
 Route::prefix('v1')->group(function () {
     Route::middleware(['auth:api'])->group(function () {
-        
+
         Route::post('login', [App\Http\Controllers\AuthController::class, 'login'])
         ->middleware('guest')
         ->withoutMiddleware('auth:api');
@@ -28,11 +30,18 @@ Route::prefix('v1')->group(function () {
             Route::post('/', [App\Http\Controllers\Api\UserController::class, 'store']);
             Route::get('/search', [App\Http\Controllers\Api\UserController::class, 'search']);
             Route::get('/{user_id}', [App\Http\Controllers\Api\UserController::class, 'show'])->whereNumber('user_id');
+            Route::post('/{user_id}', [App\Http\Controllers\Api\UserController::class, 'update'])->whereNumber('user_id');
 
             Route::prefix('image')->group(function () {
                 Route::post('/', [App\Http\Controllers\Api\UserAvatarController::class, 'update']);
                 Route::delete('/', [App\Http\Controllers\Api\UserAvatarController::class, 'destroy']);
             });
+
+            Route::post('/{user_id}/change-password', [App\Http\Controllers\Api\UserPasswordController::class, 'update'])->whereNumber('user_id');
+        });
+
+        Route::prefix('admin')->group(function () {
+            Route::post('users/{user_id}/reset-password', [App\Http\Controllers\Api\UserResetPasswordController::class, 'update'])->whereNumber('user_id');
         });
 
         Route::prefix('roles')->group(function () {
