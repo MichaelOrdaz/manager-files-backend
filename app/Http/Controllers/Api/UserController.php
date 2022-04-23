@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
+use App\Models\Department;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -51,13 +53,19 @@ class UserController extends Controller
         $this->authorize('create', User::class);
         
         $data = $request->getData();
-        $user = User::create($data);
-        $user->assignRole($data['role']->name);
+
+        $role = Role::findOrFail($data['role_id']);
         
-        if (isset($data['department'])) {
-            $user->department()->associate($data['department']);
-            $user->save();
+        $department = null;
+        if (isset($data['department_id'])) {
+            $department = Department::findOrFail($data['department_id']);
         }
+
+        $user = User::create($data);
+        $user->assignRole($role->name);
+        
+        $user->department()->associate($department);
+        $user->save();
         
         return (new UserResource($user))->additional([
             'success' => true,
@@ -88,21 +96,43 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $historial
+     * @param  \App\Models\User  $userId
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $historial)
+    public function update(UserRequest $request, $userId)
     {
-        //
+        $user = User::findOrFail($userId);
+        $this->authorize('update', $user);
+
+        $data = $request->getData();
+        $role = Role::findOrFail($data['role_id']);
+        
+        $department = null;
+        if (isset($data['department_id'])) {
+            $department = Department::findOrFail($data['department_id']);
+        }
+
+        $user->update($data);
+        $user->assignRole($role->name);
+        
+        if (array_key_exists('department_id', $data)) {
+            $user->department()->associate($department);
+            $user->save();
+        }
+        
+        return (new UserResource($user))->additional([
+            'success' => true,
+            'message' => 'user updated successfully'
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $historial
+     * @param  \App\Models\User  $userId
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $historial)
+    public function destroy(User $userId)
     {
         //
     }

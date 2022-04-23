@@ -19,12 +19,14 @@ class UserPermissionsSeeder extends Seeder
       Permission::create(['name' => 'user.update']);
       Permission::create(['name' => 'user.create']);
       Permission::create(['name' => 'user.delete']);
+      Permission::create(['name' => 'user.reset-password']);
 
       $admin = Role::findByName('Admin');
       $admin->givePermissionTo('user.show');
       $admin->givePermissionTo('user.update');
       $admin->givePermissionTo('user.create');
       $admin->givePermissionTo('user.delete');
+      $admin->givePermissionTo('user.reset-password');
 
       $jefe = Role::findByName('Head of Department');
       $jefe->givePermissionTo('user.show');
