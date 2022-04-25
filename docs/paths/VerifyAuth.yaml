@@ -1,8 +1,7 @@
 get:
   tags: 
     - Auth
-  security: []
-  summary: verifyAuth
+  summary: Verify Auth
   operationId: verifyAuth
   description: verify that the user is still authenticated
   responses:
