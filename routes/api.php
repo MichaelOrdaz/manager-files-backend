@@ -31,6 +31,7 @@ Route::prefix('v1')->group(function () {
             Route::get('/search', [App\Http\Controllers\Api\UserController::class, 'search']);
             Route::get('/{user_id}', [App\Http\Controllers\Api\UserController::class, 'show'])->whereNumber('user_id');
             Route::post('/{user_id}', [App\Http\Controllers\Api\UserController::class, 'update'])->whereNumber('user_id');
+            Route::delete('/{user_id}', [App\Http\Controllers\Api\UserController::class, 'destroy'])->whereNumber('user_id');
 
             Route::prefix('image')->group(function () {
                 Route::post('/', [App\Http\Controllers\Api\UserAvatarController::class, 'update']);
