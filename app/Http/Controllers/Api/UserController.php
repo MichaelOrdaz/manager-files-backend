@@ -132,9 +132,17 @@ class UserController extends Controller
      * @param  \App\Models\User  $userId
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $userId)
+    public function destroy($userId)
     {
-        //
+        $user = User::with(['roles', 'department'])->findOrFail($userId);
+        $this->authorize('delete', $user);
+
+        $user->delete();
+
+        return (new UserResource($user))->additional([
+            'success' => true,
+            'message' => 'user deleted successfully'
+        ]);
     }
 
     public function search(Request $request)
