@@ -40,6 +40,10 @@ paths:
     $ref: './paths/Departments.yaml'
   /departments/{department_id}:
     $ref: './paths/DepartmentsById.yaml'
+  /documents:
+    $ref: './paths/Documents.yaml'
+  /documents/{document_id}:
+    $ref: './paths/DocumentsById.yaml'
 
 components:
   schemas:

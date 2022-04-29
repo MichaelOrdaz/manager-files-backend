@@ -41,6 +41,11 @@ Route::prefix('v1')->group(function () {
             Route::post('/{user_id}/change-password', [App\Http\Controllers\Api\UserPasswordController::class, 'update'])->whereNumber('user_id');
         });
 
+        Route::prefix('documents')->group(function () {
+            Route::get('/', [App\Http\Controllers\Api\UserDocumentController::class, 'index'])->whereNumber('user_id');
+            Route::get('/{document_id}', [App\Http\Controllers\Api\UserDocumentController::class, 'show'])->whereNumber(['document_id']);
+        });
+
         Route::prefix('admin')->group(function () {
             Route::post('users/{user_id}/reset-password', [App\Http\Controllers\Api\UserResetPasswordController::class, 'update'])->whereNumber('user_id');
         });
