@@ -1,0 +1,7 @@
+in: query
+name: parent
+description: (folder id) Value get files from parent folder
+required: false
+schema:
+  type: integer
+  example: 1

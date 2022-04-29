@@ -74,8 +74,7 @@ paths:
     get:
       tags:
         - Auth
-      security: []
-      summary: verifyAuth
+      summary: Verify Auth
       operationId: verifyAuth
       description: verify that the user is still authenticated
       responses:
@@ -625,6 +624,78 @@ paths:
           $ref: '#/components/responses/404'
         '422':
           $ref: '#/components/responses/422'
+  /documents:
+    get:
+      tags:
+        - Documents
+      summary: List - Documents
+      operationId: getDocuments
+      description: Get the list of all documents in a single request
+      parameters:
+        - $ref: '#/components/parameters/parent'
+      responses:
+        '200':
+          description: Basic structure of the response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DocumentSimple'
+                  message:
+                    type: string
+                    example: Ok
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+  '/documents/{document_id}':
+    get:
+      tags:
+        - Documents
+      summary: Get - Document
+      operationId: getDocument
+      description: Get the document in a single request
+      parameters:
+        - $ref: '#/components/parameters/documentId'
+      responses:
+        '200':
+          description: Basic structure of the response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Document'
+                  message:
+                    type: string
+                    example: Ok
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
 components:
   schemas:
     Login:
@@ -853,6 +924,139 @@ components:
         - password
         - password_confirmation
         - new_password
+    DocumentType:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1
+        name:
+          type: string
+          example: Archivo
+    Document:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: credit note.pdf
+        description:
+          type: string
+          example: document desciption example
+        location:
+          type: string
+          format: url
+          example: 'http://dixa.com/public/document.pdf'
+        identifier:
+          type: string
+          example: '50478'
+        tags:
+          type: array
+          items:
+            type: string
+          example:
+            - note
+            - invoice
+            - legal
+        creator:
+          $ref: '#/components/schemas/User'
+        createdAt:
+          type: string
+          format: date-time
+          example: '2020-01-01 12:00:00'
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2020-01-01 12:00:00'
+        date:
+          type: string
+          format: date
+          example: '2020-01-01'
+        type:
+          $ref: '#/components/schemas/DocumentType'
+        department:
+          $ref: '#/components/schemas/Department'
+        parent:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            name:
+              type: string
+              example: credits
+            location:
+              type: string
+              format: url
+              example: 'http://dixa.com/public/credits'
+              nullable: true
+            identifier:
+              type: string
+              nullable: true
+            creator:
+              $ref: '#/components/schemas/User'
+            createdAt:
+              type: string
+              format: date-time
+              example: '2020-01-01 12:00:00'
+            date:
+              type: string
+              format: date
+              example: '2020-01-01'
+            type:
+              $ref: '#/components/schemas/DocumentType'
+            typeName:
+              type: string
+              example: Carpeta
+    DocumentSimple:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: credit note.pdf
+        location:
+          type: string
+          format: url
+          example: 'http://dixa.com/public/document.pdf'
+        createdAt:
+          type: string
+          format: date-time
+          example: '2020-01-01 12:00:00'
+        date:
+          type: string
+          format: date
+          example: '2020-01-01'
+        type:
+          $ref: '#/components/schemas/DocumentType'
+        parent:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            name:
+              type: string
+              example: credits
+            location:
+              type: string
+              format: url
+              example: 'http://dixa.com/public/credits'
+              nullable: true
+            createdAt:
+              type: string
+              format: date-time
+              example: '2020-01-01 12:00:00'
+            date:
+              type: string
+              format: date
+              example: '2020-01-01'
+            type:
+              $ref: '#/components/schemas/DocumentType'
   parameters:
     userId:
       name: user_id
@@ -872,6 +1076,13 @@ components:
       name: department_id
       in: path
       description: department id
+      schema:
+        type: integer
+      required: true
+    documentId:
+      name: document_id
+      in: path
+      description: document id
       schema:
         type: integer
       required: true
@@ -925,6 +1136,14 @@ components:
       schema:
         type: string
         example: John Doe
+    parent:
+      in: query
+      name: parent
+      description: (folder id) Value get files from parent folder
+      required: false
+      schema:
+        type: integer
+        example: 1
   securitySchemes:
     bearerAuth:
       type: http

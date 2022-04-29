@@ -1,0 +1,46 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+  name:
+    type: string
+    example: credit note.pdf
+  location:
+    type: string
+    format: url
+    example: 'http://dixa.com/public/document.pdf'
+  createdAt:
+    type: string
+    format: date-time
+    example: '2020-01-01 12:00:00'
+  date:
+    type: string
+    format: date
+    example: '2020-01-01'
+  type:
+    $ref: './DocumentType.yaml'
+  parent:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      name:
+        type: string
+        example: credits
+      location:
+        type: string
+        format: url
+        example: 'http://dixa.com/public/credits'
+        nullable: true
+      createdAt:
+        type: string
+        format: date-time
+        example: '2020-01-01 12:00:00'
+      date:
+        type: string
+        format: date
+        example: '2020-01-01'
+      type:
+        $ref: './DocumentType.yaml'

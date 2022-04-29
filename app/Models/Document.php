@@ -25,7 +25,7 @@ class Document extends Model
         'deleted_at',
     ];
 
-    protected $cast = [
+    protected $casts = [
         'tags' => 'array'
     ];
 

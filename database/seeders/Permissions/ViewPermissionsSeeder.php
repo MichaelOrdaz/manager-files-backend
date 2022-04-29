@@ -15,9 +15,11 @@ class ViewPermissionsSeeder extends Seeder
     Permission::create(['name' => 'Collaborators', 'is_view' => '/collaborators']);
     Permission::create(['name' => 'Shared files', 'is_view' => '/shared-files']);
     Permission::create(['name' => 'Users management', 'is_view' => '/users-management']);
+    Permission::create(['name' => 'Admin Dashboard', 'is_view' => '/admin-home']);
 
     $admin = Role::findByName('Admin');
     $admin->givePermissionTo('Dashboard');
+    $admin->givePermissionTo('Admin Dashboard');
 
     $jefe = Role::findByName('Head of Department');
     $jefe->givePermissionTo('Dashboard');
