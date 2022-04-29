@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Database\Seeders\Permissions\DeparmentPermissionsSeeder;
+use Database\Seeders\Permissions\DocumentPermissionsSeeder;
 use Database\Seeders\Permissions\RolePermissionsSeeder;
 use Database\Seeders\Permissions\UserPermissionsSeeder;
 use Database\Seeders\Permissions\ViewPermissionsSeeder;
@@ -30,6 +31,7 @@ class RolesSeeder extends Seeder
             UserPermissionsSeeder::class,
             RolePermissionsSeeder::class,
             DeparmentPermissionsSeeder::class,
+            DocumentPermissionsSeeder::class,
         ]);
 
     }

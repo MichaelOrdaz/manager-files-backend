@@ -18,7 +18,7 @@ class DocumentPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->can('document.show');
     }
 
     /**
@@ -28,9 +28,10 @@ class DocumentPolicy
      * @param  \App\Models\Document  $documentos
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Document $documentos)
+    public function view(User $user, Document $document)
     {
-        //
+        $isSameDepartment = $user->department->id === $document->department->id;
+        return $user->can('document.show') && $isSameDepartment;
     }
 
     /**
@@ -41,7 +42,7 @@ class DocumentPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->can('document.create');
     }
 
     /**
@@ -53,7 +54,7 @@ class DocumentPolicy
      */
     public function update(User $user, Document $documentos)
     {
-        //
+        return $user->can('document.update');
     }
 
     /**
@@ -65,7 +66,7 @@ class DocumentPolicy
      */
     public function delete(User $user, Document $documentos)
     {
-        //
+        return $user->can('document.delete');
     }
 
     /**

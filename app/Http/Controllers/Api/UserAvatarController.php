@@ -21,6 +21,7 @@ class UserAvatarController extends Controller
     {
         $user = Auth::user();
         $this->authorize('update', $user);
+        $user->load('department');
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $path = $request->file('image')->store('profiles', 'public');
@@ -45,6 +46,7 @@ class UserAvatarController extends Controller
     {
         $user = Auth::user();
         $this->authorize('update', $user);
+        $user->load('department');
 
         $user->image = null;
         $user->save();

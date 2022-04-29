@@ -15,19 +15,15 @@ class DepartmentSeeder extends Seeder
     public function run()
     {
         Department::create([
-            'name' => 'Backend'
+            'name' => 'Ordenes de cobro'
         ]);
 
         Department::create([
-            'name' => 'Frontend'
+            'name' => 'Facturas'
         ]);
 
         Department::create([
-            'name' => 'QA'
-        ]);
-
-        Department::create([
-            'name' => 'Diseño UI/UX'
+            'name' => 'Notas de credito'
         ]);
     }
 }

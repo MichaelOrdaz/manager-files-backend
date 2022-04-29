@@ -12,7 +12,7 @@ class UserResetPasswordController extends Controller
 {
     public function update(UserResetPasswordRequest $request, $userId)
     {
-        $user = User::findOrFail($userId);
+        $user = User::with('department')->findOrFail($userId);
         $this->authorize('resetPassword', $user);
 
         $data = $request->getData();

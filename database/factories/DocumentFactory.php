@@ -20,14 +20,13 @@ class DocumentFactory extends Factory
         return [
             'name' => $this->faker->word(),
             'description' => $this->faker->text(255),
-            'location' => $this->faker->randomElement(['public/faker', 'public/random', 'public/faker/first']),
+            'location' => $this->faker->file(base_path('tests/Feature/FileFaker'), storage_path('app/public/files'), true),
             'date' => $this->faker->dateTimeThisDecade()->format('Y-m-d'),
             'min_identifier' => $minIdentifier,
-            'max_identifier' => $this->faker->numberBetween($minIdentifier),
-            'tags' => $this->faker->randomElements(),
+            'max_identifier' => $this->faker->numberBetween($minIdentifier, ($minIdentifier + 10)),
+            'tags' => ([$this->faker->word(), $this->faker->word()]),
             'type_id' => DocumentType::factory(),
             'creator_id' => User::factory(),
-            'department_id' => Department::factory(),
         ];
     }
 }
