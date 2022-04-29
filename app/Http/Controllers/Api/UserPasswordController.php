@@ -19,7 +19,7 @@ class UserPasswordController extends Controller
      */
     public function update(UserPasswordRequest $request, $userId)
     {
-        $user = User::findOrFail($userId);
+        $user = User::with('department')->findOrFail($userId);
         $this->authorize('update', $user);
 
         $data = $request->getData();

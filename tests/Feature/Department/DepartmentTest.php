@@ -28,11 +28,13 @@ class DepartmentTest extends TestCase
 
         $this->assertAuthenticated();
 
+        $total = Department::count();
+
         $response = $this->getJson('api/v1/departments');
 
         $response->assertStatus(200)
         ->assertJson(fn (AssertableJson $json) => 
-            $json->has('data', 4, fn ($json) => 
+            $json->has('data', $total, fn ($json) => 
                 $json->has('id')
                 ->has('name')
             )
@@ -54,12 +56,13 @@ class DepartmentTest extends TestCase
         Passport::actingAs($user);
 
         $this->assertAuthenticated();
+        $total = Department::count();
 
         $response = $this->getJson('api/v1/departments');
 
         $response->assertStatus(200)
         ->assertJson(fn (AssertableJson $json) => 
-            $json->has('data', 4, fn ($json) => 
+            $json->has('data', $total, fn ($json) => 
                 $json->has('id')
                 ->has('name')
             )
@@ -81,12 +84,13 @@ class DepartmentTest extends TestCase
         Passport::actingAs($user);
 
         $this->assertAuthenticated();
+        $total = Department::count();
 
         $response = $this->getJson('api/v1/departments');
 
         $response->assertStatus(200)
         ->assertJson(fn (AssertableJson $json) => 
-            $json->has('data', 4, fn ($json) => 
+            $json->has('data', $total, fn ($json) => 
                 $json->has('id')
                 ->has('name')
             )

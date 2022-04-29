@@ -66,6 +66,7 @@ class UserController extends Controller
         
         $user->department()->associate($department);
         $user->save();
+        $user->load('department');
         
         return (new UserResource($user))->additional([
             'success' => true,
@@ -119,6 +120,7 @@ class UserController extends Controller
             $user->department()->associate($department);
             $user->save();
         }
+        $user->load('department');
         
         return (new UserResource($user))->additional([
             'success' => true,

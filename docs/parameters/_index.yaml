@@ -5,6 +5,8 @@ roleId:
   $ref: "./path/RoleId.yaml"
 departmentId:
   $ref: "./path/DepartmentId.yaml"
+documentId:
+  $ref: "./path/DocumentId.yaml"
 
 #query
 page:
@@ -19,3 +21,5 @@ role:
   $ref: "./query/role.yaml"
 name:
   $ref: "./query/name.yaml"
+parent:
+  $ref: "./query/parent.yaml"

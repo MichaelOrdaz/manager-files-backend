@@ -14,6 +14,7 @@ class DevelopmentSeeder extends Seeder
     public function run()
     {
         $this->call([
+            DocumentsSeeder::class,
         ]);
     }
 }

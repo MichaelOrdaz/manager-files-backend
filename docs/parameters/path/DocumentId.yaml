@@ -1,0 +1,6 @@
+name: document_id
+in: path
+description: document id
+schema:
+  type: integer
+required: true
