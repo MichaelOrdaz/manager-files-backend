@@ -285,6 +285,7 @@ db refresh:
 
   script:
     - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker exec -i ${CONTAINER_NAME}_qa php artisan migrate:refresh"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker exec -i ${CONTAINER_NAME}_qa php artisan storage:link"
     - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker exec -i ${CONTAINER_NAME}_qa php artisan db:seed"
     - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker exec -i ${CONTAINER_NAME}_qa php artisan db:seed --class=DocumentsSeeder"
     - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker exec -i ${CONTAINER_NAME}_qa php artisan passport:install --force"
