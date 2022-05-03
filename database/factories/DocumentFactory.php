@@ -20,7 +20,7 @@ class DocumentFactory extends Factory
         return [
             'name' => $this->faker->word(),
             'description' => $this->faker->text(255),
-            'location' => $this->faker->file(base_path('tests/Feature/FileFaker'), storage_path('app/public/files'), true),
+            'location' => $this->faker->url(),
             'date' => $this->faker->dateTimeThisDecade()->format('Y-m-d'),
             'min_identifier' => $minIdentifier,
             'max_identifier' => $this->faker->numberBetween($minIdentifier, ($minIdentifier + 10)),
