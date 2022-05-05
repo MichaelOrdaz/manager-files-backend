@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\Dixa;
 use App\Http\Controllers\Api\Controller;
+use App\Http\Requests\FolderPostRequest;
 use App\Http\Resources\BasicDocumentResource;
 use App\Http\Resources\DocumentResource;
 use App\Models\Document;
@@ -29,7 +31,7 @@ class UserDocumentController extends Controller
 
         $parentId = $validated['parent'] ?? null;
         if ($parentId) {
-            $carpeta = DocumentType::where('name', 'Carpeta')->first();
+            $carpeta = DocumentType::where('name', Dixa::FOLDER)->first();
             Document::where('type_id', $carpeta->id)
             ->firstOrFail($parentId);
         }
@@ -53,9 +55,40 @@ class UserDocumentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeFolder(FolderPostRequest $request)
     {
-        //
+        $this->authorize('create', Document::class);
+        $data = $request->getData();
+        $user = Auth::user();
+        $type = DocumentType::where('name', Dixa::FOLDER)->first();
+
+        $document = Document::create($data);
+        $document->creator()->associate($user);
+        $document->type()->associate($type);
+        $document->department()->associate($user->department);
+
+        $location = '';
+
+        if (isset($data['parent'])) {
+            $document->parent()->associate($data['parent']);
+            $location = Dixa::getPath($data['parent']);
+        }
+
+        $location .= $document->name;
+        $document->location = $location;
+        $document->save();
+
+        $document->load([
+            'creator',
+            'type',
+            'parent',
+            'department',
+        ]);
+
+        return (new DocumentResource($document))->additional([
+            'message' => 'Document successfully retrieved',
+            'success' => true
+        ]);
     }
 
     /**

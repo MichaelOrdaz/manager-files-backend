@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Helpers\Dixa;
 use App\Models\DocumentType;
 use Illuminate\Database\Seeder;
 
@@ -15,11 +16,11 @@ class DocumentTypesSeeder extends Seeder
     public function run()
     {
         DocumentType::create([
-            'name' => 'Carpeta'
+            'name' => Dixa::FOLDER
         ]);
 
         DocumentType::create([
-            'name' => 'Archivo'
+            'name' => Dixa::FILE
         ]);
     }
 }

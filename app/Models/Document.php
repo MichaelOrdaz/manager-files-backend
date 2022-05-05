@@ -29,6 +29,10 @@ class Document extends Model
         'tags' => 'array'
     ];
 
+    protected $attributes = [
+        'tags' => "[]",
+    ];
+
     public function creator()
     {
         return $this->belongsTo(User::class, 'creator_id', 'id');
@@ -42,6 +46,15 @@ class Document extends Model
     public function parent()
     {
         return $this->belongsTo(Document::class, 'parent_id', 'id');
+    }
+
+    public function parents()
+    {
+        return $this->belongsTo(Document::class, 'parent_id', 'id')->with('parents');
+    }
+
+    public function children() {
+        return $this->hasMany(Document::class, 'parent_id', 'id')->with('children');
     }
 
     public function department()

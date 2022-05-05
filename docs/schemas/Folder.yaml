@@ -1,0 +1,12 @@
+type: object
+properties:
+  name:
+    type: string
+    example: new-folder
+  parent_id:
+    type: integer
+    example: 1
+    nullable: true
+
+required:
+  - name
