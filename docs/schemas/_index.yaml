@@ -26,3 +26,5 @@ Document:
   $ref: './Document.yaml'
 DocumentSimple:
   $ref: './DocumentSimple.yaml'
+Folder:
+  $ref: './Folder.yaml'

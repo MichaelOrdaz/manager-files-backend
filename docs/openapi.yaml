@@ -44,6 +44,8 @@ paths:
     $ref: './paths/Documents.yaml'
   /documents/{document_id}:
     $ref: './paths/DocumentsById.yaml'
+  /folders:
+    $ref: './paths/Folders.yaml'
 
 components:
   schemas:
