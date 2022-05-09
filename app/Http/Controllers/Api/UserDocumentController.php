@@ -31,9 +31,10 @@ class UserDocumentController extends Controller
 
         $parentId = $validated['parent'] ?? null;
         if ($parentId) {
-            $carpeta = DocumentType::where('name', Dixa::FOLDER)->first();
-            Document::where('type_id', $carpeta->id)
-            ->firstOrFail($parentId);
+            $folder = DocumentType::where('name', Dixa::FOLDER)->first();
+            Document::where('type_id', $folder->id)
+            ->where('id', $parentId)
+            ->firstOrFail();
         }
 
         $documents = Document::with([
