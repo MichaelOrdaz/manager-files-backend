@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\Dixa;
 use App\Http\Controllers\Api\Controller;
+use App\Http\Requests\FilePostRequest;
 use App\Http\Requests\FolderPostRequest;
 use App\Http\Resources\BasicDocumentResource;
 use App\Http\Resources\DocumentResource;
@@ -11,6 +12,7 @@ use App\Models\Document;
 use App\Models\DocumentType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class UserDocumentController extends Controller
 {
@@ -67,17 +69,33 @@ class UserDocumentController extends Controller
         $document->creator()->associate($user);
         $document->type()->associate($type);
         $document->department()->associate($user->department);
+        $document->parent()->associate($data['parent'] ?? null);
 
-        $location = '';
+        $document->load([
+            'creator',
+            'type',
+            'parent',
+            'department',
+        ]);
 
-        if (isset($data['parent'])) {
-            $document->parent()->associate($data['parent']);
-            $location = Dixa::getPath($data['parent']);
-        }
+        return (new DocumentResource($document))->additional([
+            'message' => 'Document successfully retrieved',
+            'success' => true,
+        ]);
+    }
 
-        $location .= $document->name;
-        $document->location = $location;
-        $document->save();
+    public function storeFile(FilePostRequest $request)
+    {
+        $this->authorize('create', Document::class);
+        $data = $request->getData();
+        $user = Auth::user();
+        $type = DocumentType::where('name', Dixa::FILE)->first();
+
+        $document = Document::create($data);
+        $document->creator()->associate($user);
+        $document->type()->associate($type);
+        $document->department()->associate($user->department);
+        $document->parent()->associate($data['parent'] ?? null);
 
         $document->load([
             'creator',

@@ -1,0 +1,33 @@
+type: object
+properties:
+  name:
+    type: string
+    example: credit note.pdf
+  description:
+    type: string
+    example: document desciption example
+  min_identifier:
+    type: string
+    example: '50478'
+  max_identifier:
+    type: string
+    example: '50478'
+    nullable: true
+  date:
+    type: string
+    format: date
+    example: '2020-01-01'
+  file:
+    type: string
+    format: binary
+  parent_id:
+    type: integer
+    example: 1
+    nullable: true
+
+required:
+  - name
+  - description
+  - min_identifier
+  - date
+  - file

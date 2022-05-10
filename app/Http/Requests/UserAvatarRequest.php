@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\Dixa;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserAvatarRequest extends FormRequest
@@ -23,9 +24,7 @@ class UserAvatarRequest extends FormRequest
      */
     public function rules()
     {
-        $MB = 1024;
-        $MAX_FILE_SIZE = (8 * $MB);
-
+        $MAX_FILE_SIZE = (8 * Dixa::MB);
         return [
             'image' => "required|image|max:{$MAX_FILE_SIZE}",
         ];
