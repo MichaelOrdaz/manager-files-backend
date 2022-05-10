@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Helpers\Dixa;
 use DateTime;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,10 +21,19 @@ class DocumentResource extends JsonResource
             $identifier .= '-' . $this->max_indentifier;
         }
 
+        $url = asset(
+            "storage" . 
+            DIRECTORY_SEPARATOR . 
+            Dixa::PATH_FILES . 
+            DIRECTORY_SEPARATOR . 
+            $this->location
+        );
+
         return [
             'id' => $this->id,
             'name' => $this->name,
             'location' => $this->location,
+            'url' => $url,
             'description' => $this->description,
             'indentifier' => $identifier,
             'tags' => $this->tags,
