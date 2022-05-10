@@ -28,3 +28,5 @@ DocumentSimple:
   $ref: './DocumentSimple.yaml'
 Folder:
   $ref: './Folder.yaml'
+FileMultipartCreate:
+  $ref: './FileMultipartCreate.yaml'

@@ -7,6 +7,7 @@ use App\Http\Requests\UserAvatarRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use League\Flysystem\Util;
 
 class UserAvatarController extends Controller
 {

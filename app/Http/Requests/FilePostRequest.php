@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 use League\Flysystem\Util;
 
-class FolderPostRequest extends FormRequest
+class FilePostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -20,16 +20,17 @@ class FolderPostRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
+        $MAX_FILE_SIZE = (100 * Dixa::MB);
         return [
-            'name' => 'required|regex:/^[a-z0-9_\-\s]+$/i|min:1|max:255',
+            'name' => 'required|regex:/^[a-z0-9_\-\s\.]+$/i|min:1|max:255',
+            'description' => 'required|min:1|max:65000',
+            'date' => 'required|date_format:Y-m-d',
+            'min_identifier' => 'required|integer',
+            'max_identifier' => 'nullable|integer',
             'parent_id' => 'nullable|integer',
+            'file' => "required|mimes:pdf|max:{$MAX_FILE_SIZE}",
         ];
     }
 
@@ -37,27 +38,30 @@ class FolderPostRequest extends FormRequest
     {
         $validated = $this->validated();
         
-        $location = [];
+        $location = '';
         if (isset($validated['parent_id'])) {
             $parent = Document::findOrFail($validated['parent_id']);
             $validated['parent'] = $parent;
-            $location = array_filter(explode('/', $validated['parent']->location));
+            $location = $parent->location;
         }
-
+        $extension = $this->file('file')->extension();
         $name = Util::normalizePath($validated['name']);
-        $location[] = $name;
-        $location = implode('/', $location);
+        $filename = "{$name}.{$extension}";
 
-        $pathOnDisk = Dixa::storageRootPath($location);
-        $isCreated = Dixa::useFolder($pathOnDisk);
-        if (!$isCreated) {
+        $sectionFiles = Dixa::PATH_FILES . DIRECTORY_SEPARATOR;
+        $path = $sectionFiles . $location;
+        $path = $this->file('file')->storeAs(
+            Util::normalizePath($path), 
+            $filename, 
+            'public'
+        );
+        if (!$path) {
             throw ValidationException::withMessages([
                 'name' => 'Nombre de la carpeta inválido'
             ]);
         }
-        $validated['location'] = $location;
-        $validated['name'] = $name;
+        $path = str_replace($sectionFiles, '', $path);
+        $validated['location'] = $path;
         return $validated;
     }
-
 }
