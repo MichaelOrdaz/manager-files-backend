@@ -21,6 +21,8 @@ class UserSeeder extends Seeder
             DepartmentSeeder::class
         ]);
 
+        $departaments = Department::all();
+
         $faker = Factory::create();
 
         $admin = User::create([
@@ -47,7 +49,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'remember_token' => $faker->word(),
         ]);
-        $departamento1 = Department::all()->random();
+        $departamento1 = $departaments->random();
         $jefe1->department()->associate($departamento1);
         $jefe1->save();
         $jefe1->assignRole('Head of Department');
@@ -63,7 +65,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'remember_token' => $faker->word(),
         ]);
-        $departamento2 = Department::all()->random();
+        $departamento2 = $departaments->where('name', '!=', $departamento1->name)->random();
         $jefe2->department()->associate($departamento2);
         $jefe2->save();
         $jefe2->assignRole('Head of Department');
