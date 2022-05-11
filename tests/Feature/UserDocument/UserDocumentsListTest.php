@@ -46,7 +46,7 @@ class UserDocumentsListTest extends TestCase
 
         $response->assertOk()
         ->assertJson(fn (AssertableJson $json) => 
-            $json->has('data.0', fn ($json) => 
+            $json->has('data', 10, fn ($json) => 
                 $json->has('id')
                 ->has('name')
                 ->has('type')
@@ -95,7 +95,7 @@ class UserDocumentsListTest extends TestCase
 
         $response->assertOk()
         ->assertJson(fn (AssertableJson $json) => 
-            $json->has('data.0', fn ($json) => 
+            $json->has('data', 10, fn ($json) => 
                 $json->has('id')
                 ->has('name')
                 ->has('type')

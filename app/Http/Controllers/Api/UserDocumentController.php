@@ -43,7 +43,11 @@ class UserDocumentController extends Controller
             'type',
             'parent',
         ])->where('department_id', $user->department_id)
-        ->where('parent_id', $parentId)
+        ->when($parentId, function ($query, $parentId) {
+            $query->where('parent_id', $parentId);
+        }, function ($query) {
+            $query->whereNull('parent_id');
+        })
         ->get();
 
         return (BasicDocumentResource::collection($documents))->additional([
