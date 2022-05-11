@@ -74,6 +74,7 @@ class UserDocumentController extends Controller
         $document->type()->associate($type);
         $document->department()->associate($user->department);
         $document->parent()->associate($data['parent'] ?? null);
+        $document->save();
 
         $document->load([
             'creator',
@@ -100,6 +101,7 @@ class UserDocumentController extends Controller
         $document->type()->associate($type);
         $document->department()->associate($user->department);
         $document->parent()->associate($data['parent'] ?? null);
+        $document->save();
 
         $document->load([
             'creator',
