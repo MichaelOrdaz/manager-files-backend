@@ -66,4 +66,9 @@ class Document extends Model
     {
         return $this->belongsToMany(User::class, 'document_user', 'document_id', 'user_id');
     }
+    
+    public function historical()
+    {
+        return $this->hasMany(History::class, 'document_id', 'id');
+    }
 }

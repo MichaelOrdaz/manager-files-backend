@@ -14,6 +14,18 @@ class Dixa
     const STORAGE_ROOT_PATH = 'app/public/' . self::PATH_FILES;
     const DEFAULT_PERMISSION = 0755;
 
+    const ACTION_CREATED = 'Creado';
+    const ACTION_DELETED = 'Eliminado';
+    const ACTION_UPDATED = 'Modificado';
+    const ACTION_SHARED = 'Compartido';
+
+    const HISTORY_ACTIONS = [
+        self::ACTION_CREATED,
+        self::ACTION_UPDATED,
+        self::ACTION_DELETED,
+        self::ACTION_SHARED,
+    ];
+
     public static function useFolder($path): bool
     {
         $isDirectory = File::isDirectory($path);

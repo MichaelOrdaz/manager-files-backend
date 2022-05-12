@@ -23,7 +23,7 @@ class DocumentsSeeder extends Seeder
         $typeFolder = $documentType->where('name', Dixa::FOLDER)->first();
         $typeFile = $documentType->where('name', Dixa::FILE)->first();
 
-        //creo 10 documentos (carpetas y archivos) de cada jefe de departamento en el nivel raiz
+        //creo 5 documentos (carpetas y archivos) de cada jefe de departamento en el nivel raiz
         User::role('head of department')->get()
         ->each(function ($user) use (
             $documentType,
@@ -31,12 +31,15 @@ class DocumentsSeeder extends Seeder
             $typeFile
         ) {
             //level root
-            $documentsRoot = Document::factory()->count(10)
+            $documentsRoot = Document::factory()->count(5)
             ->state(new Sequence(
                 fn ($sequence) => [
                     'type_id' => $documentType->random()->id
                 ]
             ))
+            ->state(fn (array $attr) => [
+                'location' => $attr['name']
+            ])
             ->for($user->department)
             ->for($user, 'creator')
             ->create();
@@ -50,13 +53,16 @@ class DocumentsSeeder extends Seeder
                 $typeFile, 
                 $user
             ) {
-                $quantity = rand(3, 5);
+                $quantity = rand(2, 4);
                 $documentsSecondLevel = Document::factory()->count($quantity)
                 ->state(new Sequence(
                     fn ($sequence) => [
                         'type_id' => $documentType->random()->id
                     ]
                 ))
+                ->state(fn (array $attr) => [
+                    'location' => $folderRoot->location . DIRECTORY_SEPARATOR . $attr['name']
+                ])
                 ->for($user->department)
                 ->for($user, 'creator')
                 ->for($folderRoot, 'parent')
@@ -71,13 +77,16 @@ class DocumentsSeeder extends Seeder
                     $typeFile, 
                     $user
                 ) {
-                    $quantity = rand(3, 5);
+                    $quantity = rand(2, 4);
                     $documentsThreeLevel = Document::factory()->count($quantity)
                     ->state(new Sequence(
                         fn ($sequence) => [
                             'type_id' => $documentType->random()->id
                         ]
                     ))
+                    ->state(fn (array $attr) => [
+                        'location' => $folderSecondLevel->location . DIRECTORY_SEPARATOR . $attr['name']
+                    ])
                     ->for($user->department)
                     ->for($user, 'creator')
                     ->for($folderSecondLevel, 'parent')
@@ -98,6 +107,9 @@ class DocumentsSeeder extends Seeder
                         ->for($user->department)
                         ->for($user, 'creator')
                         ->for($folderThreeLevel, 'parent')
+                        ->state(fn (array $attr) => [
+                            'location' => $folderThreeLevel->location . DIRECTORY_SEPARATOR . $attr['name']
+                        ])
                         ->create();
                     });
                 

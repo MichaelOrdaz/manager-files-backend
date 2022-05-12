@@ -1,0 +1,13 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+  date:
+   type: string
+   format: date-time
+   example: '2022-11-28T11:45:00Z'
+  name:
+    $ref: './User.yaml'
+  action:
+    $ref: './Action.yaml'

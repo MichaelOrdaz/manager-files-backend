@@ -13,7 +13,7 @@ properties:
   createdAt:
     type: string
     format: date-time
-    example: '2020-01-01 12:00:00'
+    example: '2020-01-01T12:00:00Z'
   date:
     type: string
     format: date
@@ -37,7 +37,7 @@ properties:
       createdAt:
         type: string
         format: date-time
-        example: '2020-01-01 12:00:00'
+        example: '2020-01-01T12:00:00Z'
       date:
         type: string
         format: date
