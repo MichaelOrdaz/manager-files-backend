@@ -5,4 +5,4 @@ properties:
     example: 1
   name:
     type: string
-    example: Archivo
+    example: Creado

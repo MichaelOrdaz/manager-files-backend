@@ -133,6 +133,10 @@ class UserDocumentController extends Controller
             'parent',
             'department',
             'creator.roles',
+            'historical',
+            'historical.user',
+            'historical.action',
+            'shared'
         ]);
 
         return (new DocumentResource($document))->additional([

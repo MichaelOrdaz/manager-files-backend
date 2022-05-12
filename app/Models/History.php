@@ -17,7 +17,7 @@ class History extends Model
 
     public function document()
     {
-        return $this->belongsTo(Document::class, 'documento_id', 'id');
+        return $this->belongsTo(Document::class, 'document_id', 'id');
     }
 
     public function user()

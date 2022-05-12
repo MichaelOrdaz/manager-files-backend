@@ -35,7 +35,7 @@ class DocumentResource extends JsonResource
             'location' => $this->location,
             'url' => $url,
             'description' => $this->description,
-            'indentifier' => $identifier,
+            'identifier' => $identifier,
             'tags' => $this->tags,
             'type' => new DocumentTypeResource($this->whenLoaded('type')),
             'date' => $this->date,
@@ -44,6 +44,8 @@ class DocumentResource extends JsonResource
             'creator' => new UserResource($this->whenLoaded('creator')),
             'department' => $this->whenLoaded('department'),
             'parent' => $this->whenLoaded('parent'),
+            'shared' => $this->whenLoaded('shared'),
+            'historical' => HistoricalResource::collection($this->whenLoaded('historical')),
         ];
     }
 }
