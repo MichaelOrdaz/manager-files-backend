@@ -27,6 +27,8 @@ class UserDocumentShowTest extends TestCase
         ->create();
         $user->assignRole('Head of department');
 
+        Passport::actingAs($user);
+
         $documentType = DocumentType::all();
         $documents = Document::factory()->count(3)
         ->state(new Sequence(
@@ -34,13 +36,15 @@ class UserDocumentShowTest extends TestCase
                 'type_id' => $documentType->random()->id
             ]
         ))
+        ->state(fn (array $attr) => [
+            'location' => $attr['name']
+        ])
         ->for($user->department)
         ->for($user, 'creator')
         ->create();
 
         $document = $documents->random();
 
-        Passport::actingAs($user);
         $this->assertAuthenticated();
 
         $response = $this->getJson("api/v1/documents/{$document->id}");
@@ -50,13 +54,14 @@ class UserDocumentShowTest extends TestCase
             $json->has('data', fn ($json) => 
                 $json->has('id')
                 ->has('name')
+                ->has('description')
                 ->has('type')
                 ->has('location')
-                ->has('indentifier')
-                ->has('description')
+                ->has('identifier')
+                ->has('date')
                 ->whereType('tags', 'array')
                 ->has('createdAt')
-                ->has('creator', fn($json) => 
+                ->has('creator', fn ($json) => 
                     $json->has('id')
                     ->has('email')
                     ->has('name')
@@ -65,6 +70,17 @@ class UserDocumentShowTest extends TestCase
                     ->has('role')
                     ->etc()
                 )
+                ->has('historical.0', fn ($json) => 
+                    $json->has('id')
+                    ->has('user', fn ($json) => 
+                        $json->has('name')
+                        ->etc()
+                    )
+                    ->has('action')
+                    ->has('date')
+                    ->etc()
+                )
+                ->whereType('shared', 'array')
                 ->whereType('parent', 'null')
                 ->etc()
             )
@@ -85,6 +101,15 @@ class UserDocumentShowTest extends TestCase
         $user->assignRole('Head of department');
 
         $documentType = DocumentType::all();
+
+        $userAnalyst = User::factory()
+            ->for($deparment)
+        ->create();
+        $userAnalyst->assignRole('Head of department');
+
+        Passport::actingAs($user);
+        $this->assertAuthenticated();
+
         $documents = Document::factory()->count(3)
         ->state(new Sequence(
             fn ($sequence) => [
@@ -95,16 +120,9 @@ class UserDocumentShowTest extends TestCase
         ->for($user, 'creator')
         ->create();
 
-        $document = $documents->random();
-
-        $userAnalyst = User::factory()
-            ->for($deparment)
-        ->create();
-        $userAnalyst->assignRole('Head of department');
-
         Passport::actingAs($userAnalyst);
         $this->assertAuthenticated();
-
+        $document = $documents->random();
         $response = $this->getJson("api/v1/documents/{$document->id}");
 
         $response->assertOk()
@@ -112,13 +130,14 @@ class UserDocumentShowTest extends TestCase
             $json->has('data', fn ($json) => 
                 $json->has('id')
                 ->has('name')
+                ->has('description')
                 ->has('type')
                 ->has('location')
-                ->has('indentifier')
-                ->has('description')
+                ->has('identifier')
+                ->has('date')
                 ->whereType('tags', 'array')
                 ->has('createdAt')
-                ->has('creator', fn($json) => 
+                ->has('creator', fn ($json) => 
                     $json->has('id')
                     ->has('email')
                     ->has('name')
@@ -127,6 +146,17 @@ class UserDocumentShowTest extends TestCase
                     ->has('role')
                     ->etc()
                 )
+                ->has('historical.0', fn ($json) => 
+                    $json->has('id')
+                    ->has('user', fn ($json) => 
+                        $json->has('name')
+                        ->etc()
+                    )
+                    ->has('action')
+                    ->has('date')
+                    ->etc()
+                )
+                ->whereType('shared', 'array')
                 ->whereType('parent', 'null')
                 ->etc()
             )

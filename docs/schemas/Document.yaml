@@ -26,15 +26,23 @@ properties:
   createdAt:
     type: string
     format: date-time
-    example: '2020-01-01 12:00:00'
+    example: '2020-01-01T12:00:00Z'
   updatedAt:
     type: string
     format: date-time
-    example: '2020-01-01 12:00:00'
+    example: '2020-01-01T12:00:00Z'
   date:
     type: string
     format: date
     example: '2020-01-01'
+  historical:
+    type: array
+    items:
+      $ref: './History.yaml'
+  shared:
+    type: array
+    items:
+      $ref: './User.yaml'
   type:
     $ref: './DocumentType.yaml'
   department:
@@ -61,7 +69,7 @@ properties:
       createdAt:
         type: string
         format: date-time
-        example: '2020-01-01 12:00:00'
+        example: '2020-01-01T12:00:00Z'
       date:
         type: string
         format: date

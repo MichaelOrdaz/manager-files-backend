@@ -7,7 +7,7 @@ post:
   requestBody: 
     description: Request in format json format
     content: 
-      application/json:
+      multipart/form-data:
         schema:
           $ref: '../schemas/Folder.yaml'
   responses:

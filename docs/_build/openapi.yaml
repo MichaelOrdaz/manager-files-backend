@@ -744,7 +744,7 @@ paths:
       requestBody:
         description: Request in format json format
         content:
-          application/json:
+          multipart/form-data:
             schema:
               $ref: '#/components/schemas/Folder'
       responses:
@@ -803,6 +803,13 @@ components:
         success:
           type: boolean
           example: true
+        data:
+          type: array
+          items:
+            type: string
+          example:
+            - access_token
+            - user
     Account:
       type: object
       properties:
@@ -1005,7 +1012,7 @@ components:
       type: object
       properties:
         id:
-          type: string
+          type: integer
           example: 1
         name:
           type: string
@@ -1042,15 +1049,23 @@ components:
         createdAt:
           type: string
           format: date-time
-          example: '2020-01-01 12:00:00'
+          example: '2020-01-01T12:00:00Z'
         updatedAt:
           type: string
           format: date-time
-          example: '2020-01-01 12:00:00'
+          example: '2020-01-01T12:00:00Z'
         date:
           type: string
           format: date
           example: '2020-01-01'
+        historical:
+          type: array
+          items:
+            $ref: '#/components/schemas/History'
+        shared:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
         type:
           $ref: '#/components/schemas/DocumentType'
         department:
@@ -1077,7 +1092,7 @@ components:
             createdAt:
               type: string
               format: date-time
-              example: '2020-01-01 12:00:00'
+              example: '2020-01-01T12:00:00Z'
             date:
               type: string
               format: date
@@ -1103,7 +1118,7 @@ components:
         createdAt:
           type: string
           format: date-time
-          example: '2020-01-01 12:00:00'
+          example: '2020-01-01T12:00:00Z'
         date:
           type: string
           format: date
@@ -1127,7 +1142,7 @@ components:
             createdAt:
               type: string
               format: date-time
-              example: '2020-01-01 12:00:00'
+              example: '2020-01-01T12:00:00Z'
             date:
               type: string
               format: date
@@ -1179,6 +1194,29 @@ components:
         - min_identifier
         - date
         - file
+    History:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        date:
+          type: string
+          format: date-time
+          example: '2022-11-28T11:45:00Z'
+        name:
+          $ref: '#/components/schemas/User'
+        action:
+          $ref: '#/components/schemas/Action'
+    Action:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Creado
   parameters:
     userId:
       name: user_id
