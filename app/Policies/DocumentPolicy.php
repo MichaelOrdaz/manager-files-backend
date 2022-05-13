@@ -64,9 +64,10 @@ class DocumentPolicy
      * @param  \App\Models\Document  $documentos
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Document $documentos)
+    public function delete(User $user, Document $document)
     {
-        return $user->can('document.delete');
+        $isSameDepartment = $user->department->id === $document->department->id;
+        return $user->can('document.delete') && $isSameDepartment;
     }
 
     /**
