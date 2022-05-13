@@ -163,8 +163,28 @@ class UserDocumentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($documentId)
     {
-        //
+        $document = Document::findOrFail($documentId);
+        $this->authorize('delete', $document);
+
+        $document->load([
+            'type',
+            'parent',
+        ]);
+
+        if ($document->type->name === Dixa::FOLDER) {
+            $childrenDocuments = Dixa::getChildrenProperty($document->children, 'id');
+            $childrenDocuments->push($document->id);
+            $total = Document::destroy($childrenDocuments);
+        } elseif ($document->type->name === Dixa::FILE) {
+            $total = Document::destroy($document->id);
+        }
+
+        return (new BasicDocumentResource($document))->additional([
+            'total' => $total,
+            'message' => 'Document successfully deleted',
+            'success' => true
+        ]);
     }
 }
