@@ -734,6 +734,43 @@ paths:
           $ref: '#/components/responses/404'
         '422':
           $ref: '#/components/responses/422'
+    delete:
+      tags:
+        - Documents
+      summary: Delete - Document
+      operationId: deleteDocument
+      description: Delete the document in a single request
+      parameters:
+        - $ref: '#/components/parameters/documentId'
+      responses:
+        '200':
+          description: Basic structure of the response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/DocumentSimple'
+                  total:
+                    type: integer
+                    example: 5
+                  message:
+                    type: string
+                    example: Ok
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
   /folders:
     post:
       tags:
@@ -1204,7 +1241,7 @@ components:
           type: string
           format: date-time
           example: '2022-11-28T11:45:00Z'
-        name:
+        user:
           $ref: '#/components/schemas/User'
         action:
           $ref: '#/components/schemas/Action'
