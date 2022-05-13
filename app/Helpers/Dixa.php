@@ -2,6 +2,7 @@
 namespace App\Helpers;
 
 use App\Models\Document;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use League\Flysystem\Util;
 
@@ -57,5 +58,17 @@ class Dixa
         $sections = implode('/', $sections);
         $sections .= '/';
         return $sections;
+    }
+
+    public static function getChildrenProperty($children, $prop = null)
+    {
+        $data = collect([]);
+        foreach ($children as $child) {
+            $data->push($prop ? $child->{$prop} : $child);
+            if ($child->children instanceof Collection) {
+                $data = $data->merge(self::getChildrenProperty($child->children, $prop));
+            }
+        }
+        return $data;
     }
 }
