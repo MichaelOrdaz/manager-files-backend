@@ -810,6 +810,53 @@ paths:
           $ref: '#/components/responses/404'
         '422':
           $ref: '#/components/responses/422'
+  '/documents/{document_id}/:rename':
+    post:
+      tags:
+        - Documents
+      summary: Rename - Document
+      operationId: renameDocument
+      description: Rename the document in a single request
+      parameters:
+        - $ref: '#/components/parameters/documentId'
+      requestBody:
+        description: Request in format json format
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: document name
+              required:
+                - name
+      responses:
+        '200':
+          description: Basic structure of the response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Document'
+                  message:
+                    type: string
+                    example: Ok
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
 components:
   schemas:
     Login:

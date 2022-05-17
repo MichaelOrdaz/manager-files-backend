@@ -13,7 +13,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
-
+use Illuminate\Support\Str;
 class DocumentFolderCreateTest extends TestCase
 {
   use RefreshDatabase;
@@ -31,8 +31,9 @@ class DocumentFolderCreateTest extends TestCase
       Passport::actingAs($user);
       $this->assertAuthenticated();
 
+      $randomName = Str::random(30);
       $response = $this->postJson("api/v1/folders", [
-          'name' => 'new-folder-space-end',
+          'name' => $randomName,
           'parent' => '',
       ]);
 
@@ -47,7 +48,7 @@ class DocumentFolderCreateTest extends TestCase
                 $json->where('id', $typeFolder->id)
                 ->where('name', $typeFolder->name)
               )
-              ->where('location', 'new-folder-space-end')
+              ->where('location', $randomName)
               ->has('identifier')
               ->has('description')
               ->whereType('tags', 'array')
@@ -83,8 +84,9 @@ class DocumentFolderCreateTest extends TestCase
       Passport::actingAs($user);
       $this->assertAuthenticated();
 
+      $randomName = Str::random(30);
       $response = $this->postJson("api/v1/folders", [
-          'name' => 'new-folder-space-end',
+          'name' => $randomName,
       ]);
 
       $typeFolder = DocumentType::where('name', Dixa::FOLDER)->first();
@@ -97,7 +99,7 @@ class DocumentFolderCreateTest extends TestCase
                 $json->where('id', $typeFolder->id)
                 ->where('name', $typeFolder->name)
               )
-              ->where('location', 'new-folder-space-end')
+              ->where('location', $randomName)
               ->has('identifier')
               ->has('description')
               ->whereType('tags', 'array')
@@ -147,7 +149,7 @@ class DocumentFolderCreateTest extends TestCase
       Passport::actingAs($user);
       $this->assertAuthenticated();
 
-      $newFolderName = 'new-folder-space-end';
+      $newFolderName = Str::random(30);
       $response = $this->postJson("api/v1/folders", [
           'name' => $newFolderName,
           'parent_id' => $folder->id,
@@ -409,5 +411,92 @@ class DocumentFolderCreateTest extends TestCase
           ->etc()
       );
   }
+
+  public function test_create_folder_head_error_duplicate_name_root()
+  {
+      $this->seed();
+
+      $deparment = Department::all()->random();
+      $user = User::factory()
+          ->for($deparment)
+      ->create();
+      $user->assignRole('Head of department');
+
+      $typeFolder = DocumentType::where('name', Dixa::FOLDER)->first();
+
+      //level root
+      $folder = Document::factory()
+      ->for($typeFolder, 'type')
+      ->for($user->department)
+      ->for($user, 'creator')
+      ->state(fn (array $attr) => [
+          'location' => $attr['name']
+      ])
+      ->create();
+
+      Passport::actingAs($user);
+      $this->assertAuthenticated();
+
+      $newFolderName = Str::random(30);
+      $response = $this->postJson("api/v1/folders", [
+          'name' => $folder->name,
+      ]);
+
+      $response->assertStatus(422)
+      ->assertJson(fn (AssertableJson $json) => 
+          $json->has('errors')
+          ->where('success', false)
+          ->etc()
+      );
+  }
+
+  public function test_create_folder_head_error_duplicate_name_levels()
+  {
+      $this->seed();
+
+      $deparment = Department::all()->random();
+      $user = User::factory()
+          ->for($deparment)
+      ->create();
+      $user->assignRole('Head of department');
+
+      $typeFolder = DocumentType::where('name', Dixa::FOLDER)->first();
+
+      //level root
+      $folder = Document::factory()
+      ->for($typeFolder, 'type')
+      ->for($user->department)
+      ->for($user, 'creator')
+      ->state(fn (array $attr) => [
+          'location' => $attr['name']
+      ])
+      ->create();
+
+      $subFolder = Document::factory()
+      ->for($typeFolder, 'type')
+      ->for($user->department)
+      ->for($user, 'creator')
+      ->for($folder, 'parent')
+      ->state(fn (array $attr) => [
+          'location' => $attr['name']
+      ])
+      ->create();
+
+      Passport::actingAs($user);
+      $this->assertAuthenticated();
+
+      $response = $this->postJson("api/v1/folders", [
+          'name' => $subFolder->name,
+          'parent_id' => $folder->id,
+      ]);
+
+      $response->assertStatus(422)
+      ->assertJson(fn (AssertableJson $json) => 
+          $json->has('errors')
+          ->where('success', false)
+          ->etc()
+      );
+  }
+
 
 }

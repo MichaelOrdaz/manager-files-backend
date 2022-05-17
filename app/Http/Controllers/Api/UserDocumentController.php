@@ -13,6 +13,8 @@ use App\Models\DocumentType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Validation\ValidationException;
+use League\Flysystem\Util;
 
 class UserDocumentController extends Controller
 {
@@ -185,6 +187,54 @@ class UserDocumentController extends Controller
             'total' => $total,
             'message' => 'Document successfully deleted',
             'success' => true
+        ]);
+    }
+
+    public function rename(Request $request, $documentId)
+    {
+        $document = Document::findOrFail($documentId);
+        $this->authorize('update', $document);
+        
+        $validated = $request->validate([
+            'name' => [
+                'required',
+                'regex:/^[a-z0-9_\-\s]+$/i',
+                'min:1',
+                'max:255'
+            ]
+        ]);
+
+        $name = Util::normalizePath($validated['name']);
+        $nameAlreadyExistsAtSameLevel = Document::where('id', '!=', $document->id)
+        ->where('name', $name)
+        ->where(function ($query) use ($document) {
+            if (isset($document->parent_id)) {
+                $query->where('parent_id', $document->parent_id);
+            } else {
+                $query->whereNull('parent_id');
+            }
+        })
+        ->first();
+        if ($nameAlreadyExistsAtSameLevel) {
+            throw ValidationException::withMessages([
+                'name' => 'El nombre de la recurso ya existe'
+            ]);
+        }
+
+        $document->update([
+            'name' => $validated['name']
+        ]);
+
+        $document->load([
+            'creator',
+            'type',
+            'parent',
+            'department',
+        ]);
+
+        return (new DocumentResource($document))->additional([
+            'message' => 'Document successfully retrieved',
+            'success' => true,
         ]);
     }
 }
