@@ -46,6 +46,20 @@ class FilePostRequest extends FormRequest
         }
         $extension = $this->file('file')->extension();
         $name = Util::normalizePath($validated['name']);
+        $nameAlreadyExistsAtSameLevel = Document::where('name', $name)
+        ->where(function ($query) use ($validated) {
+            if (isset($validated['parent_id'])) {
+                $query->where('parent_id', $validated['parent_id']);
+            } else {
+                $query->whereNull('parent_id');
+            }
+        })
+        ->first();
+        if ($nameAlreadyExistsAtSameLevel) {
+            throw ValidationException::withMessages([
+                'name' => 'El nombre del archivo ya existe'
+            ]);
+        }
         $filename = "{$name}.{$extension}";
 
         $sectionFiles = Dixa::PATH_FILES . DIRECTORY_SEPARATOR;
