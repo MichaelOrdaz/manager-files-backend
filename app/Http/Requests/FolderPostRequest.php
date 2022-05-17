@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Helpers\Dixa;
 use App\Models\Document;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use League\Flysystem\Util;
 
@@ -28,7 +29,12 @@ class FolderPostRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|regex:/^[a-z0-9_\-\s]+$/i|min:1|max:255',
+            'name' => [
+                'required',
+                'regex:/^[a-z0-9_\-\s]+$/i',
+                'min:1',
+                'max:255',
+            ],
             'parent_id' => 'nullable|integer',
         ];
     }
@@ -45,6 +51,20 @@ class FolderPostRequest extends FormRequest
         }
 
         $name = Util::normalizePath($validated['name']);
+        $nameAlreadyExistsAtSameLevel = Document::where('name', $name)
+        ->where(function ($query) use ($validated) {
+            if (isset($validated['parent_id'])) {
+                $query->where('parent_id', $validated['parent_id']);
+            } else {
+                $query->whereNull('parent_id');
+            }
+        })
+        ->first();
+        if ($nameAlreadyExistsAtSameLevel) {
+            throw ValidationException::withMessages([
+                'name' => 'El nombre de la carpeta ya existe'
+            ]);
+        }
         $location[] = $name;
         $location = implode('/', $location);
 

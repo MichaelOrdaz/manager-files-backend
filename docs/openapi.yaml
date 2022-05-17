@@ -46,6 +46,8 @@ paths:
     $ref: './paths/DocumentsById.yaml'
   /folders:
     $ref: './paths/Folders.yaml'
+  /documents/{document_id}/:rename:
+    $ref: './paths/DocumentRenameById.yaml'
 
 components:
   schemas:

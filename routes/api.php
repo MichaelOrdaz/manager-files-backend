@@ -46,6 +46,7 @@ Route::prefix('v1')->group(function () {
             Route::get('/{document_id}', [App\Http\Controllers\Api\UserDocumentController::class, 'show'])->whereNumber(['document_id']);
             Route::post('/', [App\Http\Controllers\Api\UserDocumentController::class, 'storeFile']);
             Route::delete('/{document_id}', [App\Http\Controllers\Api\UserDocumentController::class, 'destroy'])->whereNumber(['document_id']);
+            Route::post('/{document_id}/:rename', [App\Http\Controllers\Api\UserDocumentController::class, 'rename'])->whereNumber(['document_id']);
         });
 
         Route::prefix('folders')->group(function () {
