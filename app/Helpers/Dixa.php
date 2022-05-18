@@ -27,6 +27,12 @@ class Dixa
         self::ACTION_SHARED,
     ];
 
+    const SPANISH_ROLES = [
+        'Analyst' => 'Analista',
+        'Admin' => 'Administrador',
+        'Head of Department' => 'Jefe de Departamento',
+    ];
+
     public static function useFolder($path): bool
     {
         $isDirectory = File::isDirectory($path);

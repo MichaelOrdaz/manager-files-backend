@@ -53,6 +53,7 @@ class UserDocumentsListTest extends TestCase
                 ->has('location')
                 ->has('createdAt')
                 ->whereType('parent', 'null')
+                ->whereType('sons_count', 'integer')
                 ->etc()
             )
             ->has('message')
@@ -205,6 +206,65 @@ class UserDocumentsListTest extends TestCase
                     $json->where('id', $folderRoot->id)
                     ->etc()
                 )
+                ->etc()
+            )
+            ->has('message')
+            ->where('success', true)
+            ->etc()
+        );
+    }
+
+    public function test_list_second_level_documents_deparment_analyst_success_sons()
+    {
+        $this->seed();
+
+        $deparment = Department::all()->random();
+        
+        $userHead = User::factory()
+            ->for($deparment)
+        ->create();
+        $userHead->assignRole('Head of department');
+
+        $documentType = DocumentType::all();
+        $typeFolder = $documentType->where('name', Dixa::FOLDER)->first();
+        
+        $folderRoot = Document::factory()
+        ->for($typeFolder, 'type')
+        ->for($userHead->department)
+        ->for($userHead, 'creator')
+        ->create();
+
+        $documents = Document::factory()->count(10)
+        ->state(new Sequence(
+            fn ($sequence) => [
+                'type_id' => $documentType->random()->id
+            ]
+        ))
+        ->for($userHead->department)
+        ->for($userHead, 'creator')
+        ->for($folderRoot, 'parent')
+        ->create();
+
+        $user = User::factory()
+            ->for($deparment)
+        ->create();
+        $user->assignRole('analyst');
+
+        Passport::actingAs($user);
+        $this->assertAuthenticated();
+
+        $response = $this->getJson("api/v1/documents");
+
+        $response->assertOk()
+        ->assertJson(fn (AssertableJson $json) => 
+            $json->has('data.0', fn ($json) => 
+                $json->has('id')
+                ->has('name')
+                ->has('type')
+                ->has('location')
+                ->has('createdAt')
+                ->whereType('sons_count', 'integer')
+                ->whereType('parent', 'null')
                 ->etc()
             )
             ->has('message')
