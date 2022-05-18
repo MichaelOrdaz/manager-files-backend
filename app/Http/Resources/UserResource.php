@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Helpers\Dixa;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
@@ -24,7 +25,7 @@ class UserResource extends JsonResource
             'phone' => $this->phone,
             'image' => $this->image ? asset("storage/{$this->image}") : $this->image,
             'department' => new DepartmentResource($this->whenLoaded('department')),
-            'role' => $this->getRoleNames()
+            'role' => $this->getRoleNames()->map(fn ($rol) => Dixa::SPANISH_ROLES[$rol])
         ];
     }
 }

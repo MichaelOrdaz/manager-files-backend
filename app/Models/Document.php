@@ -58,6 +58,10 @@ class Document extends Model
         return $this->hasMany(Document::class, 'parent_id', 'id')->with('children');
     }
 
+    public function sons() {
+        return $this->hasMany(Document::class, 'parent_id', 'id');
+    }
+
     public function department()
     {
         return $this->belongsTo(Department::class, 'department_id', 'id');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Helpers\Dixa;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class RoleResource extends JsonResource
@@ -14,9 +15,10 @@ class RoleResource extends JsonResource
      */
     public function toArray($request)
     {
+        $spanish = Dixa::SPANISH_ROLES;
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name' => $spanish[$this->name],
         ];
     }
 }

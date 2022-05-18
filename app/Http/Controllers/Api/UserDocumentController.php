@@ -50,6 +50,7 @@ class UserDocumentController extends Controller
         }, function ($query) {
             $query->whereNull('parent_id');
         })
+        ->withCount('sons')
         ->get();
 
         return (BasicDocumentResource::collection($documents))->additional([
