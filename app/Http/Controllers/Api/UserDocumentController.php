@@ -33,10 +33,10 @@ class UserDocumentController extends Controller
             'parent' => 'nullable|integer'
         ]);
 
+        $typeFolder = DocumentType::where('name', Dixa::FOLDER)->first();
         $parentId = $validated['parent'] ?? null;
         if ($parentId) {
-            $folder = DocumentType::where('name', Dixa::FOLDER)->first();
-            Document::where('type_id', $folder->id)
+            Document::where('type_id', $typeFolder->id)
             ->where('id', $parentId)
             ->firstOrFail();
         }
@@ -50,7 +50,7 @@ class UserDocumentController extends Controller
         }, function ($query) {
             $query->whereNull('parent_id');
         })
-        ->withCount('sons')
+        ->withCount(['sons' => fn ($query) => $query->where('type_id', $typeFolder->id)])
         ->get();
 
         return (BasicDocumentResource::collection($documents))->additional([
