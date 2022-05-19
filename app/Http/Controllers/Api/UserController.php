@@ -114,7 +114,7 @@ class UserController extends Controller
         }
 
         $user->update($data);
-        $user->assignRole($role->name);
+        $user->syncRoles($role->name);
         
         if (array_key_exists('department_id', $data)) {
             $user->department()->associate($department);
