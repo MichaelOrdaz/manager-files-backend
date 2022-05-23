@@ -3,7 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DocumentUserPostRequest;
+use App\Http\Resources\UserResource;
+use App\Http\Resources\UserWithSharePermissionResource;
+use App\Models\Document;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ShareDocumentUserController extends Controller
 {
@@ -12,9 +18,36 @@ class ShareDocumentUserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, $documentId)
     {
-        return 'hola';
+        $this->authorize('viewAny', DocumentUser::class);
+
+        $document = Document::findOrFail($documentId);
+
+        $validated = $request->validate([
+            'department_id' => 'nullable|integer',
+        ]);
+
+        $departmentId = $validated['department_id'] ?? null;
+
+        $users = User::with([
+            'roles', 
+            'department',
+            'share' => function ($query) use ($document) {
+                $query->where('document_id', $document->id);
+            }
+        ])
+        ->when($departmentId, function ($query, $departmentId) {
+            return $query->whereHas('department', function ($query) use ($departmentId) {
+                $query->where('id', $departmentId);
+            });
+        })
+        ->get();
+
+        return UserResource::collection($users)->additional([
+            'success' => true,
+            'message' => 'user created successfully'
+        ]);
     }
 
     /**
@@ -23,9 +56,31 @@ class ShareDocumentUserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DocumentUserPostRequest $request, $documentId)
     {
-        //
+        $this->authorize('create', DocumentUser::class);
+        
+        $user = Auth::user();
+        $document = Document::findOrFail($documentId);
+
+        $data = $request->getData();
+
+        $usersToSync = $data->mapWithKeys(function ($item, $key) use ($user) {
+            return [
+                $item['user']->id => [
+                    'permission' => $item['permission'],
+                    'granted_by' => $user->id,
+                ]
+            ];
+        });
+
+        $result = $document->share()->sync($usersToSync);
+
+        return response()->json([
+            'data' => $result,
+            'success' => true,
+            'message' => 'Related permissions successfully'
+        ]);
     }
 
     /**

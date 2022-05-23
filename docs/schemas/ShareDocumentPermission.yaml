@@ -1,5 +1,84 @@
 type: object
 properties:
+  id:
+    type: integer
+    example: 1
   name:
+    type: string
+    example: credit note.pdf
+  description:
+    type: string
+    example: document desciption example
+  location:
+    type: string
+    format: url
+    example: 'http://dixa.com/public/document.pdf'
+  identifier:
+    type: string
+    example: '50478'
+  tags:
+    type: array
+    items:
+      type: string
+    example: ['note', 'invoice', 'legal']
+  creator:
+    $ref: './User.yaml'
+  createdAt:
+    type: string
+    format: date-time
+    example: '2020-01-01T12:00:00Z'
+  updatedAt:
+    type: string
+    format: date-time
+    example: '2020-01-01T12:00:00Z'
+  date:
+    type: string
+    format: date
+    example: '2020-01-01'
+  historical:
+    type: array
+    items:
+      $ref: './History.yaml'
+  share:
+    type: array
+    items:
+      $ref: './User.yaml'
+  type:
+    $ref: './DocumentType.yaml'
+  department:
+    $ref: './Department.yaml'
+  parent:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      name:
+        type: string
+        example: credits
+      location:
+        type: string
+        format: url
+        example: 'http://dixa.com/public/credits'
+        nullable: true
+      identifier:
+        type: string
+        nullable: true
+      creator:
+        $ref: './User.yaml'
+      createdAt:
+        type: string
+        format: date-time
+        example: '2020-01-01T12:00:00Z'
+      date:
+        type: string
+        format: date
+        example: '2020-01-01'
+      type:
+        $ref: './DocumentType.yaml'
+      typeName:
+        type: string
+        example: Carpeta
+  permission:
     type: string
     example: Lectura

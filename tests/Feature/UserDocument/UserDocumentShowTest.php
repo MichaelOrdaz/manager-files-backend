@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\UserDocument;
 
+use App\Helpers\Dixa;
 use App\Models\Department;
 use App\Models\Document;
 use App\Models\DocumentType;
@@ -11,6 +12,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Laravel\Passport\Passport;
+use Spatie\Permission\Models\Permission;
 use Tests\TestCase;
 
 class UserDocumentShowTest extends TestCase
@@ -21,7 +23,9 @@ class UserDocumentShowTest extends TestCase
     {
         $this->seed();
 
-        $deparment = Department::all()->random();
+        $departments = Department::all();
+        $deparment = $departments->random();
+
         $user = User::factory()
             ->for($deparment)
         ->create();
@@ -44,6 +48,27 @@ class UserDocumentShowTest extends TestCase
         ->create();
 
         $document = $documents->random();
+
+        $sharePermissions = Permission::whereIn('name', Dixa::SHARE_DOCUMENT_PERMISSIONS)->get();
+        $departments = $departments->where('id', '!=', $user->department->id);
+
+        $users = User::factory()
+        ->count(3)
+        ->state(new Sequence(
+            fn ($sequence) => [
+                'department_id' => $departments->random()->id
+            ]
+        ))
+        ->create();
+
+        $users->each(function ($user) use ($document, $sharePermissions) {
+            $user->assignRole('analyst');
+
+            $user->share()->attach($document, [
+                'permission' => $sharePermissions->random()->name,
+                'granted_by' => $user->id,
+            ]);
+        });
 
         $this->assertAuthenticated();
 
