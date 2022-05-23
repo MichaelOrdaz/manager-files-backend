@@ -1,0 +1,13 @@
+type: object
+properties:
+  users:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 3
+        permission:
+          type: string
+          example: Lectura

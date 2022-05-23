@@ -24,10 +24,12 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' => 'nullable',
             'role' => 'nullable|integer',
+            'department_id' => 'nullable|integer',
         ]);
 
         $name = $validated['name'] ?? null;
         $roleId = $validated['role'] ?? null;
+        $departmentId = $validated['department_id'] ?? null;
 
         $users = User::with(['roles', 'department'])
         ->when($name, function ($query, $name) {
@@ -36,6 +38,11 @@ class UserController extends Controller
         ->when($roleId, function ($query, $roleId) {
             return $query->whereHas('roles', function ($query) use ($roleId) {
                 $query->where('id', $roleId);
+            });
+        })
+        ->when($departmentId, function ($query, $departmentId) {
+            return $query->whereHas('department', function ($query) use ($departmentId) {
+                $query->where('id', $departmentId);
             });
         })
         ->get();
