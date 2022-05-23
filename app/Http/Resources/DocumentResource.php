@@ -44,7 +44,7 @@ class DocumentResource extends JsonResource
             'creator' => new UserResource($this->whenLoaded('creator')),
             'department' => $this->whenLoaded('department'),
             'parent' => $this->whenLoaded('parent'),
-            'shared' => $this->whenLoaded('shared'),
+            'share' => $this->whenLoaded('share'),
             'historical' => HistoricalResource::collection($this->whenLoaded('historical')),
         ];
     }

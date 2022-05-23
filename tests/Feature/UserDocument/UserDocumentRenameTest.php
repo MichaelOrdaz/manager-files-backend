@@ -99,7 +99,6 @@ class UserDocumentRenameTest extends TestCase
             'name' => $document->name,
         ]);
 
-        $response->dump();
         $response->assertStatus(200)
         ->assertJson(fn (AssertableJson $json) => 
             $json->has('data', fn ($json) => 
@@ -158,7 +157,6 @@ class UserDocumentRenameTest extends TestCase
             'name' => $documents[1]->name,
         ]);
 
-        $response->dump();
         $response->assertStatus(422)
         ->assertJson(fn (AssertableJson $json) => 
             $json->has('errors')
