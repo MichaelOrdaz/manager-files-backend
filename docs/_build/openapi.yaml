@@ -176,16 +176,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/name'
         - $ref: '#/components/parameters/role'
-<<<<<<< HEAD
-        - name: department_id
-          in: query
-          description: department id
-          schema:
-            type: integer
-            nullable: true
-=======
         - $ref: '#/components/parameters/departmentIdQuery'
->>>>>>> develop
       responses:
         '200':
           description: Basic structure of the response
@@ -1452,10 +1443,6 @@ components:
     ShareDocumentPermission:
       type: object
       properties:
-<<<<<<< HEAD
-        name:
-          type: string
-=======
         id:
           type: integer
           example: 1
@@ -1540,7 +1527,6 @@ components:
               example: Carpeta
         permission:
           type: string
->>>>>>> develop
           example: Lectura
     UserWithPermissionDocument:
       type: object
@@ -1548,8 +1534,6 @@ components:
         id:
           type: integer
           example: 1
-<<<<<<< HEAD
-=======
         email:
           type: string
           format: email
@@ -1557,7 +1541,6 @@ components:
         email_verified_at:
           type: string
           example: '2020-01-01 12:00:00'
->>>>>>> develop
         name:
           type: string
           example: John
@@ -1567,8 +1550,6 @@ components:
         second_lastname:
           type: string
           example: Roblox
-<<<<<<< HEAD
-=======
         phone:
           type: string
           example: 55 54 89 67 87
@@ -1576,7 +1557,6 @@ components:
           type: string
           format: password
           example: C0ntr4s3n14
->>>>>>> develop
         image:
           type: string
           format: url
@@ -1585,11 +1565,7 @@ components:
           $ref: '#/components/schemas/Role'
         department:
           $ref: '#/components/schemas/Department'
-<<<<<<< HEAD
-        permission:
-=======
         share:
->>>>>>> develop
           type: array
           items:
             $ref: '#/components/schemas/ShareDocumentPermission'
