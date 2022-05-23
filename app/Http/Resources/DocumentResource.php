@@ -17,8 +17,8 @@ class DocumentResource extends JsonResource
     public function toArray($request)
     {
         $identifier = $this->min_identifier;
-        if (!empty($this->max_indentifier)) {
-            $identifier .= '-' . $this->max_indentifier;
+        if (!empty($this->max_identifier)) {
+            $identifier .= '-' . $this->max_identifier;
         }
 
         $url = asset(
@@ -44,7 +44,7 @@ class DocumentResource extends JsonResource
             'creator' => new UserResource($this->whenLoaded('creator')),
             'department' => $this->whenLoaded('department'),
             'parent' => $this->whenLoaded('parent'),
-            'shared' => $this->whenLoaded('shared'),
+            'share' => $this->whenLoaded('share'),
             'historical' => HistoricalResource::collection($this->whenLoaded('historical')),
         ];
     }

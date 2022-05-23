@@ -24,7 +24,21 @@ class Dixa
         self::ACTION_CREATED,
         self::ACTION_UPDATED,
         self::ACTION_DELETED,
-        self::ACTION_SHARED,
+        self::ACTION_SHARED
+    ];
+
+    const PERMISSION_TO_READ_SHARED_DOCUMENT = 'Lectura';
+    const PERMISSION_TO_WRITE_SHARED_DOCUMENT = 'Escritura';
+
+    const SHARE_DOCUMENT_PERMISSIONS = [
+        self::PERMISSION_TO_READ_SHARED_DOCUMENT,
+        self::PERMISSION_TO_WRITE_SHARED_DOCUMENT
+    ];
+
+    const SPANISH_ROLES = [
+        'Analyst' => 'Analista',
+        'Admin' => 'Administrador',
+        'Head of Department' => 'Jefe de Departamento',
     ];
 
     public static function useFolder($path): bool

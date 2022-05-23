@@ -1,0 +1,26 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+  name:
+    type: string
+    example: John
+  lastname:
+    type: string
+    example: Doe
+  second_lastname:
+    type: string
+    example: Roblox
+  image:
+    type: string
+    format: url
+    example: 'https://s3.amazon/profile/46798a7fsd98f79asd8f7'
+  role:
+    $ref: './Role.yaml'
+  department:
+    $ref: './Department.yaml'
+  permission:
+    type: array
+    items:
+      $ref: './ShareDocumentPermission.yaml'

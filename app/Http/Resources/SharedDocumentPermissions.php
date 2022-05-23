@@ -2,10 +2,9 @@
 
 namespace App\Http\Resources;
 
-use App\Helpers\Dixa;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RoleResource extends JsonResource
+class SharedDocumentPermissions extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,10 +14,8 @@ class RoleResource extends JsonResource
      */
     public function toArray($request)
     {
-        $spanish = Dixa::SPANISH_ROLES;
         return [
-            'id' => $this->id,
-            'name' => $spanish[$this->name],
+            'name' => $this->name
         ];
     }
 }

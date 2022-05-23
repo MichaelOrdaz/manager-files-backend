@@ -15,8 +15,8 @@ class BasicDocumentResource extends JsonResource
     public function toArray($request)
     {
         $identifier = $this->min_identifier;
-        if (!empty($this->max_indentifier)) {
-            $identifier .= '-' . $this->max_indentifier;
+        if (!empty($this->max_identifier)) {
+            $identifier .= '-' . $this->max_identifier;
         }
 
         return [
@@ -25,6 +25,7 @@ class BasicDocumentResource extends JsonResource
             'location' => $this->location,
             'type' => new DocumentTypeResource($this->whenLoaded('type')),
             'date' => $this->date,
+            'sons_count' => $this->when(isset($this->sons_count), $this->sons_count),
             'createdAt' => $this->created_at->format('Y-m-d H:i:s'),
             'parent' => $this->whenLoaded('parent')
         ];

@@ -46,6 +46,12 @@ paths:
     $ref: './paths/DocumentsById.yaml'
   /folders:
     $ref: './paths/Folders.yaml'
+  /share-permissions:
+    $ref: './paths/SharePermissions.yaml'
+  /documents/{document_id}/:rename:
+    $ref: './paths/DocumentRenameById.yaml'
+  /share-documents/{document_id}/users:
+    $ref: './paths/ShareDocumentsUsers.yaml'
 
 components:
   schemas:

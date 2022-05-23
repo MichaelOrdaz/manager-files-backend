@@ -343,4 +343,118 @@ class UserDocumentCreateTest extends TestCase
             ->etc()
         );
     }
+
+    public function test_create_file_head_error_duplicate_parent()
+    {
+        $this->seed();
+
+        $deparments = Department::all();
+        $deparmentUser = $deparments->random();
+        $user = User::factory()
+            ->for($deparmentUser)
+        ->create();
+        $user->assignRole('Head of department');
+
+        $documentTypes = DocumentType::all();
+        $typeFolder = $documentTypes->where('name', Dixa::FOLDER)->first();
+        $typeFile = $documentTypes->where('name', Dixa::FILE)->first();
+
+        $folderRoot = Document::factory()
+        ->for($typeFolder, 'type')
+        ->for($user->department)
+        ->for($user, 'creator')
+        ->state(fn (array $attr) => [
+            'location' => $attr['name']
+        ])
+        ->create();
+
+        $fileFaker = Document::factory()
+        ->for($typeFile, 'type')
+        ->for($user->department)
+        ->for($user, 'creator')
+        ->for($folderRoot, 'parent')
+        ->state(fn (array $attr) => [
+            'location' => $attr['name']
+        ])
+        ->create();
+
+        Passport::actingAs($user);
+        $this->assertAuthenticated();
+
+        $ext = 'pdf';
+        $file = UploadedFile::fake()->create("document.{$ext}", $KILOBYTES = 10000);
+
+        $response = $this->postJson("api/v1/documents", [
+            'name' => $fileFaker->name,
+            'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo consequatur eius delectus dolorem explicabo modi, nobis a cumque officia, doloremque amet dicta provident omnis, saepe asperiores quibusdam officiis vero rerum.',
+            'date' => '2022-05-05',
+            'min_identifier' => '1000',
+            'max_identifier' => '',
+            'file' => $file,
+            'parent_id' => $folderRoot->id,
+        ]);
+
+        $response->assertStatus(422)
+        ->assertJson(fn (AssertableJson $json) => 
+            $json->has('errors')
+            ->where('success', false)
+            ->etc()
+        );
+    }
+
+    public function test_create_file_head_sucess_duplicate_other_level()
+    {
+        $this->seed();
+
+        $deparments = Department::all();
+        $deparmentUser = $deparments->random();
+        $user = User::factory()
+            ->for($deparmentUser)
+        ->create();
+        $user->assignRole('Head of department');
+
+        $documentTypes = DocumentType::all();
+        $typeFolder = $documentTypes->where('name', Dixa::FOLDER)->first();
+        $typeFile = $documentTypes->where('name', Dixa::FILE)->first();
+
+        $folderRoot = Document::factory()
+        ->for($typeFolder, 'type')
+        ->for($user->department)
+        ->for($user, 'creator')
+        ->state(fn (array $attr) => [
+            'location' => $attr['name']
+        ])
+        ->create();
+
+        $fileFaker = Document::factory()
+        ->for($typeFile, 'type')
+        ->for($user->department)
+        ->for($user, 'creator')
+        ->for($folderRoot, 'parent')
+        ->state(fn (array $attr) => [
+            'location' => $attr['name']
+        ])
+        ->create();
+
+        Passport::actingAs($user);
+        $this->assertAuthenticated();
+
+        $ext = 'pdf';
+        $file = UploadedFile::fake()->create("document.{$ext}", $KILOBYTES = 10000);
+
+        $response = $this->postJson("api/v1/documents", [
+            'name' => $fileFaker->name,
+            'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo consequatur eius delectus dolorem explicabo modi, nobis a cumque officia, doloremque amet dicta provident omnis, saepe asperiores quibusdam officiis vero rerum.',
+            'date' => '2022-05-05',
+            'min_identifier' => '1000',
+            'max_identifier' => '',
+            'file' => $file,
+        ]);
+
+        $response->assertStatus(201)
+        ->assertJson(fn (AssertableJson $json) => 
+            $json->where('success', true)
+            ->etc()
+        );
+    }
 }

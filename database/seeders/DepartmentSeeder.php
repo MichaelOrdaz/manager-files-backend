@@ -14,16 +14,18 @@ class DepartmentSeeder extends Seeder
      */
     public function run()
     {
-        Department::create([
-            'name' => 'Ordenes de cobro'
-        ]);
-
-        Department::create([
-            'name' => 'Facturas'
-        ]);
-
-        Department::create([
-            'name' => 'Notas de credito'
-        ]);
+        $departments = [
+            'Órdenes de Pago',
+            'Caja',
+            'Flujo de Efectivo',
+            'Conciliaciones Bancarias',
+            'Registro y Seguimiento de Ingresos y Egresos',
+            'Deuda Pública'
+        ];
+        foreach ($departments as $department) {
+            Department::create([
+                'name' => $department
+            ]);
+        }
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Helpers\Dixa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -86,7 +87,7 @@ class AuthController extends Controller
 
         return $this->successResponse('Ok', [
             'user' => new UserResource($user),
-            'roles' => $user->getRoleNames(),
+            'roles' => $user->getRoleNames()->map(fn ($rol) => Dixa::SPANISH_ROLES[$rol]),
             'permissions' => $regularPermissions,
             'views' => $viewPermissions,
         ]);

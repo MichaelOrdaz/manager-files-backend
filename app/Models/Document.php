@@ -58,14 +58,20 @@ class Document extends Model
         return $this->hasMany(Document::class, 'parent_id', 'id')->with('children');
     }
 
+    public function sons() {
+        return $this->hasMany(Document::class, 'parent_id', 'id');
+    }
+
     public function department()
     {
         return $this->belongsTo(Department::class, 'department_id', 'id');
     }
 
-    public function shared()
+    public function share()
     {
-        return $this->belongsToMany(User::class, 'document_user', 'document_id', 'user_id');
+        return $this->belongsToMany(User::class, 'document_user', 'document_id', 'user_id')
+        ->withPivot('id', 'permission', 'granted_by')
+        ->withTimestamps();
     }
     
     public function historical()

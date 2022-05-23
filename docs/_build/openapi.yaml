@@ -176,6 +176,12 @@ paths:
       parameters:
         - $ref: '#/components/parameters/name'
         - $ref: '#/components/parameters/role'
+        - name: department_id
+          in: query
+          description: department id
+          schema:
+            type: integer
+            nullable: true
       responses:
         '200':
           description: Basic structure of the response
@@ -810,6 +816,190 @@ paths:
           $ref: '#/components/responses/404'
         '422':
           $ref: '#/components/responses/422'
+  /share-permissions:
+    get:
+      tags:
+        - Share Document
+      summary: List - Share Document Permissions
+      operationId: listShareDocumentPermissions
+      description: Get the list of all permission to share document in a single request
+      responses:
+        '200':
+          description: Basic structure of the response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ShareDocumentPermission'
+                  message:
+                    type: string
+                    example: Ok
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+  '/documents/{document_id}/:rename':
+    post:
+      tags:
+        - Documents
+      summary: Rename - Document
+      operationId: renameDocument
+      description: Rename the document in a single request
+      parameters:
+        - $ref: '#/components/parameters/documentId'
+      requestBody:
+        description: Request in format json format
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: document name
+              required:
+                - name
+      responses:
+        '200':
+          description: Basic structure of the response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Document'
+                  message:
+                    type: string
+                    example: Ok
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+  '/share-documents/{document_id}/users':
+    get:
+      tags:
+        - Share Document User
+      summary: List - Users
+      operationId: listUsers
+      description: Obtains a list of users with the permissions they have to access the consulted document
+      parameters:
+        - $ref: '#/components/parameters/documentId'
+      responses:
+        '200':
+          description: Basic structure of the response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UserWithPermissionDocument'
+                  message:
+                    type: string
+                    example: Ok
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+    post:
+      tags:
+        - Share Document User
+      summary: Save - Users of document share
+      operationId: saveUsersOfDocument
+      description: save of list of users with the permissions they have to access the consulted document
+      parameters:
+        - $ref: '#/components/parameters/documentId'
+      requestBody:
+        description: Request in application/json format
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSharePermissionByDocument'
+      responses:
+        '200':
+          description: Basic structure of the response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      attached:
+                        type: array
+                        items:
+                          type: integer
+                        example:
+                          - 1
+                          - 2
+                          - 3
+                      detached:
+                        type: array
+                        items:
+                          type: integer
+                        example:
+                          - 1
+                          - 2
+                          - 3
+                      updated:
+                        type: array
+                        items:
+                          type: integer
+                        example:
+                          - 1
+                          - 2
+                          - 3
+                  message:
+                    type: string
+                    example: Ok
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
 components:
   schemas:
     Login:
@@ -1099,7 +1289,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/History'
-        shared:
+        share:
           type: array
           items:
             $ref: '#/components/schemas/User'
@@ -1254,6 +1444,53 @@ components:
         name:
           type: string
           example: Creado
+    ShareDocumentPermission:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Lectura
+    UserWithPermissionDocument:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: John
+        lastname:
+          type: string
+          example: Doe
+        second_lastname:
+          type: string
+          example: Roblox
+        image:
+          type: string
+          format: url
+          example: 'https://s3.amazon/profile/46798a7fsd98f79asd8f7'
+        role:
+          $ref: '#/components/schemas/Role'
+        department:
+          $ref: '#/components/schemas/Department'
+        permission:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShareDocumentPermission'
+    UserSharePermissionByDocument:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 3
+              permission:
+                type: string
+                example: Lectura
   parameters:
     userId:
       name: user_id

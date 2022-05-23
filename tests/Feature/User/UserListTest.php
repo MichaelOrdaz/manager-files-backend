@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\User;
 
+use App\Models\Department;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -275,6 +276,51 @@ class UserListTest extends TestCase
             )
             ->has('message')
             ->where('success', true)
+        );
+    }
+
+    public function test_users_list_by_department_success_normal()
+    {
+        $this->seed();
+
+        $user = User::factory()->create();
+        $user->assignRole('Admin');
+
+        Passport::actingAs($user);
+
+        $departments = Department::all();
+        $department = $departments->random();
+
+        $users =User::factory()
+        ->for($department)
+        ->count(3)
+        ->create();
+        $users->each(fn ($user) => $user->assignRole('Analyst'));
+
+        $totalUser = User::whereHas('department', fn ($query) =>
+            $query->where('id', $department->id)
+        )->count();
+
+        $this->assertAuthenticated();
+        $response = $this->getJson("api/v1/users?department_id={$department->id}");
+
+        $response->assertOk()
+        ->assertJson(fn (AssertableJson $json) => 
+            $json->has('data', $totalUser, fn ($json) => 
+                $json->has('id')
+                ->has('email')
+                ->has('image')
+                ->has('name')
+                ->has('lastname')
+                ->has('second_lastname')
+                ->has('role')
+                ->has('department')
+                ->has('phone')
+                ->etc()
+            )
+            ->has('message')
+            ->where('success', true)
+            ->etc()
         );
     }
 

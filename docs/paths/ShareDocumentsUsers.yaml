@@ -1,13 +1,11 @@
 get:
   tags: 
-    - Users
+    - Share Document User
   summary: List - Users
-  operationId: getUsers
-  description: Get the list of all users in a single request
+  operationId: listUsers
+  description: Obtains a list of users with the permissions they have to access the consulted document
   parameters:
-    - $ref: "../parameters/query/name.yaml"
-    - $ref: "../parameters/query/role.yaml"
-    - $ref: "../parameters/query/departmentId.yaml"
+    - $ref: "../parameters/path/DocumentId.yaml"
   responses:
     '200': 
       description: Basic structure of the response
@@ -19,7 +17,7 @@ get:
               data:
                 type: array
                 items:
-                  $ref: "../schemas/User.yaml"
+                  $ref: "../schemas/UserWithPermissionDocument.yaml"
               message:
                 type: string
                 example: Ok
@@ -38,16 +36,18 @@ get:
       $ref: "../responses/error422.yaml"
 post:
   tags: 
-    - Users
-  summary: Create - Users
-  operationId: createUsers
-  description: create a user in the system
+    - Share Document User
+  summary: Save - Users of document share
+  operationId: saveUsersOfDocument
+  description: save of list of users with the permissions they have to access the consulted document
+  parameters:
+    - $ref: "../parameters/path/DocumentId.yaml"
   requestBody: 
-    description: Request in multipart/form-data format
+    description: Request in application/json format
     content: 
-      multipart/form-data:
+      application/json:
         schema:
-          $ref: '../schemas/UserMultipartCreate.yaml'
+          $ref: '../schemas/UserSharePermissionByDocument.yaml'
   responses:
     '200': 
       description: Basic structure of the response
@@ -57,7 +57,23 @@ post:
             type: object
             properties:
               data:
-                $ref: "../schemas/User.yaml"
+                type: object
+                properties:
+                  attached:
+                    type: array
+                    items:
+                      type: integer
+                    example: [1,2,3]
+                  detached:
+                    type: array
+                    items:
+                      type: integer
+                    example: [1,2,3]
+                  updated:
+                    type: array
+                    items:
+                      type: integer
+                    example: [1,2,3]
               message:
                 type: string
                 example: Ok
