@@ -34,3 +34,9 @@ History:
   $ref: './History.yaml'
 Action:
   $ref: './Action.yaml'
+ShareDocumentPermission:
+  $ref: './ShareDocumentPermission.yaml'
+UserWithPermissionDocument:
+  $ref: './UserWithPermissionDocument.yaml'
+UserSharePermissionByDocument:
+  $ref: './UserSharePermissionByDocument.yaml'

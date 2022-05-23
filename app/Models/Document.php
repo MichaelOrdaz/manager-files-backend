@@ -67,9 +67,11 @@ class Document extends Model
         return $this->belongsTo(Department::class, 'department_id', 'id');
     }
 
-    public function shared()
+    public function share()
     {
-        return $this->belongsToMany(User::class, 'document_user', 'document_id', 'user_id');
+        return $this->belongsToMany(User::class, 'document_user', 'document_id', 'user_id')
+        ->withPivot('id', 'permission', 'granted_by')
+        ->withTimestamps();
     }
     
     public function historical()

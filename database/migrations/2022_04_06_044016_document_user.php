@@ -17,11 +17,14 @@ class DocumentUser extends Migration
             $table->id();
             $table->unsignedBigInteger('document_id')->nullable()->comment('the document, which must be a folder');
             $table->unsignedBigInteger('user_id')->nullable()->comment('user to which it is relating (sharing the folder/document)');
+            $table->unsignedBigInteger('granted_by')->nullable()->comment('user to which it is relating (creator of relationship)');
+            $table->string('permission')->nullable()->comment('type of permission the user has with the document');
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('document_id')->references('id')->on('documents');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('granted_by')->references('id')->on('users');
         });
     }
 
