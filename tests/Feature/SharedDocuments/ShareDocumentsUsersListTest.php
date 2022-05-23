@@ -82,7 +82,7 @@ class ShareDocumentsUsersListTest extends TestCase
                 ->has('second_lastname')
                 ->has('role')
                 ->has('department')
-                ->whereType('permission', 'array')
+                ->whereType('share', 'array')
                 ->etc()
             )
             ->has('message')
@@ -150,11 +150,11 @@ class ShareDocumentsUsersListTest extends TestCase
                 ->has('second_lastname')
                 ->has('role')
                 ->has('department')
-                ->has('permission', 1, fn ($json) => 
+                ->has('share', 1, fn ($json) => 
                     $json->has('id')
-                    ->has('document_id')
                     ->has('permission')
                     ->has('createdAt')
+                    ->etc()
                 )
                 ->etc()
             )
@@ -227,11 +227,11 @@ class ShareDocumentsUsersListTest extends TestCase
                 ->has('second_lastname')
                 ->has('role')
                 ->has('department')
-                ->has('permission', 1, fn ($json) => 
+                ->has('share', 1, fn ($json) => 
                     $json->has('id')
-                    ->has('document_id')
                     ->has('permission')
                     ->has('createdAt')
+                    ->etc()
                 )
                 ->etc()
             )

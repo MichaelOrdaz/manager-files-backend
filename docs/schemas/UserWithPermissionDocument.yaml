@@ -3,6 +3,13 @@ properties:
   id:
     type: integer
     example: 1
+  email:
+    type: string
+    format: email
+    example: correo@puller.mx
+  email_verified_at:
+    type: string
+    example: "2020-01-01 12:00:00"
   name:
     type: string
     example: John
@@ -12,6 +19,13 @@ properties:
   second_lastname:
     type: string
     example: Roblox
+  phone:
+    type: string
+    example: '55 54 89 67 87'
+  password:
+    type: string
+    format: password
+    example: C0ntr4s3n14
   image:
     type: string
     format: url
@@ -20,7 +34,7 @@ properties:
     $ref: './Role.yaml'
   department:
     $ref: './Department.yaml'
-  permission:
+  share:
     type: array
     items:
       $ref: './ShareDocumentPermission.yaml'
