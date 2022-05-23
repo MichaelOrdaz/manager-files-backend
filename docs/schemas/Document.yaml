@@ -39,7 +39,7 @@ properties:
     type: array
     items:
       $ref: './History.yaml'
-  shared:
+  share:
     type: array
     items:
       $ref: './User.yaml'

@@ -1,0 +1,6 @@
+name: department_id
+in: query
+description: department id
+schema:
+  type: integer
+  nullable: true

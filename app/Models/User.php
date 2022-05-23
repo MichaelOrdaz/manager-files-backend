@@ -79,8 +79,10 @@ class User extends Authenticatable
         return $this->hasMany(History::class, 'user_id', 'id');
     }
 
-    public function shared()
+    public function share()
     {
-        return $this->belongsToMany(Document::class, 'document_user', 'user_id', 'document_id');
+        return $this->belongsToMany(Document::class, 'document_user', 'user_id', 'document_id')
+        ->withPivot('id', 'permission', 'granted_by')
+        ->withTimestamps();
     }
 }
