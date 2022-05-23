@@ -44,8 +44,11 @@ class DocumentResource extends JsonResource
             'creator' => new UserResource($this->whenLoaded('creator')),
             'department' => $this->whenLoaded('department'),
             'parent' => $this->whenLoaded('parent'),
-            'share' => $this->whenLoaded('share'),
             'historical' => HistoricalResource::collection($this->whenLoaded('historical')),
+            'share' => UserResource::collection($this->whenLoaded('share')),
+            'permission' => $this->whenPivotLoaded('document_user', function () {
+                return $this->pivot->permission;
+            }),
         ];
     }
 }

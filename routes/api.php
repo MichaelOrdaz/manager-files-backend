@@ -77,10 +77,10 @@ Route::prefix('v1')->group(function () {
             // Route::get('/{document_id}', [App\Http\Controllers\Api\ShareDocumentController::class, 'show'])->whereNumber('document_id');
 
             Route::prefix('{document_id}/users')->group(function () {
-                Route::get('/', [App\Http\Controllers\Api\ShareDocumentController::class, 'index'])->whereNumber(['document_id']);
-                Route::get('/{user_id}', [App\Http\Controllers\Api\ShareDocumentController::class, 'show'])->whereNumber(['user_id', 'document_id']);
-                Route::post('/', [App\Http\Controllers\Api\ShareDocumentController::class, 'store'])->whereNumber(['document_id']);
-                Route::delete('/{user_id}', [App\Http\Controllers\Api\ShareDocumentController::class, 'delete'])->whereNumber(['user_id', 'document_id']);
+                Route::get('/', [App\Http\Controllers\Api\ShareDocumentUserController::class, 'index'])->whereNumber(['document_id']);
+                Route::get('/{user_id}', [App\Http\Controllers\Api\ShareDocumentUserController::class, 'show'])->whereNumber(['user_id', 'document_id']);
+                Route::post('/', [App\Http\Controllers\Api\ShareDocumentUserController::class, 'store'])->whereNumber(['document_id']);
+                Route::delete('/{user_id}', [App\Http\Controllers\Api\ShareDocumentUserController::class, 'delete'])->whereNumber(['user_id', 'document_id']);
             });
         });
     });

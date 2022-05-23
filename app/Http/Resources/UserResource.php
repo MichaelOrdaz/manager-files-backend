@@ -25,7 +25,11 @@ class UserResource extends JsonResource
             'phone' => $this->phone,
             'image' => $this->image ? asset("storage/{$this->image}") : $this->image,
             'department' => new DepartmentResource($this->whenLoaded('department')),
-            'role' => $this->getRoleNames()->map(fn ($rol) => Dixa::SPANISH_ROLES[$rol])
+            'role' => $this->getRoleNames()->map(fn ($rol) => Dixa::SPANISH_ROLES[$rol]),
+            'permission' => $this->whenPivotLoaded('document_user', function () {
+                return $this->pivot->permission;
+            }),
+            'share' => DocumentResource::collection($this->whenLoaded('share')),
         ];
     }
 }

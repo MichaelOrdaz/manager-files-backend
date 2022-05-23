@@ -5,6 +5,7 @@ get:
   operationId: listUsers
   description: Obtains a list of users with the permissions they have to access the consulted document
   parameters:
+    - $ref: "../parameters/query/departmentId.yaml"
     - $ref: "../parameters/path/DocumentId.yaml"
   responses:
     '200': 

@@ -23,3 +23,5 @@ name:
   $ref: "./query/name.yaml"
 parent:
   $ref: "./query/parent.yaml"
+departmentIdQuery:
+  $ref: "./query/departmentId.yaml"

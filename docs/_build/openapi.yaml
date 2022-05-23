@@ -176,12 +176,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/name'
         - $ref: '#/components/parameters/role'
-        - name: department_id
-          in: query
-          description: department id
-          schema:
-            type: integer
-            nullable: true
+        - $ref: '#/components/parameters/departmentIdQuery'
       responses:
         '200':
           description: Basic structure of the response
@@ -906,6 +901,7 @@ paths:
       operationId: listUsers
       description: Obtains a list of users with the permissions they have to access the consulted document
       parameters:
+        - $ref: '#/components/parameters/departmentIdQuery'
         - $ref: '#/components/parameters/documentId'
       responses:
         '200':
@@ -1447,7 +1443,89 @@ components:
     ShareDocumentPermission:
       type: object
       properties:
+        id:
+          type: integer
+          example: 1
         name:
+          type: string
+          example: credit note.pdf
+        description:
+          type: string
+          example: document desciption example
+        location:
+          type: string
+          format: url
+          example: 'http://dixa.com/public/document.pdf'
+        identifier:
+          type: string
+          example: '50478'
+        tags:
+          type: array
+          items:
+            type: string
+          example:
+            - note
+            - invoice
+            - legal
+        creator:
+          $ref: '#/components/schemas/User'
+        createdAt:
+          type: string
+          format: date-time
+          example: '2020-01-01T12:00:00Z'
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2020-01-01T12:00:00Z'
+        date:
+          type: string
+          format: date
+          example: '2020-01-01'
+        historical:
+          type: array
+          items:
+            $ref: '#/components/schemas/History'
+        share:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        type:
+          $ref: '#/components/schemas/DocumentType'
+        department:
+          $ref: '#/components/schemas/Department'
+        parent:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            name:
+              type: string
+              example: credits
+            location:
+              type: string
+              format: url
+              example: 'http://dixa.com/public/credits'
+              nullable: true
+            identifier:
+              type: string
+              nullable: true
+            creator:
+              $ref: '#/components/schemas/User'
+            createdAt:
+              type: string
+              format: date-time
+              example: '2020-01-01T12:00:00Z'
+            date:
+              type: string
+              format: date
+              example: '2020-01-01'
+            type:
+              $ref: '#/components/schemas/DocumentType'
+            typeName:
+              type: string
+              example: Carpeta
+        permission:
           type: string
           example: Lectura
     UserWithPermissionDocument:
@@ -1456,6 +1534,13 @@ components:
         id:
           type: integer
           example: 1
+        email:
+          type: string
+          format: email
+          example: correo@puller.mx
+        email_verified_at:
+          type: string
+          example: '2020-01-01 12:00:00'
         name:
           type: string
           example: John
@@ -1465,6 +1550,13 @@ components:
         second_lastname:
           type: string
           example: Roblox
+        phone:
+          type: string
+          example: 55 54 89 67 87
+        password:
+          type: string
+          format: password
+          example: C0ntr4s3n14
         image:
           type: string
           format: url
@@ -1473,7 +1565,7 @@ components:
           $ref: '#/components/schemas/Role'
         department:
           $ref: '#/components/schemas/Department'
-        permission:
+        share:
           type: array
           items:
             $ref: '#/components/schemas/ShareDocumentPermission'
@@ -1578,6 +1670,13 @@ components:
       schema:
         type: integer
         example: 1
+    departmentIdQuery:
+      name: department_id
+      in: query
+      description: department id
+      schema:
+        type: integer
+        nullable: true
   securitySchemes:
     bearerAuth:
       type: http
