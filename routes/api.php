@@ -67,6 +67,10 @@ Route::prefix('v1')->group(function () {
             Route::get('/{department_id}', [App\Http\Controllers\Api\DepartmentController::class, 'show'])->whereNumber('department_id');
         });
 
+        Route::prefix('analyst-permissions')->group(function () {
+            Route::get('/', [App\Http\Controllers\Api\AnalystPermissionController::class, 'index']);
+        });
+
         Route::prefix('share-permissions')->group(function () {
             Route::get('/', [App\Http\Controllers\Api\SharePermissionController::class, 'index']);
         });

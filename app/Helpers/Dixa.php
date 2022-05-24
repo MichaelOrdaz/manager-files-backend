@@ -35,6 +35,14 @@ class Dixa
         self::PERMISSION_TO_WRITE_SHARED_DOCUMENT
     ];
 
+    const ANALYST_READ_PERMISSION = 'Solo ver';
+    const ANALYST_WRITE_PERMISSION = 'Todos los permisos';
+
+    const ANALYST_PERMISSIONS = [
+        self::ANALYST_READ_PERMISSION,
+        self::ANALYST_WRITE_PERMISSION,
+    ];
+
     const SPANISH_ROLES = [
         'Analyst' => 'Analista',
         'Admin' => 'Administrador',

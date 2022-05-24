@@ -34,3 +34,8 @@ properties:
     $ref: './Role.yaml'
   department:
     $ref: './Department.yaml'
+  authorization:
+    type: array
+    items:
+      type: string
+    example: ['Solo ver', 'Todos los permisos']

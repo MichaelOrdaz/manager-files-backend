@@ -1,9 +1,9 @@
 get:
   tags: 
-    - Share Document
-  summary: List - Share Document Permissions
-  operationId: listShareDocumentPermissions
-  description: Get the list of all permission to share document in a single request
+    - Permissions
+  summary: List - Permissions to role analyst
+  operationId: listAnalystPermissions
+  description: Get the list of all permission to analyst in a single request
   responses:
     '200': 
       description: Basic structure of the response

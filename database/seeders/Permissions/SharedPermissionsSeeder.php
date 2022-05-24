@@ -22,8 +22,8 @@ class SharedPermissionsSeeder extends Seeder
       //permisos para administrar los permisos de los documentos compartidos
       Permission::create(['name' => 'share.permissions.show']);//permiso para visualizar los permisos de arriba
       Permission::create(['name' => 'share.permissions.create']);//permiso para asignar los permisos de arriba
-      Permission::create(['name' => 'share.permissions.update']);//permiso para actualizar los permisos de arriba
-      Permission::create(['name' => 'share.permissions.delete']);//permiso para borrar los permisos de arriba
+      Permission::create(['name' => 'share.permissions.update']);//permiso para reasignar los permisos de arriba
+      Permission::create(['name' => 'share.permissions.delete']);//permiso para borrar los permisos de arriba de un
 
       $admin = Role::findByName('Admin');
       $admin->givePermissionTo('share.permissions.show');
