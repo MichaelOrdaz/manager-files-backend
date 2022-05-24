@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Permissions\AnalystPermissionsSeeder;
 use Database\Seeders\Permissions\DeparmentPermissionsSeeder;
 use Database\Seeders\Permissions\DocumentPermissionsSeeder;
 use Database\Seeders\Permissions\RolePermissionsSeeder;
@@ -33,7 +34,8 @@ class RolesSeeder extends Seeder
             RolePermissionsSeeder::class,
             DeparmentPermissionsSeeder::class,
             DocumentPermissionsSeeder::class,
-            SharedPermissionsSeeder::class
+            SharedPermissionsSeeder::class,
+            AnalystPermissionsSeeder::class,
         ]);
 
     }

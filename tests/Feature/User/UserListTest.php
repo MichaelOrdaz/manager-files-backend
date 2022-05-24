@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\User;
 
+use App\Helpers\Dixa;
 use App\Models\Department;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -61,7 +62,7 @@ class UserListTest extends TestCase
 
         $this->assertDatabaseCount('users', 5);
 
-        $users = User::factory()->count(50)->create();
+        $users = User::factory()->count(20)->create();
         $user = $users->first();
         $user->assignRole('Admin');
 
@@ -307,6 +308,81 @@ class UserListTest extends TestCase
         $response->assertOk()
         ->assertJson(fn (AssertableJson $json) => 
             $json->has('data', $totalUser, fn ($json) => 
+                $json->has('id')
+                ->has('email')
+                ->has('image')
+                ->has('name')
+                ->has('lastname')
+                ->has('second_lastname')
+                ->has('role')
+                ->has('department')
+                ->has('phone')
+                ->etc()
+            )
+            ->has('message')
+            ->where('success', true)
+            ->etc()
+        );
+    }
+
+    public function test_users_list_head_error_403()
+    {
+        $this->seed();
+
+        $this->assertDatabaseCount('users', 5);
+
+        $departments = Department::all();
+
+        $user = User::factory()
+        ->create();
+        $user->assignRole('analyst');
+
+        $user = User::factory()
+        ->for($departments->random())
+        ->create();
+        $user->assignRole('head of department');
+
+        Passport::actingAs($user);
+        $this->assertAuthenticated();
+
+        $response = $this->getJson('api/v1/users');
+
+        $response->assertStatus(403)
+        ->assertJson(fn (AssertableJson $json) => 
+            $json->has('errors')
+            ->where('success', false)
+            ->etc()
+        );
+    }
+
+    public function test_users_list_head_success()
+    {
+        $this->seed();
+
+        $this->assertDatabaseCount('users', 5);
+
+        $departments = Department::all();
+        $department = $departments->random();
+        $user = User::factory()
+        ->for($department)
+        ->create();
+        $user->assignRole('analyst');
+        $user->syncPermissions(Dixa::ANALYST_WRITE_PERMISSION);
+
+        $user = User::factory()
+        ->for($department)
+        ->create();
+        $user->assignRole('head of department');
+
+        Passport::actingAs($user);
+        $this->assertAuthenticated();
+
+        $response = $this->getJson("api/v1/users?department_id={$department->id}");
+
+        $total = User::where('department_id', $department->id)->count();
+        $response->assertOk()
+        ->assertJson(fn (AssertableJson $json) => 
+            $json->has('data', $total, fn ($json) => 
                 $json->has('id')
                 ->has('email')
                 ->has('image')

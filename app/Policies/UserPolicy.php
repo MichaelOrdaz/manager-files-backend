@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Helpers\Dixa;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
@@ -30,6 +31,9 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
+        if ($user->hasRole('Head of Department')) {
+            return $user->department_id === $model->department_id;
+        }
         return $user->can('user.show');
     }
 

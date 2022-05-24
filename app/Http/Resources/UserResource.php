@@ -15,6 +15,13 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
+        $authorization = [];
+        $analystPermissions = Dixa::ANALYST_PERMISSIONS;
+        foreach ($analystPermissions as $permission) {
+            if ($this->can($permission)) {
+                $authorization[] = $permission;
+            }
+        }
         return [
             'id' => $this->id,
             'email' => $this->email,
@@ -30,6 +37,7 @@ class UserResource extends JsonResource
                 return $this->pivot->permission;
             }),
             'share' => DocumentResource::collection($this->whenLoaded('share')),
+            'authorization' => $this->when($this->hasRole('Analyst'), $authorization),
         ];
     }
 }
