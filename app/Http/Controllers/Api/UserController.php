@@ -21,6 +21,8 @@ class UserController extends Controller
     {
         $this->authorize('viewAny', User::class);
 
+        $user = $request->user();
+
         $validated = $request->validate([
             'name' => 'nullable',
             'role' => 'nullable|integer',
@@ -31,7 +33,16 @@ class UserController extends Controller
         $roleId = $validated['role'] ?? null;
         $departmentId = $validated['department_id'] ?? null;
 
-        $users = User::with(['roles', 'department'])
+        if ($user->hasRole('Head of Department')) {
+            if ($user->department_id !== (int) $departmentId) {
+                return response()->json([
+                    'errors' => 'This action is not allowed',
+                    'success' => false,
+                ], 403);
+            }
+        }
+
+        $users = User::with(['roles', 'department', 'permissions'])
         ->when($name, function ($query, $name) {
             return $query->whereRaw("CONCAT(name,' ',lastname,' ',second_lastname) LIKE ?", "%{$name}%");
         })
@@ -92,7 +103,7 @@ class UserController extends Controller
         $user = User::findOrFail($userId);
         $this->authorize('view', $user);
 
-        $user->load(['roles', 'department']);
+        $user->load(['roles', 'department', 'permissions']);
 
         return (new UserResource($user))->additional([
             'message' => 'user retrieved successfully',

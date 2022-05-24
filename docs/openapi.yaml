@@ -52,6 +52,8 @@ paths:
     $ref: './paths/DocumentRenameById.yaml'
   /share-documents/{document_id}/users:
     $ref: './paths/ShareDocumentsUsers.yaml'
+  /analyst-permissions:
+    $ref: './paths/AnalystPermissions.yaml'
 
 components:
   schemas:
