@@ -314,10 +314,7 @@ staging:migrate refresh:
 
   script:
     - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker exec -i ${CONTAINER_NAME}_staging php artisan migrate:refresh"
-    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker exec -i ${CONTAINER_NAME}_staging php artisan db:seed --class=RolesSeeder"
-    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker exec -i ${CONTAINER_NAME}_staging php artisan db:seed --class=UserSeeder"
-    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker exec -i ${CONTAINER_NAME}_staging php artisan db:seed --class=ResourceSeeder"
-    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker exec -i ${CONTAINER_NAME}_staging php artisan db:seed --class=AdministracionSeeder"
+    - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker exec -i ${CONTAINER_NAME}_staging php artisan db:seed"
     - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker exec -i ${CONTAINER_NAME}_staging php artisan passport:install --force"
     - ssh ${SECRETS_DIGITAL_OCEAN_DROPLET_USER}@${SECRETS_DIGITAL_OCEAN_DROPLET_IP} "docker exec -i ${CONTAINER_NAME}_staging chown -R www-data:www-data storage/"
   when: manual
