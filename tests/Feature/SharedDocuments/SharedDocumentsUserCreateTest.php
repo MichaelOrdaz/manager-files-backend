@@ -268,11 +268,15 @@ class SharedDocumentsUserCreateTest extends TestCase
             ]
         ]);
 
-        $response->assertStatus(422)
+        $response->assertStatus(200)
         ->assertJson(fn (AssertableJson $json) => 
-            $json
-            ->has('errors')
-            ->where('success', false)
+            $json->has('data', fn ($json) => 
+                $json->has('attached', 0)
+                ->has('detached', 0)
+                ->has('updated', 0)
+            )
+            ->has('message')
+            ->where('success', true)
         );
     }
 

@@ -1,0 +1,40 @@
+post:
+  tags: 
+    - Users
+  summary: Save - User Permission
+  operationId: saveUserPermission
+  description: save a permission with user in the system
+  parameters:
+    - $ref: "../parameters/path/UserId.yaml"
+  requestBody: 
+    description: Request in application/json format
+    content: 
+      application/json:
+        schema:
+          $ref: '../schemas/UserPermission.yaml'
+  responses:
+    '200': 
+      description: Basic structure of the response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: "../schemas/User.yaml"
+              message:
+                type: string
+                example: Ok
+              success:
+                type: boolean
+                example: true
+    '400':
+      $ref: "../responses/error400.yaml"
+    '401':
+      $ref: "../responses/error401.yaml"
+    '403':
+      $ref: "../responses/error403.yaml"
+    '404':
+      $ref: "../responses/error404.yaml"
+    '422':
+      $ref: "../responses/error422.yaml"
