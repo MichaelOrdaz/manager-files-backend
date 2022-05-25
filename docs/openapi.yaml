@@ -54,6 +54,10 @@ paths:
     $ref: './paths/ShareDocumentsUsers.yaml'
   /analyst-permissions:
     $ref: './paths/AnalystPermissions.yaml'
+  /users/{user_id}/permissions:
+    $ref: './paths/UsersPermissions.yaml'
+  /users/*/permissions:
+    $ref: './paths/UsersManyPermissions.yaml'
 
 components:
   schemas:

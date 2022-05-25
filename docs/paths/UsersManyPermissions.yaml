@@ -1,0 +1,40 @@
+post:
+  tags: 
+    - Users
+  summary: Save - Users Permission
+  operationId: saveUsersPermissions
+  description: saves the permissions of a user group provided in the request body
+  requestBody: 
+    description: Request in application/json format
+    content: 
+      application/json:
+        schema:
+          $ref: '../schemas/UserSharePermissionByDocument.yaml'
+  responses:
+    '200': 
+      description: Basic structure of the response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../schemas/User.yaml"
+              message:
+                type: string
+                example: Ok
+              success:
+                type: boolean
+                example: true
+    '400':
+      $ref: "../responses/error400.yaml"
+    '401':
+      $ref: "../responses/error401.yaml"
+    '403':
+      $ref: "../responses/error403.yaml"
+    '404':
+      $ref: "../responses/error404.yaml"
+    '422':
+      $ref: "../responses/error422.yaml"

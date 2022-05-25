@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 use Spatie\Permission\Models\Permission;
 
-class DocumentUserPostRequest extends FormRequest
+class UserPermissionPostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,11 +27,11 @@ class DocumentUserPostRequest extends FormRequest
      */
     public function rules()
     {
-        $permission = Dixa::SHARE_DOCUMENT_PERMISSIONS;
+        $permission = Dixa::ANALYST_PERMISSIONS;
         return [
             'users' => 'array|nullable',
             'users.*.id' => 'required|integer',
-            'users.*.permission' => "required|in:" . implode(',', $permission),
+            'users.*.permission' => "nullable|in:" . implode(',', $permission),
         ];
     }
 
@@ -45,8 +45,9 @@ class DocumentUserPostRequest extends FormRequest
         $data = $data->map(function ($item) {
             $item['user'] = User::find($item['id']);
             return $item;
-        })->filter(fn ($item) => $item['user']);
-
+        })->filter(function ($item) {
+            return $item['user'] && $item['user']->department_id === $this->user()->department_id;
+        });
         return $data;
     }
 }
