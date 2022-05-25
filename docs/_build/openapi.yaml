@@ -1031,6 +1031,88 @@ paths:
           $ref: '#/components/responses/404'
         '422':
           $ref: '#/components/responses/422'
+  '/users/{user_id}/permissions':
+    post:
+      tags:
+        - Users
+      summary: Save - User Permission
+      operationId: saveUserPermission
+      description: save a permission with user in the system
+      parameters:
+        - $ref: '#/components/parameters/userId'
+      requestBody:
+        description: Request in application/json format
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPermission'
+      responses:
+        '200':
+          description: Basic structure of the response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/User'
+                  message:
+                    type: string
+                    example: Ok
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+  /users/*/permissions:
+    post:
+      tags:
+        - Users
+      summary: Save - Users Permission
+      operationId: saveUsersPermissions
+      description: saves the permissions of a user group provided in the request body
+      requestBody:
+        description: Request in application/json format
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSharePermissionByDocument'
+      responses:
+        '200':
+          description: Basic structure of the response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+                  message:
+                    type: string
+                    example: Ok
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
 components:
   schemas:
     Login:
@@ -1629,6 +1711,12 @@ components:
       type: object
       properties:
         name:
+          type: string
+          example: Solo ver
+    UserPermission:
+      type: object
+      properties:
+        permission:
           type: string
           example: Solo ver
   parameters:

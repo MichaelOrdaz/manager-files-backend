@@ -104,4 +104,17 @@ class UserPolicy
     {
         return $user->can('user.reset-password');
     }
+
+    public function assignPermission(User $user, ?User $model = null)
+    {
+        if ($user->hasRole('Admin')) {
+            return true;
+        }
+        if ($user->hasRole('Head of Department') && $model) {
+            return $user->department_id === $model->department_id;
+        } else {
+            return true;
+        }
+        return $user->can(Dixa::ANALYST_WRITE_PERMISSION);
+    }
 }

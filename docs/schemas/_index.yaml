@@ -42,3 +42,5 @@ UserSharePermissionByDocument:
   $ref: './UserSharePermissionByDocument.yaml'
 Permission:
   $ref: './Permission.yaml'
+UserPermission:
+  $ref: './UserPermission.yaml'

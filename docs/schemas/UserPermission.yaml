@@ -1,0 +1,5 @@
+type: object
+properties:
+  permission:
+    type: string
+    example: Solo ver
