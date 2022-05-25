@@ -39,6 +39,9 @@ Route::prefix('v1')->group(function () {
             });
 
             Route::post('/{user_id}/change-password', [App\Http\Controllers\Api\UserPasswordController::class, 'update'])->whereNumber('user_id');
+
+            Route::post('/{user_id}/permissions', [App\Http\Controllers\Api\UserPermissionController::class, 'store'])->whereNumber('user_id');
+            Route::post('/*/permissions', [App\Http\Controllers\Api\UserPermissionController::class, 'storeMany']);
         });
 
         Route::prefix('documents')->group(function () {

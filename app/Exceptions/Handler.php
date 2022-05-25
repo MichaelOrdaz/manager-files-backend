@@ -10,7 +10,7 @@ use Spatie\Permission\Exceptions\UnauthorizedException;
 use App\Exceptions\AuthorizationException;
 use Symfony\Component\HttpKernel\Exception\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
-
+use Spatie\Permission\Exceptions\PermissionDoesNotExist;
 
 class Handler extends ExceptionHandler
 {
@@ -60,24 +60,6 @@ class Handler extends ExceptionHandler
             }
         });
 
-        $this->renderable(function (AuthorizationException $e, $request) {
-            if ($request->is('api/*')) {
-                return response()->json([
-                    'errors' => ['No tienes autorización suficiente para este recurso'],
-                    'success' => false
-                ], 401);
-            }
-        });
-
-        $this->renderable(function (ModelNotFoundException $e, $request) {
-            if ($request->is('api/*')) {
-                return response()->json([
-                    'errors' => ['El recurso no fue encontrado'],
-                    'success' => false
-                ], 403);
-            }
-        });
-
         $this->renderable(function (AccessDeniedHttpException $e, $request) {
             if ($request->is('api/*')) {
                 return response()->json([
@@ -93,6 +75,15 @@ class Handler extends ExceptionHandler
                     'errors' => $e->errors(),
                     'success' => false
                 ], 422);
+            }
+        });
+
+        $this->renderable(function (PermissionDoesNotExist $e, $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'errors' => $e->getMessage(),
+                    'success' => false
+                ], 404);
             }
         });
 
