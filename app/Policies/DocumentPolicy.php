@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Helpers\Dixa;
 use App\Models\Document;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -42,6 +43,11 @@ class DocumentPolicy
      */
     public function create(User $user)
     {
+        if ($user->hasRole('Head of Department')) {
+            return $user->can('document.create');
+        } elseif ($user->hasRole('Analyst')) {
+            return $user->can(Dixa::ANALYST_WRITE_PERMISSION);
+        }
         return $user->can('document.create');
     }
 
@@ -52,8 +58,14 @@ class DocumentPolicy
      * @param  \App\Models\Document  $documentos
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Document $documentos)
+    public function update(User $user, Document $document)
     {
+        $isSameDepartment = $user->department->id === $document->department->id;
+        if ($user->hasRole('Head of Department')) {
+            return $user->can('document.update') && $isSameDepartment;
+        } elseif ($user->hasRole('Analyst')) {
+            return $user->can(Dixa::ANALYST_WRITE_PERMISSION) && $isSameDepartment;
+        }
         return $user->can('document.update');
     }
 
@@ -67,7 +79,12 @@ class DocumentPolicy
     public function delete(User $user, Document $document)
     {
         $isSameDepartment = $user->department->id === $document->department->id;
-        return $user->can('document.delete') && $isSameDepartment;
+        if ($user->hasRole('Head of Department')) {
+            return $user->can('document.delete') && $isSameDepartment;
+        } elseif ($user->hasRole('Analyst')) {
+            return $user->can(Dixa::ANALYST_WRITE_PERMISSION) && $isSameDepartment;
+        }
+        return $user->can('document.delete');
     }
 
     /**

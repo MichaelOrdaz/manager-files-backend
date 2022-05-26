@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Validation\ValidationException;
 use League\Flysystem\Util;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use ZipArchive;
 
 class UserDocumentController extends Controller
 {
@@ -238,5 +241,41 @@ class UserDocumentController extends Controller
             'message' => 'Document successfully retrieved',
             'success' => true,
         ]);
+    }
+
+    public function downloadFolder($documentId)
+    {
+        $document = Document::findOrFail($documentId);
+
+        $pathDocument = Dixa::storageRootPath($document->location);
+
+        $filenameZip = storage_path("zip/{$document->name}.zip");
+
+        $rootPath = $pathDocument;
+
+        $zip = new ZipArchive();
+
+        $zip->open($filenameZip, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+
+        if ($document->type->name === Dixa::FOLDER) {
+            $files = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($rootPath),
+                RecursiveIteratorIterator::LEAVES_ONLY
+            );
+
+            foreach ($files as $name => $file) {
+                if (!$file->isDir())
+                {
+                    $filePath = $file->getRealPath();
+                    $relativePath = substr($filePath, strlen($rootPath) + 1);
+                    $zip->addFile($filePath, $relativePath);
+                }
+            }
+        } else {
+            $zip->addFile($pathDocument . DIRECTORY_SEPARATOR . $document->name, "{$document->name}.pdf");
+        }
+        $zip->close();
+
+        return response()->download($filenameZip);
     }
 }
