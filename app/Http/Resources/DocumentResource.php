@@ -21,13 +21,17 @@ class DocumentResource extends JsonResource
             $identifier .= '-' . $this->max_identifier;
         }
 
-        $url = asset(
-            "storage" . 
-            DIRECTORY_SEPARATOR . 
-            Dixa::PATH_FILES . 
-            DIRECTORY_SEPARATOR . 
-            $this->location
-        );
+        if ($this->type->name === Dixa::FOLDER) {
+            $url = route('downloadFolder', ['document_id' => $this->id]);
+        } else {
+            $url = asset(
+                "storage" . 
+                DIRECTORY_SEPARATOR . 
+                Dixa::PATH_FILES . 
+                DIRECTORY_SEPARATOR . 
+                $this->location
+            );
+        }
 
         return [
             'id' => $this->id,

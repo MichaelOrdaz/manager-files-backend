@@ -14,7 +14,4 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/api/documentacion', 'App\Http\Controllers\Documentation@documentation')->name('documentation');
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get('documents/{document_id}/:download', [App\Http\Controllers\Api\UserDocumentController::class, 'downloadFolder'])->whereNumber(['document_id'])->name('downloadFolder');

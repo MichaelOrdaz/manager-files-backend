@@ -58,6 +58,10 @@ paths:
     $ref: './paths/UsersPermissions.yaml'
   /users/*/permissions:
     $ref: './paths/UsersManyPermissions.yaml'
+  /documents/{document_id}/tags:
+    $ref: './paths/DocumentsTags.yaml'
+  /documents/{document_id}/tags/{tag_name}:
+    $ref: './paths/DocumentsTagsName.yaml'
 
 components:
   schemas:

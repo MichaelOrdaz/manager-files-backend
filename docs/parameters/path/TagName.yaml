@@ -1,0 +1,6 @@
+name: tag_name
+in: path
+description: tag name
+schema:
+  type: string
+required: true

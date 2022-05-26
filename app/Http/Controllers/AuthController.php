@@ -83,13 +83,22 @@ class AuthController extends Controller
         }
         $viewPermissions = $tmp;
         
-        $user->load('department');
+        $user->load(['roles', 'department']);
+
+        $authorization = [];
+        $analystPermissions = Dixa::ANALYST_PERMISSIONS;
+        foreach ($analystPermissions as $permission) {
+            if ($user->can($permission)) {
+                $authorization[] = $permission;
+            }
+        }
 
         return $this->successResponse('Ok', [
             'user' => new UserResource($user),
             'roles' => $user->getRoleNames()->map(fn ($rol) => Dixa::SPANISH_ROLES[$rol]),
             'permissions' => $regularPermissions,
             'views' => $viewPermissions,
+            'authorization' => $authorization
         ]);
     }
 
