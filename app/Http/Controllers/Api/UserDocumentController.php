@@ -245,51 +245,35 @@ class UserDocumentController extends Controller
 
     public function downloadFolder($documentId)
     {
-        /**
-         * @source https://stackoverflow.com/questions/4914750/how-to-zip-a-whole-folder-using-php
-        */
-
         $document = Document::findOrFail($documentId);
-        // $this->authorize('view', $document);
 
         $pathDocument = Dixa::storageRootPath($document->location);
 
         $filenameZip = storage_path("zip/{$document->name}.zip");
 
-        // Get real path for our folder
         $rootPath = $pathDocument;
 
-        // Initialize archive object
         $zip = new ZipArchive();
 
         $zip->open($filenameZip, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
         if ($document->type->name === Dixa::FOLDER) {
-            // Create recursive directory iterator
-            /** @var SplFileInfo[] $files */
             $files = new RecursiveIteratorIterator(
                 new RecursiveDirectoryIterator($rootPath),
                 RecursiveIteratorIterator::LEAVES_ONLY
             );
 
             foreach ($files as $name => $file) {
-                // Skip directories (they would be added automatically)
                 if (!$file->isDir())
                 {
-                    // Get real and relative path for current file
                     $filePath = $file->getRealPath();
                     $relativePath = substr($filePath, strlen($rootPath) + 1);
-
-                    // Add current file to archive
                     $zip->addFile($filePath, $relativePath);
                 }
             }
-
-            // Zip archive will be created only after closing object
         } else {
             $zip->addFile($pathDocument . DIRECTORY_SEPARATOR . $document->name, "{$document->name}.pdf");
         }
-        // $zip->addEmptyDir('lorem');
         $zip->close();
 
         return response()->download($filenameZip);
