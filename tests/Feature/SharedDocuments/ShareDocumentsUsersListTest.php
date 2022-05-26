@@ -210,7 +210,7 @@ class ShareDocumentsUsersListTest extends TestCase
             ]);
         });
 
-        $department = $departments->random();
+        $department = $users->random()->department;
         User::doesntHave('share')->delete();
         $totalUser = User::where('department_id', $department->id)->count();
         

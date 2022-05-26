@@ -304,7 +304,6 @@ class AnalystPermissionCreateTest extends TestCase
             'users' => $payload
         ]);
 
-        $response->dump();
         $response->assertOk()
         ->assertJson(fn (AssertableJson $json) => 
             $json->has('data', 5, fn ($json) => 

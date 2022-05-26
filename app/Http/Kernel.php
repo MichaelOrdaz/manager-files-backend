@@ -14,7 +14,8 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
-        \App\Http\Middleware\Cors::class,
+        \Fruitcake\Cors\HandleCors::class,
+        // \App\Http\Middleware\Cors::class,
         \App\Http\Middleware\ForceJsonResponse::class,
         \App\Http\Middleware\TrustHosts::class,
         \App\Http\Middleware\TrustProxies::class,
@@ -31,7 +32,6 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-            \App\Http\Middleware\Cors::class,
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
@@ -42,7 +42,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            \App\Http\Middleware\Cors::class,
+            // \App\Http\Middleware\Cors::class,
             'throttle:80,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
@@ -66,7 +66,5 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'json.response' => \App\Http\Middleware\ForceJsonResponse::class,
-        'cors' => \App\Http\Middleware\Cors::class,
-
     ];
 }

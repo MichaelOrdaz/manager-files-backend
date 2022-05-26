@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('v1/verify-auth', [App\Http\Controllers\AuthController::class, 'verifyAuth']);
 
+
 Route::prefix('v1')->group(function () {
     Route::middleware(['auth:api'])->group(function () {
 
@@ -50,6 +51,11 @@ Route::prefix('v1')->group(function () {
             Route::post('/', [App\Http\Controllers\Api\UserDocumentController::class, 'storeFile']);
             Route::delete('/{document_id}', [App\Http\Controllers\Api\UserDocumentController::class, 'destroy'])->whereNumber(['document_id']);
             Route::post('/{document_id}/:rename', [App\Http\Controllers\Api\UserDocumentController::class, 'rename'])->whereNumber(['document_id']);
+
+            Route::prefix('{document_id}/tags')->group(function () {
+                Route::post('/', [App\Http\Controllers\Api\UserDocumentTagsController::class, 'store'])->whereNumber(['document_id']);
+                Route::delete('/{tag_name}', [App\Http\Controllers\Api\UserDocumentTagsController::class, 'destroy'])->whereNumber(['document_id'])->whereAlpha('tag_name');
+            });
         });
 
         Route::prefix('folders')->group(function () {

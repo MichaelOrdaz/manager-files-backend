@@ -7,6 +7,8 @@ departmentId:
   $ref: "./path/DepartmentId.yaml"
 documentId:
   $ref: "./path/DocumentId.yaml"
+tagName:
+  $ref: "./path/TagName.yaml"
 
 #query
 page:
