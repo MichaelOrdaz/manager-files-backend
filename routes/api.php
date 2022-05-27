@@ -54,7 +54,7 @@ Route::prefix('v1')->group(function () {
 
             Route::prefix('{document_id}/tags')->group(function () {
                 Route::post('/', [App\Http\Controllers\Api\UserDocumentTagsController::class, 'store'])->whereNumber(['document_id']);
-                Route::delete('/{tag_name}', [App\Http\Controllers\Api\UserDocumentTagsController::class, 'destroy'])->whereNumber(['document_id'])->whereAlpha('tag_name');
+                Route::delete('/{tag_name}', [App\Http\Controllers\Api\UserDocumentTagsController::class, 'destroy'])->whereNumber(['document_id']);
             });
         });
 
