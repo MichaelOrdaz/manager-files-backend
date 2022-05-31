@@ -62,6 +62,8 @@ paths:
     $ref: './paths/DocumentsTags.yaml'
   /documents/{document_id}/tags/{tag_name}:
     $ref: './paths/DocumentsTagsName.yaml'
+  /share-documents/by-me:
+    $ref: './paths/ShareDocumentsByMe.yaml'
 
 components:
   schemas:
