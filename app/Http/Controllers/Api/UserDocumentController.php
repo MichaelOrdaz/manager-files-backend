@@ -276,6 +276,6 @@ class UserDocumentController extends Controller
         }
         $zip->close();
 
-        return response()->download($filenameZip);
+        return response()->download($filenameZip)->deleteFileAfterSend(true);
     }
 }

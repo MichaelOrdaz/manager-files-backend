@@ -85,9 +85,13 @@ Route::prefix('v1')->group(function () {
         });
 
         Route::prefix('share-documents')->group(function () {
-            // PENDIENTES
-            // Route::get('/', [App\Http\Controllers\Api\ShareDocumentController::class, 'index']);
-            // Route::get('/{document_id}', [App\Http\Controllers\Api\ShareDocumentController::class, 'show'])->whereNumber('document_id');
+            Route::prefix('/for-me')->group(function () {
+                Route::get('/', [App\Http\Controllers\Api\ShareDocumentController::class, 'index']);
+            });
+
+            Route::prefix('/by-me')->group(function () {
+                Route::get('/', [App\Http\Controllers\Api\ShareDocumentController::class, 'index']);
+            });
 
             Route::prefix('{document_id}/users')->group(function () {
                 Route::get('/', [App\Http\Controllers\Api\ShareDocumentUserController::class, 'index'])->whereNumber(['document_id']);
