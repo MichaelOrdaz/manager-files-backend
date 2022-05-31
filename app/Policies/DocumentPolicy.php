@@ -32,7 +32,7 @@ class DocumentPolicy
     public function view(User $user, Document $document)
     {
         $isSameDepartment = $user->department->id === $document->department->id;
-        return $user->can('document.show') && $isSameDepartment;
+        return ($user->can('document.show') && $isSameDepartment);
     }
 
     /**

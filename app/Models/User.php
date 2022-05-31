@@ -85,4 +85,11 @@ class User extends Authenticatable
         ->withPivot('id', 'permission', 'granted_by')
         ->withTimestamps();
     }
+
+    public function sharedGranted()
+    {
+        return $this->belongsToMany(Document::class, 'document_user', 'granted_by', 'document_id')
+        ->withPivot('id', 'permission', 'user_id')
+        ->withTimestamps();
+    }
 }

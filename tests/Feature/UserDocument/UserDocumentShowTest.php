@@ -34,7 +34,7 @@ class UserDocumentShowTest extends TestCase
         Passport::actingAs($user);
 
         $documentType = DocumentType::all();
-        $documents = Document::factory()->count(3)
+        $documents = Document::factory()->count(5)
         ->state(new Sequence(
             fn ($sequence) => [
                 'type_id' => $documentType->random()->id
@@ -47,7 +47,9 @@ class UserDocumentShowTest extends TestCase
         ->for($user, 'creator')
         ->create();
 
-        $document = $documents->where('type_id', $documentType->where('name', Dixa::FOLDER)->first()->id)->random();
+        $document = $documents->where('type_id', 
+        $documentType->where('name', Dixa::FOLDER)->first()->id
+        )->random();
 
         $sharePermissions = Permission::whereIn('name', Dixa::SHARE_DOCUMENT_PERMISSIONS)->get();
         $departments = $departments->where('id', '!=', $user->department->id);
@@ -74,7 +76,6 @@ class UserDocumentShowTest extends TestCase
 
         $response = $this->getJson("api/v1/documents/{$document->id}");
 
-        $response->dump();
         $response->assertOk()
         ->assertJson(fn (AssertableJson $json) => 
             $json->has('data', fn ($json) => 
