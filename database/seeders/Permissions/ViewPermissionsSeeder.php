@@ -31,12 +31,5 @@ class ViewPermissionsSeeder extends Seeder
 
     $analista = Role::findByName('Analyst');
     $analista->givePermissionTo('Dashboard');
-    $analista->givePermissionTo('Analyst home');
-
-    // $roles = Role::all();
-    // foreach ($roles as $role) {
-    //     $role->givePermissionTo('Dashboard');
-    // }
-
   }
 }
