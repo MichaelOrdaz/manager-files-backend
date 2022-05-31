@@ -78,4 +78,11 @@ class Document extends Model
     {
         return $this->hasMany(History::class, 'document_id', 'id');
     }
+
+    public function sharedGranted()
+    {
+        return $this->belongsToMany(User::class, 'document_user', 'document_id', 'granted_by')
+        ->withPivot('id', 'permission', 'user_id')
+        ->withTimestamps();
+    }
 }

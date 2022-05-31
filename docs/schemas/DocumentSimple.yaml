@@ -6,10 +6,13 @@ properties:
   name:
     type: string
     example: credit note.pdf
-  location:
+  url:
     type: string
     format: url
     example: 'http://dixa.com/public/document.pdf'
+  location:
+    type: string
+    example: '/location/on/disk'
   createdAt:
     type: string
     format: date-time
