@@ -288,7 +288,6 @@ class DocumentsSharedByMeListTest extends TestCase
 
         $response = $this->getJson("api/v1/share-documents/by-me?parent={$foldersRoot[0]->id}");
 
-        $response->dump();
         $response->assertOk()
         ->assertJson(fn (AssertableJson $json) => 
             $json->has('data', 3, fn ($json) => 

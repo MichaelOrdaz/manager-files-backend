@@ -86,7 +86,8 @@ Route::prefix('v1')->group(function () {
 
         Route::prefix('share-documents')->group(function () {
             Route::prefix('/for-me')->group(function () {
-                Route::get('/', [App\Http\Controllers\Api\ShareDocumentController::class, 'index']);
+                Route::get('/', [App\Http\Controllers\Api\ShareDocumentForMeController::class, 'index']);
+                Route::get('/{document_id}', [App\Http\Controllers\Api\ShareDocumentForMeController::class, 'show'])->whereNumber('document_id');
             });
 
             Route::prefix('/by-me')->group(function () {
