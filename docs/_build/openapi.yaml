@@ -1207,6 +1207,7 @@ paths:
       description: Get the list of all documents shared by user auth in a single request
       parameters:
         - $ref: '#/components/parameters/parent'
+        - $ref: '#/components/parameters/departmentIdQuery'
       responses:
         '200':
           description: Basic structure of the response
