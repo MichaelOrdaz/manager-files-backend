@@ -110,4 +110,9 @@ class DocumentPolicy
     {
         //
     }
+
+    public function viewShared(User $user, Document $document)
+    {
+        return User::userHasAuthorizationToAccessDocument($user, $document);
+    }
 }
