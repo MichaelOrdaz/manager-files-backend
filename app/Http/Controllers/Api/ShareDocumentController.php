@@ -6,6 +6,7 @@ use App\Helpers\Dixa;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DocumentUserPostRequest;
 use App\Http\Resources\BasicDocumentResource;
+use App\Models\Department;
 use App\Models\Document;
 use App\Models\DocumentType;
 use Illuminate\Http\Request;
@@ -21,8 +22,13 @@ class ShareDocumentController extends Controller
         $user = $request->user();
 
         $validated = $request->validate([
-            'parent' => 'nullable|integer'
+            'parent' => 'nullable|integer',
+            'department_id' => 'nullable|integer'
         ]);
+        $departmentId = $validated['department_id'] ?? null;
+        if ($departmentId) {
+            Department::findOrFail($departmentId);
+        }
 
         $typeFolder = DocumentType::where('name', Dixa::FOLDER)->first();
         $parentId = $validated['parent'] ?? null;
@@ -40,6 +46,11 @@ class ShareDocumentController extends Controller
             });
         } else {
             $builder = $user->sharedGranted()
+            ->when($departmentId, function ($query, $departmentId) {
+                $query->whereHas('share', fn ($query) => 
+                    $query->where('department_id', $departmentId)
+                );
+            })
             ->groupBy('documents.id');
         }
         $userSharedDocuments = $builder->with([
@@ -47,7 +58,6 @@ class ShareDocumentController extends Controller
             'parent',
             'creator',
         ])
-        ->where('department_id', $user->department_id)
         ->withCount(['sons' => fn ($query) => $query->where('type_id', $typeFolder->id)])
         ->get();
 
