@@ -92,4 +92,25 @@ class User extends Authenticatable
         ->withPivot('id', 'permission', 'user_id')
         ->withTimestamps();
     }
+
+    /**
+     *
+     * @param User $user
+     * @param Document|null $document
+     * @return mixed bool|object
+     * return false or usermodel with pivot information
+     */
+    public static function userHasAuthorizationToAccessDocument(User $user, ?Document $document)
+    {
+        if (is_null($document)) return false;
+        //si existe el usuario tiene permiso, independiente del tipo de permiso
+        $userShared = $document->share()
+        ->where('users.id', $user->id)
+        ->first();
+        if ($userShared) {
+            return $userShared;
+        } else {
+            return self::userHasAuthorizationToAccessDocument($user, $document->parent);
+        }
+    }
 }

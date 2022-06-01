@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use App\Helpers\Dixa;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class BasicDocumentResource extends JsonResource
+class BasicDocumentShareForMeResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -43,6 +43,8 @@ class BasicDocumentResource extends JsonResource
             'createdAt' => $this->created_at->format('Y-m-d H:i:s'),
             'parent' => $this->whenLoaded('parent'),
             'department' => $this->whenLoaded('department'),
+            'permission' => $this->permission ?? $this->pivot->permission,
+            'grantedBy' => $this->granted_by ?? $this->pivot->granted_by,
             'creator' => new UserResource($this->whenLoaded('creator')),
         ];
     }

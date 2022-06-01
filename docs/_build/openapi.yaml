@@ -1203,7 +1203,7 @@ paths:
       tags:
         - Share Document
       summary: List - Documents by me
-      operationId: listDocuments
+      operationId: listDocumentsByMe
       description: Get the list of all documents shared by user auth in a single request
       parameters:
         - $ref: '#/components/parameters/parent'
@@ -1219,6 +1219,79 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/DocumentSimple'
+                  message:
+                    type: string
+                    example: Ok
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+  /share-documents/for-me:
+    get:
+      tags:
+        - Share Document
+      summary: List - Documents for me
+      operationId: listDocumentsForMe
+      description: Get the list of all documents shared for user auth in a single request
+      parameters:
+        - $ref: '#/components/parameters/parent'
+        - $ref: '#/components/parameters/departmentIdQuery'
+      responses:
+        '200':
+          description: Basic structure of the response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DocumentSimple'
+                  message:
+                    type: string
+                    example: Ok
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+  '/share-documents/for-me/{document_id}':
+    get:
+      tags:
+        - Share Document
+      summary: Get - Document For Me
+      operationId: getDocumentForMe
+      description: Get the document in a single request shared for me
+      parameters:
+        - $ref: '#/components/parameters/documentId'
+      responses:
+        '200':
+          description: Basic structure of the response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Document'
                   message:
                     type: string
                     example: Ok

@@ -45,6 +45,7 @@ class ShareDocumentController extends Controller
         $userSharedDocuments = $builder->with([
             'type',
             'parent',
+            'creator',
         ])
         ->where('department_id', $user->department_id)
         ->withCount(['sons' => fn ($query) => $query->where('type_id', $typeFolder->id)])
