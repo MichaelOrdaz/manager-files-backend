@@ -305,4 +305,77 @@ class DocumentsSharedByMeListTest extends TestCase
             ->etc()
         );
     }
+
+    public function test_list_documents_shared_by_me_head_by_department()
+    {
+        $this->seed();
+
+        $departments = Department::all();
+        $department = $departments->random();
+
+        $userLogged = User::factory()
+            ->for($department)
+        ->create();
+        $userLogged->assignRole('Head of Department');
+
+        Passport::actingAs($userLogged);
+        $this->assertAuthenticated();
+
+        $documentType = DocumentType::all();
+        $documents = Document::factory()->count(3)
+        ->state(new Sequence(
+            fn ($sequence) => [
+                'type_id' => $documentType->random()->id
+            ]
+        ))
+        ->for($userLogged->department)
+        ->for($userLogged, 'creator')
+        ->create();
+
+        $departments = $departments->where('id', '!=', $userLogged->department->id)->values();
+        $userA = User::factory()
+        ->for($departments[0])
+        ->create();
+        $userA->assignRole('Analyst');
+
+        $userB = User::factory()
+        ->for($departments[1])
+        ->create();
+        $userB->assignRole('Analyst');
+
+        $sharePermissions = Permission::whereIn('name', Dixa::SHARE_DOCUMENT_PERMISSIONS)->get();
+
+        $documents->take(2)->each(function ($document) use (
+            $userA,
+            $userB,
+            $sharePermissions,
+            $userLogged,
+        ) {
+
+            $userA->share()->attach($document, [
+                'permission' => $sharePermissions->random()->name,
+                'granted_by' => $userLogged->id,
+            ]);
+
+        });
+
+        $response = $this->getJson("api/v1/share-documents/by-me?department_id={$departments[0]->id}");
+
+        $response->assertOk()
+        ->assertJson(fn (AssertableJson $json) => 
+            $json->has('data', 2, fn ($json) => 
+                $json->has('id')
+                ->has('name')
+                ->has('type')
+                ->has('location')
+                ->has('createdAt')
+                ->whereType('parent', 'null')
+                ->whereType('sons_count', 'integer')
+                ->etc()
+            )
+            ->has('message')
+            ->where('success', true)
+            ->etc()
+        );
+    }
 }
