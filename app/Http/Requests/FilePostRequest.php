@@ -27,8 +27,8 @@ class FilePostRequest extends FormRequest
             'name' => 'required|regex:/^[a-z0-9_\-\s\.]+$/i|min:1|max:255',
             'description' => 'required|min:1|max:65000',
             'date' => 'required|date_format:Y-m-d',
-            'min_identifier' => 'required|integer',
-            'max_identifier' => 'nullable|integer',
+            'min_identifier' => 'required|regex:/^[0-9]+$/',
+            'max_identifier' => 'nullable|regex:/^[0-9]+$/',
             'parent_id' => 'nullable|integer',
             'file' => "required|mimes:pdf|max:{$MAX_FILE_SIZE}",
         ];
