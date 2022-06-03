@@ -49,11 +49,15 @@ class ShareDocumentForMeController extends Controller
         }
 
         $builder = null;
-
         if ($parentId) {
             $builder = Document::when($parentId, function ($query, $parentId) {
                 $query->where('parent_id', $parentId);
-            });
+            })
+            ->with([
+                'share' => function ($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                }
+            ]);
         } else {
             $builder = $user->share();
         }
@@ -61,7 +65,7 @@ class ShareDocumentForMeController extends Controller
             'type',
             'parent',
             'department',
-            'creator'
+            'creator',
         ])
         ->when($departmentId, function ($query, $departmentId) {
             $query->where('department_id', $departmentId);

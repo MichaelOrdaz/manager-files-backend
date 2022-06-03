@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\FilePostRequest;
 use App\Http\Requests\FolderPostRequest;
 use App\Http\Resources\BasicDocumentResource;
+use App\Http\Resources\DocumentCollection;
 use App\Http\Resources\DocumentResource;
 use App\Models\Document;
 use App\Models\DocumentType;
@@ -21,6 +22,7 @@ use ZipArchive;
 
 class UserDocumentController extends Controller
 {
+    const NUMBER_OF_RECORDS = 100;
     /**
      * Display a listing of the resource.
      *
@@ -32,9 +34,40 @@ class UserDocumentController extends Controller
 
         $user = Auth::user();
 
+        $documentTypes = DocumentType::all();
+
         $validated = $request->validate([
-            'parent' => 'nullable|integer'
+            'parent' => 'nullable|integer',
+            'name' => 'nullable|min:2',
+            //advanced filters
+            'all' => 'nullable|boolean',
+            'type' => "nullable|in:{$documentTypes->pluck('name')->join(',')}",
+            'tags' => 'array|nullable',
+            'tags.*' => 'regex:/^[a-z0-9_\-\s\.]+$/i|max:80',
+            'identifiers' => 'nullable|array',
+            'identifiers.*' => 'regex:/^[0-9]+$/',
+            'start_date' => 'nullable|date_format:Y-m-d',
+            'end_date' => 'nullable|date_format:Y-m-d',
+            // pagination query params
+            'page' => 'nullable|integer',
+            'perPage' => 'nullable|integer',
+            'sortBy' => 'nullable|string',
+            'order' => 'nullable|string|in:asc,desc',
         ]);
+
+        $name = $validated['name'] ?? null;
+        //advanced filters
+        $all = $validated['all'] ?? false;
+        $type = $validated['type'] ?? null;
+        $tags = $validated['tags'] ?? null;
+        $identifiers = $validated['identifiers'] ?? null;
+        $startDate = $validated['start_date'] ?? null;
+        $endDate = $validated['end_date'] ?? null;
+        // pagination query params
+        $perPage = $validated['perPage'] ?? self::NUMBER_OF_RECORDS;
+        $perPage = $perPage > self::NUMBER_OF_RECORDS ? self::NUMBER_OF_RECORDS : $perPage;
+        $sortBy = $validated['sortBy'] ?? 'name';
+        $order = $validated['order'] ?? 'asc';
 
         $typeFolder = DocumentType::where('name', Dixa::FOLDER)->first();
         $parentId = $validated['parent'] ?? null;
@@ -47,19 +80,55 @@ class UserDocumentController extends Controller
         $documents = Document::with([
             'type',
             'parent',
-        ])->where('department_id', $user->department_id)
-        ->when($parentId, function ($query, $parentId) {
-            $query->where('parent_id', $parentId);
-        }, function ($query) {
-            $query->whereNull('parent_id');
+        ])
+        ->where('department_id', $user->department_id)
+        ->where(function ($query) use ($parentId, $all) {
+            if ($parentId) {
+                $query->where('parent_id', $parentId);
+            } elseif (!$all) {
+                $query->whereNull('parent_id');
+            }
         })
         ->withCount(['sons' => fn ($query) => $query->where('type_id', $typeFolder->id)])
-        ->get();
+        //advanced filters
+        ->when($name, function ($query, $name) {
+            $query->where('name', 'like', "%$name%");
+        })
+        ->when($type, function ($query, $type) use ($documentTypes) {
+            $documentType = $documentTypes->where('name', $type)->first();
+            $query->where('type_id', $documentType->id);
+        })
+        ->when($tags, function ($query, $tags) {
+            $query->where(function($query) use ($tags) {
+                foreach ($tags as $tag) {
+                    $query->orWhereJsonContains('tags', $tag);
+                }
+            });
+        })
+        ->where(function ($query) use ($startDate, $endDate) {
+            if ($startDate && $endDate) {
+                $query->whereDate('date', '>=', $startDate)
+                ->whereDate('date', '<=', $endDate);
+            } elseif ($startDate) {
+                $query->whereDate('date', $startDate);
+            } elseif ($endDate) {
+                $query->whereDate('date', $endDate);
+            }
+        })
+        ->when($identifiers, function ($query, $identifiers) {
+            $query->where(function ($query) use ($identifiers) {
+                foreach ($identifiers as $identifier) {
+                    $identifier = (int) $identifier;
+                    $query->orWhere(function ($query) use ($identifier) {
+                        $query->whereRaw("{$identifier} BETWEEN min_identifier AND IFNULL(max_identifier, min_identifier)");
+                    });
+                }
+            });
+        })
+        ->orderBy($sortBy, $order)
+        ->paginate($perPage);
 
-        return (BasicDocumentResource::collection($documents))->additional([
-            'message' => 'Documents successfully retrieved',
-            'success' => true
-        ]);
+        return new DocumentCollection($documents);
     }
 
     /**

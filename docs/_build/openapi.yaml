@@ -634,6 +634,17 @@ paths:
       description: Get the list of all documents in a single request
       parameters:
         - $ref: '#/components/parameters/parent'
+        - $ref: '#/components/parameters/nameDocument'
+        - $ref: '#/components/parameters/all'
+        - $ref: '#/components/parameters/type'
+        - $ref: '#/components/parameters/tags'
+        - $ref: '#/components/parameters/identifiers'
+        - $ref: '#/components/parameters/startDate'
+        - $ref: '#/components/parameters/endDate'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/perPage'
+        - $ref: '#/components/parameters/sortBy'
+        - $ref: '#/components/parameters/order'
       responses:
         '200':
           description: Basic structure of the response
@@ -2019,6 +2030,74 @@ components:
       schema:
         type: integer
         nullable: true
+    nameDocument:
+      in: query
+      name: name
+      description: Value to filter by name of document
+      required: false
+      schema:
+        type: string
+        example: Contables
+    all:
+      in: query
+      name: all
+      description: 'if this value is true, it will search in all the user''s documents, if it is false, it will search in its respective level'
+      required: false
+      schema:
+        type: boolean
+        example: false
+    type:
+      in: query
+      name: type
+      description: 'search by folder or file, allowed values are Carpeta and Archivo'
+      required: false
+      schema:
+        type: string
+        example: Carpeta
+    tags:
+      in: query
+      name: 'tags[]'
+      description: an array of tags
+      required: false
+      schema:
+        type: array
+        items:
+          type: strings
+        example:
+          - ventas
+          - compras
+          - facturas
+    identifiers:
+      in: query
+      name: 'identifiers[]'
+      description: an array of folios
+      required: false
+      schema:
+        type: array
+        items:
+          type: integer
+        example:
+          - 15478
+          - 9846
+          - 1879
+    startDate:
+      in: query
+      name: start_date
+      description: search date
+      required: false
+      schema:
+        type: string
+        format: date
+        example: '2022-10-15'
+    endDate:
+      in: query
+      name: end_date
+      description: search date
+      required: false
+      schema:
+        type: string
+        format: date
+        example: '2022-10-15'
   securitySchemes:
     bearerAuth:
       type: http

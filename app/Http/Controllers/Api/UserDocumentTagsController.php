@@ -23,7 +23,7 @@ class UserDocumentTagsController extends Controller
 
         $validated = $request->validate([
             'tags' => 'array|nullable',
-            'tags.*' => 'string|min:2|max:80'
+            'tags.*' => 'regex:/^[a-z0-9_\-\s\.]+$/i|min:2|max:80'
         ]);
 
         $document->update([
