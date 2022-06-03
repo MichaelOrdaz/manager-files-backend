@@ -1,0 +1,9 @@
+in: query
+name: tags[]
+description: an array of tags
+required: false
+schema:
+  type: array
+  items:
+    type: strings
+  example: ['ventas', 'compras', 'facturas']

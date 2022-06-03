@@ -1,0 +1,9 @@
+in: query
+name: identifiers[]
+description: an array of folios
+required: false
+schema:
+  type: array
+  items:
+    type: integer
+  example: [15478, 9846, 1879]

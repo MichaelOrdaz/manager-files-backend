@@ -6,6 +6,17 @@ get:
   description: Get the list of all documents in a single request
   parameters:
     - $ref: "../parameters/query/parent.yaml"
+    - $ref: "../parameters/query/nameDocument.yaml"
+    - $ref: "../parameters/query/all.yaml"
+    - $ref: "../parameters/query/type.yaml"
+    - $ref: "../parameters/query/tags.yaml"
+    - $ref: "../parameters/query/identifiers.yaml"
+    - $ref: "../parameters/query/startDate.yaml"
+    - $ref: "../parameters/query/endDate.yaml"
+    - $ref: "../parameters/query/page.yaml"
+    - $ref: "../parameters/query/perPage.yaml"
+    - $ref: "../parameters/query/sortBy.yaml"
+    - $ref: "../parameters/query/order.yaml"
   responses:
     '200': 
       description: Basic structure of the response

@@ -27,3 +27,17 @@ parent:
   $ref: "./query/parent.yaml"
 departmentIdQuery:
   $ref: "./query/departmentId.yaml"
+nameDocument:
+  $ref: "./query/nameDocument.yaml"
+all:
+  $ref: "./query/all.yaml"
+type:
+  $ref: "./query/type.yaml"
+tags:
+  $ref: "./query/tags.yaml"
+identifiers:
+  $ref: "./query/identifiers.yaml"
+startDate:
+  $ref: "./query/startDate.yaml"
+endDate:
+  $ref: "./query/endDate.yaml"
