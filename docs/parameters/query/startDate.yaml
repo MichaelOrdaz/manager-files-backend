@@ -1,0 +1,8 @@
+in: query
+name: start_date
+description: search date
+required: false
+schema:
+  type: string
+  format: date
+  example: '2022-10-15'

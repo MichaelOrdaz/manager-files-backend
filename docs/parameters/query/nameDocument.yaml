@@ -1,0 +1,7 @@
+in: query
+name: name
+description: Value to filter by name of document
+required: false
+schema:
+  type: string
+  example: Contables

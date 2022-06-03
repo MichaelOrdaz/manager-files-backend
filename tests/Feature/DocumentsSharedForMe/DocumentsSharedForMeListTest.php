@@ -633,7 +633,6 @@ class DocumentsSharedForMeListTest extends TestCase
 
         $response = $this->getJson("api/v1/share-documents/for-me?parent={$foldersRoot[0]->id}");
 
-        $response->dump();
         $response->assertStatus(403)
         ->assertJson(fn (AssertableJson $json) => 
             $json

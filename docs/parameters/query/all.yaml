@@ -1,0 +1,7 @@
+in: query
+name: all
+description: if this value is true, it will search in all the user's documents, if it is false, it will search in its respective level
+required: false
+schema:
+  type: boolean
+  example: false

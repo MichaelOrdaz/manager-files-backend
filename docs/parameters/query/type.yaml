@@ -1,0 +1,7 @@
+in: query
+name: type
+description: search by folder or file, allowed values are Carpeta and Archivo
+required: false
+schema:
+  type: string
+  example: Carpeta
