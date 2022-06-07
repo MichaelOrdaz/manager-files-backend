@@ -30,6 +30,8 @@ Folder:
   $ref: './Folder.yaml'
 FileMultipartCreate:
   $ref: './FileMultipartCreate.yaml'
+FileMultipartUpdate:
+  $ref: './FileMultipartUpdate.yaml'
 History:
   $ref: './History.yaml'
 Action:
