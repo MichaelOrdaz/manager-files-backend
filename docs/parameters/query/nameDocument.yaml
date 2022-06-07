@@ -5,3 +5,4 @@ required: false
 schema:
   type: string
   example: Contables
+  nullable: true

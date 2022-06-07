@@ -7,3 +7,4 @@ schema:
   items:
     type: integer
   example: [15478, 9846, 1879]
+  nullable: true
