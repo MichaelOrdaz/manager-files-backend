@@ -32,6 +32,46 @@ get:
       $ref: "../responses/error404.yaml"
     '422':
       $ref: "../responses/error422.yaml"
+post:
+  tags: 
+    - Documents
+  summary: Update - File
+  operationId: updateFile
+  description: update a document in the system
+  parameters:
+    - $ref: "../parameters/path/DocumentId.yaml"
+  requestBody: 
+    description: Request in format multipart/form-data
+    content: 
+      multipart/form-data:
+        schema:
+          $ref: '../schemas/FileMultipartUpdate.yaml'
+  responses:
+    '200': 
+      description: Basic structure of the response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: "../schemas/Document.yaml"
+              message:
+                type: string
+                example: Ok
+              success:
+                type: boolean
+                example: true
+    '400':
+      $ref: "../responses/error400.yaml"
+    '401':
+      $ref: "../responses/error401.yaml"
+    '403':
+      $ref: "../responses/error403.yaml"
+    '404':
+      $ref: "../responses/error404.yaml"
+    '422':
+      $ref: "../responses/error422.yaml"
 delete:
   tags: 
     - Documents

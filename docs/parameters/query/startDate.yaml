@@ -6,3 +6,4 @@ schema:
   type: string
   format: date
   example: '2022-10-15'
+  nullable: true

@@ -31,7 +31,7 @@ class DocumentsSeeder extends Seeder
             $typeFile
         ) {
             //level root
-            $documentsRoot = Document::factory()->count(5)
+            $documentsRoot = Document::factory()->count(2)
             ->state(new Sequence(
                 fn ($sequence) => [
                     'type_id' => $documentType->random()->id

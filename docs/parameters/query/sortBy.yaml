@@ -5,3 +5,4 @@ required: false
 schema:
   type: string
   example: nombre
+  nullable: true
