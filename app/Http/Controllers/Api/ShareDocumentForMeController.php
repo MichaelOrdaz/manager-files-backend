@@ -75,8 +75,10 @@ class ShareDocumentForMeController extends Controller
 
         if ($parentId) {
           $userSharedDocuments = $userSharedDocuments->map(function ($item) use ($userShared) {
-            $item->permission = $userShared->pivot->permission;
-            $item->granted_by = $userShared->pivot->granted_by;
+            if (count($item->share))
+                $item->pivot = $item->share[0]->pivot;
+            else
+                $item->pivot = $userShared->pivot;
             return $item;
           });
         }

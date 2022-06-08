@@ -43,8 +43,8 @@ class BasicDocumentShareForMeResource extends JsonResource
             'createdAt' => $this->created_at->format('Y-m-d H:i:s'),
             'parent' => $this->whenLoaded('parent'),
             'department' => $this->whenLoaded('department'),
-            'permission' => $this->pivot->permission ?? $this->permission,
-            'grantedBy' => $this->pivot->granted_by ?? $this->granted_by,
+            'permission' => $this->pivot->permission,
+            'grantedBy' => $this->pivot->granted_by,
             'creator' => new UserResource($this->whenLoaded('creator')),
         ];
     }
