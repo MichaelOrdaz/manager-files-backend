@@ -346,6 +346,10 @@ class UserDocumentController extends Controller
 
         $rootPath = $pathDocument;
 
+        if (!file_exists($rootPath)) {
+            abort(404);
+        }
+
         $zip = new ZipArchive();
 
         $zip->open($filenameZip, ZipArchive::CREATE | ZipArchive::OVERWRITE);
@@ -356,19 +360,19 @@ class UserDocumentController extends Controller
                 RecursiveIteratorIterator::LEAVES_ONLY
             );
 
-            foreach ($files as $name => $file) {
-                if (!$file->isDir())
-                {
+            $zip->addEmptyDir($document->name);
+
+            foreach ($files as $file) {
+                if (!$file->isDir()) {
                     $filePath = $file->getRealPath();
                     $relativePath = substr($filePath, strlen($rootPath) + 1);
-                    $zip->addFile($filePath, $relativePath);
+                    $zip->addFile($filePath, $document->name . DIRECTORY_SEPARATOR . $relativePath);
                 }
             }
         } else {
-            $zip->addFile($pathDocument . DIRECTORY_SEPARATOR . $document->name, "{$document->name}.pdf");
+            $zip->addFile($pathDocument, "{$document->name}.pdf");
         }
         $zip->close();
-
         return response()->download($filenameZip)->deleteFileAfterSend(true);
     }
 }
