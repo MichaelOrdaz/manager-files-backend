@@ -66,8 +66,8 @@ class UserDocumentController extends Controller
         // pagination query params
         $perPage = $validated['perPage'] ?? self::NUMBER_OF_RECORDS;
         $perPage = $perPage > self::NUMBER_OF_RECORDS ? self::NUMBER_OF_RECORDS : $perPage;
-        $sortBy = $validated['sortBy'] ?? 'name';
-        $order = $validated['order'] ?? 'asc';
+        $sortBy = $validated['sortBy'] ?? 'created_at';
+        $order = $validated['order'] ?? 'DESC';
 
         $typeFolder = DocumentType::where('name', Dixa::FOLDER)->first();
         $parentId = $validated['parent'] ?? null;
@@ -125,6 +125,7 @@ class UserDocumentController extends Controller
                 }
             });
         })
+        ->orderBy('type_id', 'ASC')
         ->orderBy($sortBy, $order)
         ->paginate($perPage);
 
