@@ -746,6 +746,46 @@ paths:
           $ref: '#/components/responses/404'
         '422':
           $ref: '#/components/responses/422'
+    post:
+      tags:
+        - Documents
+      summary: Update - File
+      operationId: updateFile
+      description: update a document in the system
+      parameters:
+        - $ref: '#/components/parameters/documentId'
+      requestBody:
+        description: Request in format multipart/form-data
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FileMultipartUpdate'
+      responses:
+        '200':
+          description: Basic structure of the response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Document'
+                  message:
+                    type: string
+                    example: Ok
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
     delete:
       tags:
         - Documents
@@ -1751,6 +1791,39 @@ components:
         - min_identifier
         - date
         - file
+    FileMultipartUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          example: credit note.pdf
+        description:
+          type: string
+          example: document desciption example
+        min_identifier:
+          type: string
+          example: '50478'
+        max_identifier:
+          type: string
+          example: '50478'
+          nullable: true
+        date:
+          type: string
+          format: date
+          example: '2020-01-01'
+        file:
+          type: string
+          format: binary
+          nullable: true
+        parent_id:
+          type: integer
+          example: 1
+          nullable: true
+      required:
+        - name
+        - description
+        - min_identifier
+        - date
     History:
       type: object
       properties:
@@ -1973,6 +2046,7 @@ components:
       schema:
         type: integer
         example: 1
+        nullable: true
     order:
       in: query
       name: order
@@ -1983,6 +2057,7 @@ components:
         enum:
           - asc
           - desc
+        nullable: true
     sortBy:
       in: query
       name: sortBy
@@ -1991,6 +2066,7 @@ components:
       schema:
         type: string
         example: nombre
+        nullable: true
     perPage:
       in: query
       name: perPage
@@ -1999,6 +2075,7 @@ components:
       schema:
         type: integer
         example: 20
+        nullable: true
     role:
       in: query
       name: role
@@ -2007,6 +2084,7 @@ components:
       schema:
         type: integer
         example: 1
+        nullable: true
     name:
       in: query
       name: name
@@ -2015,6 +2093,7 @@ components:
       schema:
         type: string
         example: John Doe
+        nullable: true
     parent:
       in: query
       name: parent
@@ -2023,6 +2102,7 @@ components:
       schema:
         type: integer
         example: 1
+        nullable: true
     departmentIdQuery:
       name: department_id
       in: query
@@ -2038,6 +2118,7 @@ components:
       schema:
         type: string
         example: Contables
+        nullable: true
     all:
       in: query
       name: all
@@ -2054,6 +2135,7 @@ components:
       schema:
         type: string
         example: Carpeta
+        nullable: true
     tags:
       in: query
       name: 'tags[]'
@@ -2067,6 +2149,7 @@ components:
           - ventas
           - compras
           - facturas
+        nullable: true
     identifiers:
       in: query
       name: 'identifiers[]'
@@ -2089,6 +2172,7 @@ components:
         type: string
         format: date
         example: '2022-10-15'
+        nullable: true
     endDate:
       in: query
       name: end_date
@@ -2098,6 +2182,7 @@ components:
         type: string
         format: date
         example: '2022-10-15'
+        nullable: true
   securitySchemes:
     bearerAuth:
       type: http

@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\Dixa;
 use App\Http\Controllers\Api\Controller;
-use App\Http\Requests\FilePostRequest;
+use App\Http\Requests\FilePostCreateRequest;
+use App\Http\Requests\FilePostUpdateRequest;
 use App\Http\Requests\FolderPostRequest;
 use App\Http\Resources\BasicDocumentResource;
 use App\Http\Resources\DocumentCollection;
@@ -13,7 +14,6 @@ use App\Models\Document;
 use App\Models\DocumentType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
 use Illuminate\Validation\ValidationException;
 use League\Flysystem\Util;
 use RecursiveDirectoryIterator;
@@ -66,8 +66,8 @@ class UserDocumentController extends Controller
         // pagination query params
         $perPage = $validated['perPage'] ?? self::NUMBER_OF_RECORDS;
         $perPage = $perPage > self::NUMBER_OF_RECORDS ? self::NUMBER_OF_RECORDS : $perPage;
-        $sortBy = $validated['sortBy'] ?? 'name';
-        $order = $validated['order'] ?? 'asc';
+        $sortBy = $validated['sortBy'] ?? 'created_at';
+        $order = $validated['order'] ?? 'DESC';
 
         $typeFolder = DocumentType::where('name', Dixa::FOLDER)->first();
         $parentId = $validated['parent'] ?? null;
@@ -125,6 +125,7 @@ class UserDocumentController extends Controller
                 }
             });
         })
+        ->orderBy('type_id', 'ASC')
         ->orderBy($sortBy, $order)
         ->paginate($perPage);
 
@@ -165,7 +166,7 @@ class UserDocumentController extends Controller
         ]);
     }
 
-    public function storeFile(FilePostRequest $request)
+    public function storeFile(FilePostCreateRequest $request)
     {
         $this->authorize('create', Document::class);
         $data = $request->getData();
@@ -229,9 +230,25 @@ class UserDocumentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(FilePostUpdateRequest $request, $documentId)
     {
-        //
+        $document = Document::findOrFail($documentId);
+        $this->authorize('update', $document);
+        $data = $request->getData();
+        
+        $document->update($data);
+
+        $document->load([
+            'creator',
+            'type',
+            'parent',
+            'department',
+        ]);
+
+        return (new DocumentResource($document))->additional([
+            'message' => 'Document successfully retrieved',
+            'success' => true
+        ]);
     }
 
     /**
@@ -296,8 +313,16 @@ class UserDocumentController extends Controller
             ]);
         }
 
+        $currentPathOnDisk = Dixa::storageRootPath($document->location);
+        $location = explode('/', $document->location);
+        array_splice($location, -1, 1, $name);
+        $location = implode('/', $location);
+        if (file_exists($currentPathOnDisk))
+            rename($currentPathOnDisk, Dixa::storageRootPath($location));
+
         $document->update([
-            'name' => $validated['name']
+            'name' => $name,
+            'location' => $location,
         ]);
 
         $document->load([
@@ -323,6 +348,10 @@ class UserDocumentController extends Controller
 
         $rootPath = $pathDocument;
 
+        if (!file_exists($rootPath)) {
+            abort(404);
+        }
+
         $zip = new ZipArchive();
 
         $zip->open($filenameZip, ZipArchive::CREATE | ZipArchive::OVERWRITE);
@@ -333,19 +362,19 @@ class UserDocumentController extends Controller
                 RecursiveIteratorIterator::LEAVES_ONLY
             );
 
-            foreach ($files as $name => $file) {
-                if (!$file->isDir())
-                {
+            $zip->addEmptyDir($document->name);
+
+            foreach ($files as $file) {
+                if (!$file->isDir()) {
                     $filePath = $file->getRealPath();
                     $relativePath = substr($filePath, strlen($rootPath) + 1);
-                    $zip->addFile($filePath, $relativePath);
+                    $zip->addFile($filePath, $document->name . DIRECTORY_SEPARATOR . $relativePath);
                 }
             }
         } else {
-            $zip->addFile($pathDocument . DIRECTORY_SEPARATOR . $document->name, "{$document->name}.pdf");
+            $zip->addFile($pathDocument, "{$document->name}.pdf");
         }
         $zip->close();
-
         return response()->download($filenameZip)->deleteFileAfterSend(true);
     }
 }

@@ -7,3 +7,4 @@ schema:
   items:
     type: string
   example: ['ventas', 'compras', 'facturas']
+  nullable: true
