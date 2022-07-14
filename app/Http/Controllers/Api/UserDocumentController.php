@@ -145,6 +145,7 @@ class UserDocumentController extends Controller
         $user = Auth::user();
         $type = DocumentType::where('name', Dixa::FOLDER)->first();
 
+        $data['date'] = date('Y-m-d');
         $document = Document::create($data);
         $document->creator()->associate($user);
         $document->type()->associate($type);
