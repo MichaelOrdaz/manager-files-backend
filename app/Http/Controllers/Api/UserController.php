@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\Dixa;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserCollection;
@@ -137,6 +138,9 @@ class UserController extends Controller
         if (array_key_exists('department_id', $data)) {
             $user->department()->associate($department);
             $user->save();
+        }
+        if ($role->name === Dixa::SPANISH_ROLES['Admin']) {
+            $user->department()->dissociate();
         }
         $user->load('department');
         

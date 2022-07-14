@@ -5,5 +5,5 @@ required: false
 schema:
   type: array
   items:
-    type: strings
+    type: string
   example: ['ventas', 'compras', 'facturas']
