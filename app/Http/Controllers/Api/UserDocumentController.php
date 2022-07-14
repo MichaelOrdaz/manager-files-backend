@@ -80,6 +80,7 @@ class UserDocumentController extends Controller
         $documents = Document::with([
             'type',
             'parent',
+            'creator'
         ])
         ->where('department_id', $user->department_id)
         ->where(function ($query) use ($parentId, $all) {
