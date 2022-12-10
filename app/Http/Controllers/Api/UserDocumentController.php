@@ -71,10 +71,23 @@ class UserDocumentController extends Controller
 
         $typeFolder = DocumentType::where('name', Dixa::FOLDER)->first();
         $parentId = $validated['parent'] ?? null;
+        $breadcrumb = [];
         if ($parentId) {
-            Document::where('type_id', $typeFolder->id)
+            $parent = Document::where('type_id', $typeFolder->id)
+            ->with('parents')
             ->where('id', $parentId)
             ->firstOrFail();
+            
+            while ($parent !== null) {
+                $breadcrumb[] = [
+                    'id' => $parent->id,
+                    'name' => $parent->name,
+                    'location' => $parent->location,
+                    'parent_id' => $parent->parent_id,
+                ];
+                $parent =  $parent->parents;
+            }
+            $breadcrumb = array_reverse($breadcrumb);
         }
 
         $documents = Document::with([
@@ -130,7 +143,9 @@ class UserDocumentController extends Controller
         ->orderBy($sortBy, $order)
         ->paginate($perPage);
 
-        return new DocumentCollection($documents);
+        return (new DocumentCollection($documents))->additional([
+            'breadcrumb' => $breadcrumb
+        ]);
     }
 
     /**
