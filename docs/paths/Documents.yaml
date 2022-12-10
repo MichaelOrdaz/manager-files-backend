@@ -35,6 +35,24 @@ get:
               success:
                 type: boolean
                 example: true
+              breadcrumb:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id: 
+                      type: number
+                      example: 1
+                    name: 
+                      type: string
+                      example: file
+                    location: 
+                      example: path/to/file
+                    parent_id: 
+                      type: number
+                      example: 5
+                      nullable: true
+
     '400':
       $ref: "../responses/error400.yaml"
     '401':
