@@ -663,6 +663,23 @@ paths:
                   success:
                     type: boolean
                     example: true
+                  breadcrumb:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          example: 1
+                        name:
+                          type: string
+                          example: file
+                        location:
+                          example: path/to/file
+                        parent_id:
+                          type: number
+                          example: 5
+                          nullable: true
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -2163,6 +2180,7 @@ components:
           - 15478
           - 9846
           - 1879
+        nullable: true
     startDate:
       in: query
       name: start_date
