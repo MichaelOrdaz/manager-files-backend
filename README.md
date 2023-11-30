@@ -63,3 +63,47 @@ Use los siguientes comandos para correr el proyecto
 - [Teoria que necesitas saber antes de escribir end points](./Generacion-api.md)
 - [Manual para documentar end points](./Documentación-swagger.md)
 - [Manual y teoría para pruebas](./Pruebas.md)
+
+
+
+# despliegue en produccion
+
+para levantar los servicios de docker ejecutar
+docker compose -f docker-compose.prod.yml up -d
+
+luego entrar al contenedor que tiene el servicio de app-laravel
+docker compose exec -it app-laravel bash
+
+ya dentro del contenedor instalar dependencias de composer
+composer install
+
+generar llave de laravel
+php artisan key:generate
+
+- creat tablas de Base de datos y ejecutar semillas
+
+    ```bash
+        php artisan migrate:fresh --seed
+    ```
+
+- Generar las llaves del proyecto, usar el siguiente comando
+
+    ```bash
+        php artisan passport:install --force
+    ```
+
+- Ver documentación del API
+
+    ```bash
+        npm install
+        npm run preview
+        // Ver en el puerto 8000
+    ```
+
+recuerda agregar los accessos de passport al archivo .env
+
+docker compose exec app-laravel php artisan key:generate
+docker compose exec app-laravel php artisan migrate:fresh --seed
+docker compose exec app-laravel php artisan passport:install
+docker compose exec app-laravel sh -c 'echo "PASSPORT_PERSONAL_ACCESS_CLIENT_ID=\"1\"" >> .env'
+docker compose exec app-laravel sh -c 'echo "PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET=\"S56JQ4bQTGaHQmItGhashpxuTQFubcj49q0ByoVH\"" >> .env'

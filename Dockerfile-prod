@@ -1,0 +1,53 @@
+FROM oberd/php-8.0-apache
+RUN export LANG=C.UTF-8
+
+# Install dependencies
+RUN apt update
+RUN apt install -y \
+    build-essential \
+    libpng-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
+    locales \
+    libzip-dev \
+    zip \
+    jpegoptim optipng pngquant gifsicle \
+    vim \
+    unzip \
+    git \
+    curl \
+    libonig-dev
+
+RUN apt install nano
+RUN apt install -y ghostscript
+
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
+
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www
+
+COPY . /var/www/
+COPY ./app.conf /etc/apache2/sites-available/
+
+# RUN export PATH="$(yarn global bin):$PATH"
+RUN a2enmod rewrite
+RUN a2dissite 000-default.conf
+RUN a2ensite app.conf
+
+ARG user
+ARG uid
+
+RUN useradd -G www-data,root -u $uid -d /home/$user $user
+RUN mkdir -p /home/$user/.composer && \
+    chown -R $user:$user /home/$user
+
+RUN chown -R $user:$user /var/www
+
+USER $user
+
+RUN composer install --optimize-autoloader
+

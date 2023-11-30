@@ -1,0 +1,51 @@
+version: "3"
+services:
+    puller-mysql:
+        image: mysql/mysql-server:latest
+        container_name: puller-mysql
+        ports:
+            - "3306:3306"
+            - "33060:33060"
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_USER: ${DB_USERNAME}
+        volumes:
+            - './my.cnf:/etc/my.cnf'
+            - db-data:/var/lib/mysql
+        restart: unless-stopped
+        networks:
+            - pullermx-mysql-server
+
+    phpmyadmin:
+      image: phpmyadmin:latest
+      ports:
+        - 8080:80
+      environment:
+        - PMA_ARBITRARY=1
+      restart: unless-stopped
+      networks:
+          - pullermx-mysql-server
+
+    app-laravel:
+      image: app-dixa
+      container_name: app-laravel-dixa
+      restart: unless-stopped
+      build:
+        args:
+          user: sammy
+          uid: 1000
+        context: ./
+        dockerfile: Dockerfile-prod
+      ports:
+        - 80:80
+      depends_on:
+        - puller-mysql
+      networks:
+        - pullermx-mysql-server
+networks:
+    pullermx-mysql-server:
+        driver: bridge
+volumes:
+    db-data:
